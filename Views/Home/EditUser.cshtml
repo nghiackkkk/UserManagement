@@ -1,0 +1,163 @@
+﻿@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="content">
+    <div class="content-2">
+        <div class="prd-title">
+            <span>Edit Customer</span>
+        </div>
+        <div class="form">
+            <form action="/Home/EditUserDo" method="post">
+                <div class="f-1">
+                    <div class="form-flex hidden">
+                        <label for="id">Id</label>
+                        <input type="number"
+                               name="id"
+                               id="id"
+                               placeholder="Id"
+                               value="@Model.Id" />
+                    </div>
+                    <div class="form-flex">
+                        <label for="name">Name</label>
+                        <input type="text"
+                               name="name"
+                               id="name"
+                               placeholder="Name user"
+                               value="@Model.Name" />
+                    </div>
+                    <div class="form-flex">
+                        <label for="age">Age</label>
+                        <input type="number"
+                               name="age"
+                               id="age"
+                               placeholder="Age"
+                               value="@Model.Age" />
+                    </div>
+                    <div class="form-flex">
+                        <label for="gender">Gender</label>
+                        <div class="div-input">
+                            @if (@Model.Gender == "Male")
+                            {
+                                <div>
+                                    <input type="radio"
+                                           name="gender"
+                                           id="female"
+                                           value="Female" />
+                                    <label for="female">Female</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio"
+                                           name="gender"
+                                           id="male"
+                                           value="Male"
+                                           checked />
+                                    <label for="male">Male</label><br>
+                                </div>
+                            }
+                            else 
+                            {
+                                <div>
+                                    <input type="radio"
+                                           name="gender"
+                                           id="female"
+                                           value="Female" checked />
+                                    <label for="female">Female</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio"
+                                           name="gender"
+                                           id="male"
+                                           value="Male" />
+                                    <label for="male">Male</label><br>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="form-flex">
+                        <label for="number">Number</label>
+                        <input type="text"
+                               name="number"
+                               id="number"
+                               placeholder="Number"
+                               value="@Model.Number" />
+                    </div>
+                    <div class="form-flex">
+                        <label for="username">Username</label>
+                        <input type="text"
+                               name="username"
+                               id="username"
+                               placeholder="Username" 
+                               value="@Model.Username" />
+                    </div>
+                    <div class="form-flex">
+                        <label for="password">Password</label>
+                        <input type="text"
+                               name="password"
+                               id="password"
+                               placeholder="Password"
+                               value="@Model.Password" />
+                    </div>
+                    <div class="form-flex">
+                        <label for="status">Status</label>
+                        <div class="div-input">
+                            @* <h1>@Model.Status</h1> *@
+                            @if (@Model.Status == "Open")
+                            {
+                                <div>
+                                    <input type="radio"
+                                           name="status"
+                                           id="lock"
+                                           value="Lock"/>
+                                    <label for="lock">Lock</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio"
+                                           name="status"
+                                           id="open"
+                                           value="Open" checked/>
+                                    <label for="open">Unlock</label><br>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <input type="radio"
+                                           name="status"
+                                           id="lock"
+                                           value="Lock" checked/>
+                                    <label for="lock">Lock</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio"
+                                           name="status"
+                                           id="open"
+                                           value="Open"/>
+                                    <label for="open">Unlock</label><br>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="form-flex">
+                        <label for="priority">Priority</label>
+                        <select name="priority" id="priority">
+                            @if (@Model.Priority == "admin")
+                            {
+                                <option value="admin" selected>Admin</option>
+                                <option value="user">User</option>
+                            }else
+                            {
+                                <option value="admin">Admin</option>
+                                <option value="user" selected>User</option>
+                            }
+
+                        </select>
+                    </div>
+                    <button type="submit">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

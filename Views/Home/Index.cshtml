@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="content">
+
+    <div class="content-2">
+        @if (@ViewBag.Name != null)
+        {
+            <div class="prd-title">
+                <span>Hello @ViewBag.Name</span>
+            </div>
+        }else
+        {
+            <div class="prd-title">
+                <span>Customers</span>
+            </div>
+        }
+        <div class="btn-add">
+            <a href="/Home/ADUser"> Add Customer </a>
+        </div>
+        <div class="table-crud">
+            <table id="prd-table">
+                <colgroup>
+                    <col style="width: 5%" />
+                    <col style="width: 15%" />
+                    <col style="width: 5%" />
+                    <col style="width: 7%" />
+                    <col style="width: 10%" />
+                    <col style="width: 10%" />
+                    <col style="width: 10%" />
+                    <col style="width: 7%" />
+                    <col style="width: 5%" />
+                    <col style="width: 5%" />
+                    <col style="width: 5%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="prd-text-left">Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Number</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Priority</th>
+                        <th class="tall">Edit</th>
+                        <th class="tall">Status</th>
+                        <th class="tall">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td class="prd-text-left">@user.Name</td>
+                            <td>@user.Age</td>
+                            <td>@user.Gender</td>
+                            <td>@user.Number</td>
+                            <td>@user.Username</td>
+                            <td>@user.Password</td>
+                            <td>@user.Priority</td>
+                            <td class="prd-edit tall">
+                                <a href="/Home/EditUser/@user.Id" style="background-color: green">
+                                    <i class="fa fs-solid fa-tools"></i>
+                                </a>
+                            </td>
+                            <td class="prd-edit tall">
+                                @if (@user.Status == "Open")
+                                {
+                                    <button id="btn-unlock" onclick="handleLock(@user.Id)" class="" style="background-color: #27ae60"><i class="fa-solid fa-unlock"></i></button>
+                                }else
+                                {
+                                    <button id="btn-lock" onclick="handleLock(@user.Id)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button>
+                                }
+                            </td>
+                             <td class="prd-edit tall">
+                                <button onclick="deleteButton(@user.Id)" id="del-@user.Id" href="" style="background-color: red"><i class="fa fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

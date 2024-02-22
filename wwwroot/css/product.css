@@ -1,0 +1,90 @@
+﻿.content-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    background-color: #FFF;
+    box-shadow: 0px 4px 20px 0px rgba(238, 238, 238, 0.50);
+}
+
+
+.prd-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 40px;
+    padding-top: 20px;
+}
+
+.btn-add {
+    margin-left: 30px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+}
+
+    .btn-add a {
+        padding: 15px 40px;
+        border-radius: 8px;
+        border: 1px solid var(--primary-900, #5d5fef);
+        background-color: var(--primary-900, #5d5fef);
+        color: #FFF;
+        font-size: 18px;
+        text-decoration: none;
+    }
+
+button a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.table-crud {
+    width: 100%;
+    position: relative;
+}
+
+#prd-table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+    #prd-table th,
+    #prd-table td {
+        text-align: center;
+        border-bottom: 1px solid #EDF2F6;
+    }
+
+.prd-text-left {
+    text-align: left !important;
+}
+
+#prd-table td img {
+    border-radius: 8px;
+}
+
+.prd-edit a, .prd-edit button {
+    text-decoration: none;
+    background-color: var(--primary-900, #5d5fef);
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+a i, button i {
+    color: #FFF;
+}
+
+.prd-edit button {
+    width: fit-content;
+    margin-bottom: 0;
+    border-color: red;
+    box-shadow: none;
+}
+
+.tall {
+    height: 60px;
+}
+
+.nav-active {
+    font-weight: 1000 !important;
+    color: black !important;
+}
