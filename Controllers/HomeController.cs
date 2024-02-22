@@ -13,7 +13,7 @@ namespace UserManagement.Controllers
 
         private readonly ILogger<HomeController> _logger;
         private static readonly string UsernamePattern = @"^[a-zA-Z0-9_-]{3,16}$";
-        private static readonly string PasswordPattern = @"^[a-zA-Z0-9!@#$%^&*]{3,10}$";
+        private static readonly string PasswordPattern = @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{3,20}$";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -50,7 +50,7 @@ namespace UserManagement.Controllers
         [HttpPost]
         public IActionResult CreateUser(string name, int age, string gender, string number, string username, string password, string status, string priority)
         {
-            
+
             List<User> users = new List<User>();
             users = db.Users.ToList();
             User user1 = new User();
@@ -76,7 +76,7 @@ namespace UserManagement.Controllers
                     isError = true;
 
                 }
-                if (IsValidPassword(password))
+                if (IsValidPassword(password) == false)
                 {
                     ViewBag.PasswordError = "Password must include uppercase, lowercase, number, 3-10 letter and symbol";
                     isError = true;
@@ -108,6 +108,52 @@ namespace UserManagement.Controllers
             string number, string username, string password, string status,
             string priority, int id)
         {
+            List<User> users = new List<User>();
+            users = db.Users.ToList();
+            User user1 = new User();
+            User user2 = new User();
+            user2 = db.Users.Find(id);
+
+            user1.Username = username;
+            user1.Age = age;
+            user1.Gender = gender;
+            user1.Number = number;
+            user1.Priority = priority;
+            user1.Name = name;
+            user1.Password = password;
+            user1.Status = status;
+
+            bool isError = false;
+
+            // Validate username & password
+            foreach (var user in users)
+            {
+                if (user2.Username == user.Username)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (user.Username == username)
+                    {
+                        var error = "Username is already used";
+                        ViewBag.UsernameError = error;
+                        isError = true;
+
+                    }
+                    if (IsValidPassword(password) == false)
+                    {
+                        ViewBag.PasswordError = "Password must include uppercase, lowercase, number, 3-10 letter and symbol";
+                        isError = true;
+                    }
+                }
+            }
+
+            if (isError)
+            {
+                return View("EditUser", user1);
+            }
+
             var result = db.Database.ExecuteSqlRaw(
                 $"EXEC dbo.UpdateUser @id={id}, @name = '{name}', @age={age}, @gender='{gender}', " +
                 $"@status='{status}', @number='{number}', @username='{username}', " +
@@ -141,7 +187,7 @@ namespace UserManagement.Controllers
             return View();
         }
 
-        
+
 
         [HttpPost]
         public IActionResult CheckLogin(String username, String password)

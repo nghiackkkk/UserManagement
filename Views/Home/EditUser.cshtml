@@ -88,19 +88,25 @@
                     </div>
                     <div class="form-flex">
                         <label for="username">Username</label>
-                        <input type="text"
-                               name="username"
-                               id="username"
-                               placeholder="Username" 
-                               value="@Model.Username" />
+                        <div class="input-span">
+                            <input type="text"
+                                   name="username"
+                                   id="username"
+                                   placeholder="Username"
+                                   value="@Model.Username" required />
+                            <span style="color: red;">@ViewBag.UsernameError</span>
+                        </div>
                     </div>
                     <div class="form-flex">
                         <label for="password">Password</label>
-                        <input type="text"
-                               name="password"
-                               id="password"
-                               placeholder="Password"
-                               value="@Model.Password" />
+                        <div class="input-span">
+                            <input type="text"
+                                   name="password"
+                                   id="password"
+                                   placeholder="Password"
+                                   value="@Model.Password" required />
+                            <span style="color: red;">@ViewBag.PasswordError</span>
+                        </div>
                     </div>
                     <div class="form-flex">
                         <label for="status">Status</label>
