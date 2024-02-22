@@ -100,4 +100,18 @@
     align-items: center:
 }
 
-.div.div-input div
+#back-btn {
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    font-size: 40px;
+}
+
+#back-btn i {
+    color: black;
+}
+
+#back-btn i:hover{
+    cursor: pointer;
+    
+}

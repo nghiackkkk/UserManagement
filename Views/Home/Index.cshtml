@@ -36,7 +36,7 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="alg-center">#</th>
                         <th class="prd-text-left">Name</th>
                         <th>Age</th>
                         <th>Gender</th>
@@ -44,16 +44,16 @@
                         <th>Username</th>
                         <th>Password</th>
                         <th>Priority</th>
-                        <th class="tall">Edit</th>
-                        <th class="tall">Status</th>
-                        <th class="tall">Delete</th>
+                        <th class="tall alg-center">Edit</th>
+                        <th class="tall alg-center">Status</th>
+                        <th class="tall alg-center">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var user in Model)
                     {
                         <tr>
-                            <td>@user.Id</td>
+                            <td class="alg-center">@user.Id</td>
                             <td class="prd-text-left">@user.Name</td>
                             <td>@user.Age</td>
                             <td>@user.Gender</td>
@@ -61,12 +61,12 @@
                             <td>@user.Username</td>
                             <td>@user.Password</td>
                             <td>@user.Priority</td>
-                            <td class="prd-edit tall">
+                            <td class="prd-edit tall alg-center">
                                 <a href="/Home/EditUser/@user.Id" style="background-color: green">
                                     <i class="fa fs-solid fa-tools"></i>
                                 </a>
                             </td>
-                            <td class="prd-edit tall">
+                            <td class="prd-edit tall alg-center">
                                 @if (@user.Status == "Open")
                                 {
                                     <button id="btn-unlock" onclick="handleLock(@user.Id)" class="" style="background-color: #27ae60"><i class="fa-solid fa-unlock"></i></button>
@@ -75,7 +75,7 @@
                                     <button id="btn-lock" onclick="handleLock(@user.Id)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button>
                                 }
                             </td>
-                             <td class="prd-edit tall">
+                            <td class="prd-edit tall alg-center">
                                 <button onclick="deleteButton(@user.Id)" id="del-@user.Id" href="" style="background-color: red"><i class="fa fa-solid fa-trash"></i></button>
                             </td>
                         </tr>

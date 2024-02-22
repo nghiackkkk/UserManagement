@@ -50,7 +50,7 @@ button a {
 
     #prd-table th,
     #prd-table td {
-        text-align: center;
+        /*text-align: center;*/
         border-bottom: 1px solid #EDF2F6;
     }
 
@@ -87,4 +87,8 @@ a i, button i {
 .nav-active {
     font-weight: 1000 !important;
     color: black !important;
+}
+
+.alg-center {
+    text-align: center;
 }
