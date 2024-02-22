@@ -13,7 +13,7 @@ namespace UserManagement.Controllers
 
         private readonly ILogger<HomeController> _logger;
         private static readonly string UsernamePattern = @"^[a-zA-Z0-9_-]{3,16}$";
-        private static readonly string PasswordPattern = @"^[a-zA-Z0-9!@#$%^&*()_+]{6,20}$";
+        private static readonly string PasswordPattern = @"^[a-zA-Z0-9!@#$%^&*]{3,10}$";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -43,23 +43,31 @@ namespace UserManagement.Controllers
             // Check duplicate username
             List<User> users = new List<User>();
             users = db.Users.ToList();
-            foreach(var user in users)
+            User user1 = new User();
+
+            user1.Username = username;
+            user1.Age = age;
+            user1.Gender = gender;
+            user1.Number = number;
+            user1.Priority = priority;
+            user1.Name = name;
+            user1.Password = password;
+            user1.Status = status;
+            foreach (var user in users)
             {
                 if (user.Username == username) {
                     var error = "Username is already used";
-                    ViewBag.Error = error;
-                    User user1 = new User();
-                    user1.Username = username;
-                    user1.Age = age;
-                    user1.Gender = gender;
-                    user1.Number = number;
-                    user1.Priority = priority;
-                    user1.Name = name;
-                    user1.Password = password;
-                    user1.Status = status;
+                    ViewBag.UsernameError = error;
+                    return View("ADUser", user1);
+                } else if (IsValidPassword(password)) {
+                    ViewBag.PasswordError = "Password must include uppercase, lowercase, number, 3-10 letter and symbol";
                     return View("ADUser", user1);
                 }
             }
+
+            // Check password required Uppercase, Lowercase, Number, letter 3-10, inlcude ~!@#$%^&*
+            
+
 
             var result = db.Database.ExecuteSqlRaw(
                 $"EXEC dbo.InsertUser @name = '{name}', @age={age}, @gender='{gender}', " +
