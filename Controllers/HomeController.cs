@@ -20,6 +20,16 @@ namespace UserManagement.Controllers
             _logger = logger;
         }
 
+        public static bool IsValidUsername(string username)
+        {
+            return Regex.IsMatch(username, UsernamePattern);
+        }
+
+        public static bool IsValidPassword(string password)
+        {
+            return Regex.IsMatch(password, PasswordPattern);
+        }
+
         public IActionResult Index()
         {
             if (HttpContext.Session.GetString("Name") != null)
@@ -40,7 +50,7 @@ namespace UserManagement.Controllers
         [HttpPost]
         public IActionResult CreateUser(string name, int age, string gender, string number, string username, string password, string status, string priority)
         {
-            // Check duplicate username
+            
             List<User> users = new List<User>();
             users = db.Users.ToList();
             User user1 = new User();
@@ -53,21 +63,30 @@ namespace UserManagement.Controllers
             user1.Name = name;
             user1.Password = password;
             user1.Status = status;
+
+            bool isError = false;
+
+            // Validate username & password
             foreach (var user in users)
             {
-                if (user.Username == username) {
+                if (user.Username == username)
+                {
                     var error = "Username is already used";
                     ViewBag.UsernameError = error;
-                    return View("ADUser", user1);
-                } else if (IsValidPassword(password)) {
+                    isError = true;
+
+                }
+                if (IsValidPassword(password))
+                {
                     ViewBag.PasswordError = "Password must include uppercase, lowercase, number, 3-10 letter and symbol";
-                    return View("ADUser", user1);
+                    isError = true;
                 }
             }
 
-            // Check password required Uppercase, Lowercase, Number, letter 3-10, inlcude ~!@#$%^&*
-            
-
+            if (isError)
+            {
+                return View("ADUser", user1);
+            }
 
             var result = db.Database.ExecuteSqlRaw(
                 $"EXEC dbo.InsertUser @name = '{name}', @age={age}, @gender='{gender}', " +
@@ -122,16 +141,7 @@ namespace UserManagement.Controllers
             return View();
         }
 
-        public static bool IsValidUsername(string username)
-        {
-            return Regex.IsMatch(username, UsernamePattern);
-        }
-
-        // Validate password
-        public static bool IsValidPassword(string password)
-        {
-            return Regex.IsMatch(password, PasswordPattern);
-        }
+        
 
         [HttpPost]
         public IActionResult CheckLogin(String username, String password)
