@@ -32,6 +32,7 @@ namespace UserManagement.Controllers
 
         public IActionResult Index()
         {
+            
             if (HttpContext.Session.GetString("Name") != null)
             {
                 ViewBag.Name = HttpContext.Session.GetString("Name");
@@ -40,7 +41,7 @@ namespace UserManagement.Controllers
 
                 return View(users);
             }
-            return Redirect("/Home/Login");
+            return Redirect("/");
         }
         public IActionResult ADUser()
         {
@@ -99,6 +100,10 @@ namespace UserManagement.Controllers
 
         public IActionResult EditUser(int id)
         {
+            if (HttpContext.Session.GetString("Name") == null)
+            {
+                return Redirect("/");
+            }
             User user = db.Users.Find(id);
             return View(user);
         }
@@ -186,8 +191,6 @@ namespace UserManagement.Controllers
         {
             return View();
         }
-
-
 
         [HttpPost]
         public IActionResult CheckLogin(String username, String password)
