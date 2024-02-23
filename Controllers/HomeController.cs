@@ -32,7 +32,7 @@ namespace UserManagement.Controllers
 
         public IActionResult Index()
         {
-            
+
             if (HttpContext.Session.GetString("Name") != null)
             {
                 ViewBag.Name = HttpContext.Session.GetString("Name");
@@ -45,6 +45,10 @@ namespace UserManagement.Controllers
         }
         public IActionResult ADUser()
         {
+            if (HttpContext.Session.GetString("Name") == null)
+            {
+                return Redirect("/");
+            }
             return View();
         }
 
