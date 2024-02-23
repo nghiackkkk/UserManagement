@@ -39,10 +39,13 @@
                                     <input type="radio"
                                            name="gender"
                                            id="female"
-                                           value="Female" @if (Model.Gender == "Female")
+                                           value="Female"
+                                           required
+                                    @if (Model.Gender == "Female")
                                     {
                                         <text>checked</text>
                                     }
+
                                     />
                                     <label for="female">Female</label><br>
                                 </div>
@@ -50,7 +53,8 @@
                                     <input type="radio"
                                            name="gender"
                                            id="male"
-                                           value="Male" @if (Model.Gender == "Male")
+                                           value="Male" required
+                                    @if (Model.Gender == "Male")
                                     {
                                         <text>checked</text>
                                     }/>
@@ -60,11 +64,14 @@
                         </div>
                         <div class="form-flex">
                             <label for="number">Number</label>
-                            <input type="text"
-                                   name="number"
-                                   id="number"
-                                   placeholder="Number"
-                                   value="@Model.Number" required />
+                            <div class="input-span">
+                                <input type="text"
+                                       name="number"
+                                       id="number"
+                                       placeholder="Number"
+                                       value="@Model.Number" />
+                                <span style="color: red;">@ViewBag.NumberError</span>
+                            </div>
                         </div>
                         <div class="form-flex">
                             <label for="username">Username</label>
@@ -96,7 +103,7 @@
                                     <input type="radio"
                                            name="status"
                                            id="lock"
-                                           value="Lock" @if (Model.Status == "Lock")
+                                           value="Lock" required @if (Model.Status == "Lock")
                                     {
                                         <text>checked</text>
                                     }/>
@@ -105,18 +112,18 @@
                                 <div>
                                     <input type="radio"
                                            name="status"
-                                           id="unlock"
-                                           value="Unlock" @if (Model.Status == "Open")
+                                           id="open"
+                                           value="Open" @if (Model.Status == "Open")
                                     {
                                         <text>checked</text>
                                     }/>
-                                    <label for="unlock">Unlock</label><br>
+                                    <label for="open">Open</label><br>
                                 </div>
                             </div>
                         </div>
                         <div class="form-flex">
                             <label for="priority">Priority</label>
-                            <select name="priority" id="priority">
+                            <select name="priority" id="priority" required>
                                 @if (Model.Priority == "admin")
                                 {
                                     <option value="admin" selected>Admin</option>
@@ -156,7 +163,7 @@
                                     <input type="radio"
                                            name="gender"
                                            id="female"
-                                           value="Female" />
+                                           value="Female" required/>
                                     <label for="female">Female</label><br>
                                 </div>
                                 <div>
@@ -197,21 +204,21 @@
                                     <input type="radio"
                                            name="status"
                                            id="lock"
-                                           value="Lock" />
+                                           value="Lock" required />
                                     <label for="lock">Lock</label><br>
                                 </div>
                                 <div>
                                     <input type="radio"
                                            name="status"
-                                           id="unlock"
-                                           value="Unlock" />
-                                    <label for="unlock">Unlock</label><br>
+                                           id="open"
+                                           value="Open" />
+                                    <label for="open">Open</label><br>
                                 </div>
                             </div>
                         </div>
                         <div class="form-flex">
                             <label for="priority">Priority</label>
-                            <select name="priority" id="priority">
+                            <select name="priority" id="priority" required>
                                 <option value="admin">Admin</option>
                                 <option value="user">User</option>
                             </select>

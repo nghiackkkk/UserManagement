@@ -9,7 +9,8 @@ notiButtonNO.addEventListener('click', function () {
 
 var loginUrl = window.location.href.toString().split("/");
 var haveLogin = loginUrl[loginUrl.length - 1];
-if (haveLogin === "Login") {
+var haveHome = loginUrl.indexOf('Home');
+if (haveLogin === "Login" || haveHome == -1) {
     document.querySelector("header").classList.add("hidden");
 }
-console.log(haveLogin);
+console.log(haveHome);

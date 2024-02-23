@@ -19,7 +19,7 @@
                                name="id"
                                id="id"
                                placeholder="Id"
-                               value="@Model.Id" />
+                               value="@Model.Id"/>
                     </div>
                     <div class="form-flex">
                         <label for="name">Name</label>
@@ -27,7 +27,7 @@
                                name="name"
                                id="name"
                                placeholder="Name user"
-                               value="@Model.Name" />
+                               value="@Model.Name" required/>
                     </div>
                     <div class="form-flex">
                         <label for="age">Age</label>
@@ -35,7 +35,7 @@
                                name="age"
                                id="age"
                                placeholder="Age"
-                               value="@Model.Age" />
+                               value="@Model.Age" required/>
                     </div>
                     <div class="form-flex">
                         <label for="gender">Gender</label>
@@ -46,7 +46,7 @@
                                     <input type="radio"
                                            name="gender"
                                            id="female"
-                                           value="Female" />
+                                           value="Female" required/>
                                     <label for="female">Female</label><br>
                                 </div>
                                 <div>
@@ -58,7 +58,7 @@
                                     <label for="male">Male</label><br>
                                 </div>
                             }
-                            else 
+                            else
                             {
                                 <div>
                                     <input type="radio"
@@ -71,7 +71,7 @@
                                     <input type="radio"
                                            name="gender"
                                            id="male"
-                                           value="Male" />
+                                           value="Male" required/>
                                     <label for="male">Male</label><br>
                                 </div>
                             }
@@ -80,11 +80,15 @@
                     </div>
                     <div class="form-flex">
                         <label for="number">Number</label>
-                        <input type="text"
-                               name="number"
-                               id="number"
-                               placeholder="Number"
-                               value="@Model.Number" />
+                        <div class="input-span">
+                            <input type="text"
+                                   name="number"
+                                   id="number"
+                                   placeholder="Number"
+                                   value="@Model.Number" required/>
+                            <span style="color: red;">@ViewBag.NumberError</span>
+                        </div>
+
                     </div>
                     <div class="form-flex">
                         <label for="username">Username</label>
@@ -118,14 +122,15 @@
                                     <input type="radio"
                                            name="status"
                                            id="lock"
-                                           value="Lock"/>
+                                           value="Lock" 
+                                           required/>
                                     <label for="lock">Lock</label><br>
                                 </div>
                                 <div>
                                     <input type="radio"
                                            name="status"
                                            id="open"
-                                           value="Open" checked/>
+                                           value="Open" checked />
                                     <label for="open">Unlock</label><br>
                                 </div>
                             }
@@ -135,14 +140,14 @@
                                     <input type="radio"
                                            name="status"
                                            id="lock"
-                                           value="Lock" checked/>
+                                           value="Lock" checked required/>
                                     <label for="lock">Lock</label><br>
                                 </div>
                                 <div>
                                     <input type="radio"
                                            name="status"
                                            id="open"
-                                           value="Open"/>
+                                           value="Open" />
                                     <label for="open">Unlock</label><br>
                                 </div>
                             }
@@ -151,12 +156,13 @@
                     </div>
                     <div class="form-flex">
                         <label for="priority">Priority</label>
-                        <select name="priority" id="priority">
+                        <select name="priority" id="priority" required>
                             @if (@Model.Priority == "admin")
                             {
                                 <option value="admin" selected>Admin</option>
                                 <option value="user">User</option>
-                            }else
+                            }
+                            else
                             {
                                 <option value="admin">Admin</option>
                                 <option value="user" selected>User</option>

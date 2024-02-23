@@ -10,11 +10,8 @@ namespace UserManagement.Controllers
     public class HomeController : Controller
     {
         UserManagementContext db = new UserManagementContext();
-
         private readonly ILogger<HomeController> _logger;
-        private static readonly string UsernamePattern = @"^[a-zA-Z0-9_-]{3,16}$";
-        private static readonly string PasswordPattern = @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{3,20}$";
-
+     
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -22,12 +19,19 @@ namespace UserManagement.Controllers
 
         public static bool IsValidUsername(string username)
         {
+            string UsernamePattern = @"^[a-zA-Z0-9_-]{3,16}$";
             return Regex.IsMatch(username, UsernamePattern);
         }
 
         public static bool IsValidPassword(string password)
         {
+            string PasswordPattern = @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{3,20}$";
             return Regex.IsMatch(password, PasswordPattern);
+        }
+        public static bool IsValidNumber(string number)
+        {
+            string numberPattern = @"^\d{10}$";
+            return Regex.IsMatch(number, numberPattern);
         }
 
         public IActionResult Index()
@@ -37,7 +41,7 @@ namespace UserManagement.Controllers
             {
                 ViewBag.Name = HttpContext.Session.GetString("Name");
                 List<User> users = new List<User>();
-                users = db.Users.ToList();
+                users = db.Users.OrderByDescending(u => u.Id).ToList();
 
                 return View(users);
             }
@@ -53,7 +57,9 @@ namespace UserManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser(string name, int age, string gender, string number, string username, string password, string status, string priority)
+        public IActionResult CreateUser(string name, int age, string gender, 
+            string number, string username, string password, string status, 
+            string priority)
         {
 
             List<User> users = new List<User>();
@@ -74,16 +80,20 @@ namespace UserManagement.Controllers
             // Validate username & password
             foreach (var user in users)
             {
-                if (user.Username == username)
+                if (user.Username == user1.Username)
                 {
                     var error = "Username is already used";
                     ViewBag.UsernameError = error;
                     isError = true;
-
                 }
-                if (IsValidPassword(password) == false)
+                if (IsValidPassword(user1.Password) == false)
                 {
-                    ViewBag.PasswordError = "Password must include uppercase, lowercase, number, 3-10 letter and symbol";
+                    ViewBag.PasswordError = "Password must include uppercase, lowercase, number, 3-10 letter and !@#$%^&*";
+                    isError = true;
+                }
+                if (string.IsNullOrEmpty(user1.Number) || IsValidNumber(user1.Number) == false)
+                {
+                    ViewBag.NumberError = "Phone number only have number and 10 character";
                     isError = true;
                 }
             }
@@ -108,6 +118,7 @@ namespace UserManagement.Controllers
             {
                 return Redirect("/");
             }
+            HttpContext.Session.SetString("EditId", id.ToString());
             User user = db.Users.Find(id);
             return View(user);
         }
@@ -121,7 +132,8 @@ namespace UserManagement.Controllers
             users = db.Users.ToList();
             User user1 = new User();
             User user2 = new User();
-            user2 = db.Users.Find(id);
+            var idEdit = Int32.Parse(HttpContext.Session.GetString("EditId"));
+            user2 = db.Users.Find(idEdit);
 
             user1.Username = username;
             user1.Age = age;
@@ -143,16 +155,20 @@ namespace UserManagement.Controllers
                 }
                 else
                 {
-                    if (user.Username == username)
+                    if (user.Username == user1.Username)
                     {
                         var error = "Username is already used";
                         ViewBag.UsernameError = error;
                         isError = true;
-
                     }
-                    if (IsValidPassword(password) == false)
+                    if (IsValidPassword(user1.Password) == false)
                     {
                         ViewBag.PasswordError = "Password must include uppercase, lowercase, number, 3-10 letter and symbol";
+                        isError = true;
+                    }
+                    if (string.IsNullOrEmpty(user1.Number) || IsValidNumber(user1.Number) == false)
+                    {
+                        ViewBag.NumberError = "Phone number only have number and 10 character";
                         isError = true;
                     }
                 }
@@ -164,7 +180,7 @@ namespace UserManagement.Controllers
             }
 
             var result = db.Database.ExecuteSqlRaw(
-                $"EXEC dbo.UpdateUser @id={id}, @name = '{name}', @age={age}, @gender='{gender}', " +
+                $"EXEC dbo.UpdateUser @id={idEdit}, @name = '{name}', @age={age}, @gender='{gender}', " +
                 $"@status='{status}', @number='{number}', @username='{username}', " +
                 $"@password='{password}', @priority='{priority}'");
             return Redirect("/Home/Index");
@@ -206,9 +222,18 @@ namespace UserManagement.Controllers
 
             foreach (User user in users)
             {
-                if (user.Username == username && user.Password == password
-                    && user.Status == "Open")
+                if (user.Username == username && user.Password == password)
                 {
+                    if (user.Status != "Open")
+                    {
+                        ViewBag.ErrorMes = "User is locked";
+                        return View("Login");
+                    }
+                    //if (user.Priority != "admin")
+                    //{
+                    //    ViewBag.ErrorMes = "Only admin can access";
+                    //    return View("Login");
+                    //}
                     HttpContext.Session.SetString("Name", user.Name);
                     return Redirect("/Home/Index");
                 }
