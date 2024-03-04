@@ -65,7 +65,7 @@
                         <div class="form-flex">
                             <label for="number">Number</label>
                             <div class="input-span">
-                                <input type="text"
+                                <input onkeyup="validatePhoneNumber()" type="text"
                                        name="number"
                                        id="number"
                                        placeholder="Number"
@@ -88,7 +88,7 @@
                         <div class="form-flex">
                             <label for="password">Password</label>
                             <div class="input-span">
-                                <input type="text"
+                                <input onkeyup="validatePassword()" type="text"
                                        name="password"
                                        id="password"
                                        placeholder="Password"

@@ -9,37 +9,19 @@
         <div class="button-all">
             <div id="search">
                 <input id="search-input" type="text" name="seach" placeholder="Search here" />
-                <button onclick="searchUser()" type="submit"><i class="fa fa-solid fa-search fa-lg"></i></button>
+                <button onclick="searchDeleteUser()" type="submit"><i class="fa fa-solid fa-search fa-lg"></i></button>
             </div>
-            <div class="btn-add">
+            @* <div class="btn-add">
                 <a href="/Home/ADUser"> Add User </a>
-            </div>
+            </div> *@
         </div>
         <div id="checkbox-action" class="">
-            <div class="display-flex-center-all gap-5">
-                <div id="bulk-action">
-                    <select id="select-bulk" name="bulk-action">
-                        <option name="none">Bulk actions</option>
-                        <option name="reset-password">Reset password</option>
-                        <option name="move-to-trash">Move to trash</option>
-                    </select>
-                    <button onclick="bulkAction()">Apply</button>
+            <div class="display-flex-center-all gap-5 underline">
+                <div onclick="deletePernament()" class="delete-selected hover-pointer">
+                    <span>Delete pernamently</span>
                 </div>
-                <div class="sort">
-                    <span>Sort by:</span>
-                    <select id="sort-action" name="sort-action" onchange="sortAction()">
-                        <option name="all" value="all">All</option>
-                        <option name="nameaz" value="nameaz">Name A-Z</option>
-                        <option name="nameza" value="nameza">Name Z-A</option>
-                        <option name="usernameaz" value="usernameaz">Username A-Z</option>
-                        <option name="usernameza" value="usernameza">Username Z-A</option>
-                    </select>
-                </div>
-                <div class="reset-password-selected hidden">
-                    <span onclick="getAllChecked()">Reset selected user password</span>
-                </div>
-                <div class="delete-user-selected hidden">
-                    <span onclick="moveToTrash()">Move to trash</span>
+                <div onclick="restore()" class="restore-user-selected hover-pointer">
+                    <span>Restore selected</span>
                 </div>
             </div>
             <div id="count-item">
@@ -58,7 +40,7 @@
                     <col style="width: 10%" />
                     <col style="width: 7%" />
                     @* <col style="width: 5%" /> *@
-                    <col style="width: 5%" />
+                    @* <col style="width: 5%" /> *@
                     <col style="width: 5%" />
                 </colgroup>
                 <thead>
@@ -74,7 +56,7 @@
                         <th>Password</th>
                         <th>Priority</th>
                         @* <th class="tall alg-center">Edit</th> *@
-                        <th class="tall alg-center">Status</th>
+                        @* <th class="tall alg-center">Status</th> *@
                         <th class="tall alg-center">Delete</th>
                     </tr>
                 </thead>
@@ -92,18 +74,18 @@
                             <td onclick="handleToEdit(@user.Id)">@user.Username</td>
                             <td onclick="handleToEdit(@user.Id)">@user.Password</td>
                             <td onclick="handleToEdit(@user.Id)">@user.Priority</td>
-                            <td class="prd-edit tall alg-center">
+                            @* <td class="prd-edit tall alg-center">
                             @if (@user.Status == "Open")
                             {
-                                    <button id="btn-unlock" onclick="handleLock(@user.Id)" class="" style="background-color: #27ae60"><i class="fa-solid fa-unlock"></i></button>
+                                    <button id="btn-unlock" onclick="handleLock(@user.Id, 'OnTrash')" class="" style="background-color: #27ae60"><i class="fa-solid fa-unlock"></i></button>
                             }
                             else
                             {
-                                    <button id="btn-lock" onclick="handleLock(@user.Id)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button>
-                            }
-                            </td>
+                                    <button id="btn-lock" onclick="handleLock(@user.Id, 'OnTrash')" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button>
+                            } 
+                            </td> *@
                             <td class="prd-edit tall alg-center">
-                                <button onclick="deleteButton2('@user.Username', @user.Id)" id="del-@user.Id" href="" style="background-color: red"><i class="fa fa-solid fa-trash"></i></button>
+                                <button onclick="deleteButton('@user.Username', @user.Id)" id="del-@user.Id" href="" style="background-color: red"><i class="fa fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     }

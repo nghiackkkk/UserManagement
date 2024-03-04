@@ -2,21 +2,27 @@
     ViewData["Title"] = "Login";
 }
 <div class="login">
+    <div class="login-logo">
+        <img src="~/img/UserManagementLogo2.png" />
+    </div>
     <form id="login-form" method="post" action="/Home/CheckLogin">
         <h1>Login</h1>
         <div class="login-input">
             <label>Username</label>
-            <input type="text" name="username" id="usename" />
+            <input type="text" name="username" id="usename" placeholder="Enter your username"/>
         </div>
         <div class="login-input">
             <label>Password</label>
-            <input type="password" name="password" id="password" />
+            <input type="password" name="password" id="password" placeholder="Enter your password"/>
         </div>
 
         <p style="color:red">@ViewBag.ErrorMes</p>
 
         <div>
             <input class="btn-login" type="submit" value="Login" />
+        </div>
+        <div class="register">
+            <p>Haven't registered your account yet? <a>Register here!</a> </p>
         </div>
     </form>
 </div>

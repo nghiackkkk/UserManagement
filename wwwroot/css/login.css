@@ -1,13 +1,17 @@
 ﻿.login {
     background-color: white;
     height: max-content;
-    min-width: 400px;
+    min-width: 800px;
     padding: 32px;
     position: fixed;
     top: 20%;
-    right: calc(50% - 200px);
+    right: calc(50% - 500px);
     border-radius: 16px;
-    width: max-content
+    width: max-content;
+    box-shadow: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 #login-form {
@@ -15,14 +19,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-
+    gap: 30px;
 }
 
 .login-input {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    width: 500px;
+}
+
+.login-input input::placeholder{
+    font-size: 14px;
 }
 
 #login-form p{
@@ -46,4 +54,20 @@
     border-radius: 8px;
     color: white;
     border: 1px solid var(--primary-900, #5d5fef);
+    width: 500px;
+}
+
+.register p a {
+    color: blue !important;
+    text-decoration: underline !important;
+}
+
+.register p a:hover {
+    cursor: pointer;
+    
+}
+
+.login-logo img{
+    width: 500px !important;
+    height: 500px !important;
 }

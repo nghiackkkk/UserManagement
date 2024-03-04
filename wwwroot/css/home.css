@@ -1,5 +1,5 @@
 ﻿body {
-    font-family: "poppins" !important;
+    font-family: "Roboto" !important;
     font-size: 18px;
     padding: 0;
     margin: 0;
@@ -12,7 +12,7 @@ main {
 }
 
 .container {
-    font-family: "poppins" !important;
+    font-family: "Roboto" !important;
     font-size: 18px;
     width: max-content;
     padding: 0;
@@ -27,6 +27,10 @@ main {
 
 .hidden {
     display: none !important;
+}
+
+.hover-pointer:hover {
+    cursor: pointer;
 }
 
 /* NAVIGATION */
@@ -99,6 +103,81 @@ main {
             line-height: normal;
         }
 
+.container-fluid img {
+    width: 72px !important;
+    height: 76px !important;
+    padding-right: 12px;
+    margin-left: 0px;
+    margin-right: 12px;
+    /*border-right: 1px solid rgba(0, 0, 0, 0.3);*/
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.top-nav {
+    position: fixed;
+    width: 100%;
+    background-color: #FFF;
+    z-index: 999;
+    padding-bottom: 0;
+    /*border-bottom: 1px solid #000;*/
+    padding-top: 0;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#admin-control {
+    margin-right: 100px;
+    /*background-color: aqua;*/
+    p /*adding: 20px;*/
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown .dropbtn {
+    border: none;
+    background-color: #FFF;
+    color: black;
+    padding: 20px;
+}
+
+.dropbtn i {
+    color: black;
+}
+
+.dropbtn:hover {
+    background-color: #dfe6e9;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #FFF;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn i {
+    margin-left: 10px;
+}
+
 /* CONTENT */
 .content {
     flex-grow: 1;
@@ -156,13 +235,13 @@ main {
             outline: none;
             border-style: none;
             color: var(--greys-blue-grey-700, #737791);
-            font-family: "poppins";
+            font-family: "Roboto";
             font-size: 18px;
         }
 
         .top-search-border input::placeholder {
             color: var(--greys-blue-grey-700, #737791);
-            font-family: "poppins";
+            font-family: "Roboto";
             font-size: 18px;
         }
 
@@ -234,6 +313,7 @@ main {
     border-radius: 16px;
     display: flex;
     flex-direction: column;
+    padding: 10px;
 }
 
 .cont-2-1 {
@@ -283,7 +363,7 @@ main {
         font-weight: 500;
         line-height: 20px;
         color: #0F3659;
-        font-family: "poppins";
+        font-family: "Roboto";
     }
 
 .ts-title-1 {
@@ -470,6 +550,84 @@ main {
     background-color: var(--colors-light-blue-50, #F0F9FF);
 }
 
+input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+}
+
+    input[type=checkbox]:hover {
+        cursor: pointer;
+    }
+
+.button-all {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#search {
+    margin: 0 0 0 20px;
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+}
+
+    #search input {
+        padding: 5px;
+        border-radius: 8px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border: 1px solid #ccc;
+        border-right: none;
+        width: 300px;
+        height: 54px;
+    }
+
+        #search input::placeholder {
+            font-size: 16px;
+            padding-left: 5px;
+        }
+
+        #search input:focus {
+            border-right: none;
+        }
+
+    #search button {
+        width: 50px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        background-color: #74b9ff;
+        border: 1px solid #74b9ff;
+    }
+
+#checkbox-action {
+    align-self: start;
+    margin-left: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+#count-item {
+    margin-right: 100px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.reset-password-selected:hover, .delete-user-selected:hover {
+    cursor: pointer;
+}
+
+
 /* NOTIFICATION */
 .notification {
     display: flex;
@@ -489,9 +647,9 @@ main {
     gap: 30px;
 }
 
-.notification button{
-    background-color: white;
-}
+    .notification button {
+        background-color: white;
+    }
 
 .blur {
     filter: blur(5px);
@@ -513,3 +671,99 @@ main {
     .btn-noti-c:hover {
         background-color: #dfe6e9;
     }
+
+.background-transparent {
+    background-color: #636e72;
+    /*opacity: 80%;*/
+}
+
+#notification-1 i {
+    font-size: 90px;
+    opacity: 1000%;
+    color: #74b9ff;
+}
+
+/* LEFT NAVIGATION BAR */
+.left-nav-content {
+    display: flex;
+    flex-direction: row;
+    padding-top: 80px;
+}
+
+.left-nav {
+    height: 100vh;
+    width: 84px;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    /*border-right: 1px solid #000;*/
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: fixed;
+}
+
+.display-flex-center-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mg-t-40 {
+    margin-top: 40px;
+}
+
+.icon-nav-1 {
+    height: 60px;
+    width: 60px;
+    border-radius: 8px;
+}
+
+    .icon-nav-1:hover {
+        cursor: pointer;
+        background-color: #74b9ff;
+        color: #FFF;
+    }
+
+        .icon-nav-1:hover i {
+            color: #FFF;
+        }
+
+.icon-active {
+    background-color: #74b9ff;
+    color: #FFF;
+}
+
+#bulk-action {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+#select-bulk, #sort-action {
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #b2bec3;
+}
+
+    #select-bulk option, #sort-action option {
+        font-size: 14px;
+    }
+
+#bulk-action button {
+    background-color: #74b9ff;
+    border: 1px solid #74b9ff;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #FFF;
+    padding: 0 10px 0 10px;
+}
+
+.sort {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}

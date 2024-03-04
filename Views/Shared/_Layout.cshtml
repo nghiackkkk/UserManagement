@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/css/home.css" />
     <link rel="stylesheet" href="~/css/add.css" />
     <link rel="stylesheet" href="~/css/login.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
     <link rel="stylesheet" href="~/lib/fontawesome-pro-6.1.1-web/css/all.css" />
 </head>
 <body>
@@ -20,16 +20,21 @@
         </h3>
         <div id="buttonYN">
             <button id="btn-noti-yes" class="btn btn-noti-c" onclick="yesDelete()">Yes</button>
+            <button id="btn-move-trash" class="btn btn-noti-c" onclick="yesMoveToTrash()">Yes</button>
             <button id="btn-noti-no" class="btn btn-noti-c">No</button>
         </div>
-
+    </div>
+    <div id="notification-1" class="notification background-transparent hidden">
+        <i class="fa-solid fa-circle-check"></i>
+        <h3>Success!</h3>
     </div>
 
     <div id="content-main-main">
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white top-nav">
                 <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">UserManagement</a>
+                    <img class="img-logo" src="~/img/UserManagementLogo2.png" />
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">User Management</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -39,19 +44,43 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
-                            </li>
+                            @* <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                            </li> *@
                         </ul>
+
                     </div>
+
+                    <div id="admin-control" class="dropdown">
+                        <button class="dropbtn">
+                            @ViewBag.Name
+                            <i class="fa fa-solid fa-angle-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a asp-controller="Home" asp-action="Logout">Logout</a>
+                        </div>
+                    </div>
+
                 </div>
             </nav>
-        </header>
 
-        <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+        </header>
+        <div class="left-nav-content">
+            <div id="left-nav" class="left-nav">
+                <div id="left-user" class="icon-nav-1 display-flex-center-all mg-t-40" onclick="navigateUser()">
+                    <i class="fa-light fa-users fa-lg"></i>
+
+                </div>
+                @* <span>Users</span> *@
+                <div id="left-trash" class="icon-nav-1 display-flex-center-all" onclick="navigateTrash()">
+                    <i class="fa fa-light fa-trash fa-2x"></i>
+                </div>
+            </div>
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
         </div>
     </div>
 
