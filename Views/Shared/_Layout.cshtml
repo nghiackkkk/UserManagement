@@ -67,14 +67,26 @@
         </header>
         <div class="left-nav-content">
             <div id="left-nav" class="left-nav">
-                <div id="left-user" class="icon-nav-1 display-flex-center-all mg-t-40" onclick="navigateUser()">
+                <div id="left-user" class="icon-nav-1 display-flex-center-all mg-t-40" onclick="navigate('users')">
                     <i class="fa-light fa-users fa-lg"></i>
-
+                    <div class="tip users-tip hv-none">Users</div>
                 </div>
                 @* <span>Users</span> *@
-                <div id="left-trash" class="icon-nav-1 display-flex-center-all" onclick="navigateTrash()">
+                <div id="left-trash" class="icon-nav-1 display-flex-center-all" onclick="navigate('trash')">
                     <i class="fa fa-light fa-trash fa-2x"></i>
+                    <div class="tip trash-tip hv-none">Trash</div>
                 </div>
+
+                <div id="left-export" class="icon-nav-1 display-flex-center-all" onclick="navigate('export')">
+                    <i class="fa fa-light fa-file-export fa-2x element"></i>
+                    <div class="tip export-tip hv-none">Export all data to excel</div>
+                </div>
+
+                @* <div id="card-export" class="icon-nav-1 display-flex-center-all" onclick="navigate('card')">
+                    <i class="fa fa-light fa-id-card fa-2x element"></i>
+                    <div class="tip card-tip hv-none">Print user card</div>
+                </div> *@
+
             </div>
             <div class="container">
                 <main role="main" class="pb-3">

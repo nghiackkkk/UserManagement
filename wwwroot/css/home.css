@@ -651,6 +651,10 @@ input[type=checkbox] {
         background-color: white;
     }
 
+    .notification h3 {
+        text-align: center;
+    }
+
 .blur {
     filter: blur(5px);
     pointer-events: none;
@@ -735,35 +739,79 @@ input[type=checkbox] {
     color: #FFF;
 }
 
-#bulk-action {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
+.tip {
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px 5px 10px;
+    color: black;
+    border-radius: 8px;
+    position: fixed;
+    left: 20px;
+    z-index: 9999;
 }
 
-#select-bulk, #sort-action {
+.export-tip {
+    top: 323px;
+}
+.trash-tip {
+    top: 253px;
+}
+.users-tip {
+    top: 183px;
+}
+/*.card-tip {
+    top: 393px;
+}*/
+
+.icon-nav-1:hover .export-tip,
+.icon-nav-1:hover .trash-tip,
+.icon-nav-1:hover .users-tip
+/*,.icon-nav-1:hover .card-tip*/
+{
+    display: block;
+}
+
+.hv-none:hover {
+    display:none !important;
+}
+
+/* BULK ACTION */
+#bulk-action, #export {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+}
+
+#select-bulk, #sort-action, #export-action {
     border-radius: 4px;
     font-size: 16px;
     padding: 5px 10px 5px 10px;
     border: 1px solid #b2bec3;
 }
 
-    #select-bulk option, #sort-action option {
+    #select-bulk option, #sort-action option, #export-action option {
         font-size: 14px;
     }
 
-#bulk-action button {
+#bulk-action button, #export button {
     background-color: #74b9ff;
     border: 1px solid #74b9ff;
     border-radius: 4px;
     font-size: 16px;
     color: #FFF;
-    padding: 0 10px 0 10px;
+    padding: 4px 10px 4px 10px;
 }
 
-.sort {
+.sort{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+
+td img {
+    object-fit: cover;
 }

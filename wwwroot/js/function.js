@@ -1,4 +1,4 @@
-function deleteButton(username, id) {
+﻿function deleteButton(username, id) {
     let h3 = notification.querySelector('h3');
     h3.textContent = "Are you sure to delete " + username + "?";
 
@@ -29,7 +29,7 @@ function yesDelete() {
     var userId = parseInt(h1);
 
     $.ajax({
-        url: 'DeleteUserDo',
+        url: 'DoDeleteUser',
         type: 'GET',
         data: { id: userId },
         dataType: "json",
@@ -45,6 +45,7 @@ function yesDelete() {
     });
 
 }
+
 function yesMoveToTrash() {
     let h1 = notification.querySelector('h1').textContent;
     var userId = parseInt(h1);
@@ -95,10 +96,20 @@ function handleLock(userId) {
                     } else {
                         btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                     }
+                    var userImage = ``;
+
+                    if (user.image != null) {
+                        userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                    } else {
+                        userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                    }
                     tbody.innerHTML +=
                         `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
+                            </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+                               `+ userImage + `
                             </td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
@@ -121,13 +132,6 @@ function handleLock(userId) {
             console.log(error);
         }
     });
-}
-
-function navigateUser() {
-    window.location.href = "/Home/Index";
-}
-function navigateTrash() {
-    window.location.href = "/Home/ShowTrash";
 }
 
 function handleToEdit(userId) {
@@ -171,7 +175,6 @@ function validatePassword() {
     }
 }
 
-// Get all checked checkbox
 function getAllChecked() {
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
     var listChecked = [];
@@ -181,6 +184,7 @@ function getAllChecked() {
             listChecked.push(parseInt(childCheckbox.id.split('-')[2]));
         }
     });
+    listChecked = listChecked.filter(checked => !isNaN(checked));
     //console.log(listChecked[0]);
 
     $.ajax({
@@ -207,10 +211,21 @@ function getAllChecked() {
                     } else {
                         btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                     }
+
+                    var userImage = ``;
+                    if (user.image != null) {
+                        userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                    } else {
+                        userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                    }
+
                     tbody.innerHTML +=
                         `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
+                            </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+                               `+ userImage + `
                             </td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
@@ -273,11 +288,21 @@ function searchUser() {
                         } else {
                             btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                         }
+                        var userImage = ``;
+
+                        if (user.image != null) {
+                            userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                        } else {
+                            userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                        }
                         tbody.innerHTML +=
                             `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
                             </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+   `+ userImage + `
+</td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.gender + `</td>
@@ -341,11 +366,21 @@ function searchUser() {
                     } else {
                         btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                     }
+                    var userImage = ``;
+
+                    if (user.image != null) {
+                        userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                    } else {
+                        userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                    }
                     tbody.innerHTML +=
                         `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
                             </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+   `+ userImage + `
+</td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.gender + `</td>
@@ -379,6 +414,7 @@ function moveToTrash() {
             listChecked.push(parseInt(childCheckbox.id.split('-')[2]));
         }
     });
+    listChecked = listChecked.filter(checked => !isNaN(checked));
     //console.log(listChecked);
 
     $.ajax({
@@ -409,10 +445,21 @@ function moveToTrash() {
                 } else {
                     btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                 }
+
+                var userImage = ``;
+                if (user.image != null) {
+                    userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                } else {
+                    userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                }
+
                 tbody.innerHTML +=
                     `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
+                            </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+                               `+ userImage + `
                             </td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
@@ -467,11 +514,21 @@ function searchDeleteUser() {
                         } else {
                             btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                         }
+                        var userImage = ``;
+
+                        if (user.image != null) {
+                            userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                        } else {
+                            userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                        }
                         tbody.innerHTML +=
                             `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
                             </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+   `+ userImage + `
+</td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.gender + `</td>
@@ -502,7 +559,10 @@ function searchDeleteUser() {
             }
         })
     } else {
-        document.getElementById('no-result').remove();
+        if (document.getElementById('no-result')) {
+            document.getElementById('no-result').remove();
+        }
+
         $.ajax({
             url: "GetAllItemTrash",
             type: "GET",
@@ -529,11 +589,21 @@ function searchDeleteUser() {
                     } else {
                         btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                     }
+                    var userImage = ``;
+
+                    if (user.image != null) {
+                        userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                    } else {
+                        userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                    }
                     tbody.innerHTML +=
                         `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
                             </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+   `+ userImage + `
+</td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.gender + `</td>
@@ -570,11 +640,12 @@ function deletePernament() {
     //console.log(listChecked);
 
     $.ajax({
-        url: "DeleteUserDo",
+        url: "DoDeleteUsers",
         type: 'GET',
         data: {
-            ids: listChecked
+            "ids": listChecked
         },
+        traditional: 'true',
         dataType: 'json',
         success: function (response) {
             if (response.success) {
@@ -598,7 +669,6 @@ function restore() {
             listChecked.push(parseInt(childCheckbox.id.split('-')[2]));
         }
     });
-    //console.log(listChecked);
 
     $.ajax({
         url: "RestoreUser",
@@ -609,18 +679,7 @@ function restore() {
         traditional: true,
         dataType: 'json',
         success: function (response) {
-            //setTimeout(function () {
 
-            //    var notification = document.createElement('div');
-            //    notification.id = 'notification-1';
-            //    notification.classList.add('notification', 'background-transparent');
-
-
-            //    notification.innerHTML = '<i class="fa-solid fa-circle-check"></i><h3>Success!</h3>';
-
-
-            //    document.body.appendChild(notification);
-            //}, 3000);
 
             window.location.href = "/Home/ShowTrash";
         },
@@ -634,9 +693,7 @@ function bulkAction() {
     // Get selected value
     var select = document.getElementById('select-bulk');
     var selectedIndex = select.selectedIndex;
-
     var selectedOption = select.options[selectedIndex];
-
     var selectedValue = selectedOption.value;
 
 
@@ -644,6 +701,48 @@ function bulkAction() {
         getAllChecked();
     } else if (selectedValue === "Move to trash") {
         moveToTrash();
+    } else if (selectedValue === 'Create id card') {
+        console.log('Create id card');
+        createIdCard();
+    }
+}
+
+function createIdCard() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var listChecked = [];
+
+    checkboxes.forEach(function (childCheckbox) {
+        if (childCheckbox.checked) {
+            listChecked.push(parseInt(childCheckbox.id.split('-')[2]));
+        }
+    });
+    listChecked = listChecked.filter(checked => !isNaN(checked));
+
+    if (listChecked.length != 0) {
+        var idString = listChecked.join(',');
+
+        $.ajax({
+            url: '../Home/ExportCard1',
+            type: 'GET',
+            data: { ids: idString },
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function (data) {
+                var blob = new Blob([data]);
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'User.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
 }
 
@@ -682,10 +781,20 @@ function sortAction() {
                 } else {
                     btnStatus += `<td class="prd-edit tall alg-center"><button id="btn-lock" onclick="handleLock(` + user.id + `)" style="background-color: #f39c12"><i class="fa-solid fa-lock"></i></button></td>`
                 }
+                var userImage = ``;
+
+                if (user.image != null) {
+                    userImage = `<img width="50" height="50" src="/uploads/` + user.image + `" />`;
+                } else {
+                    userImage = `<img width="50" height="50" src="/img/meobongbong.jpg" />`;
+                }
                 tbody.innerHTML +=
                     `<tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-`+ user.id + `" type="checkbox" />
+                            </td>
+                            <td onclick="handleToEdit(`+ user.id + `)">
+                               `+ userImage + `
                             </td>
                             <td onclick="handleToEdit(`+ user.id + `)" class="prd-text-left">` + user.name + `</td>
                             <td onclick="handleToEdit(`+ user.id + `)">` + user.age + `</td>
@@ -706,5 +815,52 @@ function sortAction() {
         error: function (xhr, status, error) {
             console.log(error);
         }
-        })
+    })
+}
+
+function navigate(type) {
+    switch (type) {
+        case 'users':
+            window.location.href = "/Home/Index";
+            break;
+        case 'trash':
+            window.location.href = "/Home/ShowTrash";
+            break;
+        case 'export':
+            window.location.href = "/Home/ExportUserInExcel1?type=All";
+            break;
+        case 'card':
+            window.location.href = "/Home/ShowCard";
+            break;
+        default:
+            window.location.href = "/Home/Index";
+    }
+}
+
+function exportAction() {
+    var type = document.getElementById("export-action").value;
+    //console.log(type);
+    if (type == "toExcel") {
+        window.location.href = "/Home/ExportUserInExcel1?type=OpenLock";
+    } else if (type = "toExcelTrash") {
+        window.location.href = "/Home/ExportUserInExcel1?type=OnTrash";
+    }
+}
+
+function previewImg() {
+    const blah = document.getElementById("img-show");
+    const imgInp = document.getElementById("imgInp");
+    const [file] = imgInp.files;
+    if (file) {
+        if (blah) {
+            blah.src = URL.createObjectURL(file);
+        } else {
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.id = "img-shows";
+
+            document.getElementById('add-photo').appendChild(img);
+        }
+    }
+
 }

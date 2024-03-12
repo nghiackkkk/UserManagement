@@ -1,0 +1,98 @@
+﻿.body {
+    font-family: Helvetica !important;
+    font-size: 16px;
+    width: 100%;
+}
+
+.m-b-5 {
+    margin-bottom: 5px;
+}
+
+.container {
+    font-family: Helvetica !important;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.form {
+    width: 8.56cm;
+    height: 5.398cm;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.colored {
+    background: linear-gradient(135deg, #ffffff, #74b9ff);
+}
+
+.name-card {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+/* FRONT CARD */
+.up-data {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.text-bold {
+    font-weight: bolder;
+}
+
+.text-italic{
+    font-style: italic;
+}
+.information {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.image {
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    border-radius: 8px;
+    border: 1px solid #000;
+}
+
+#name {
+    display: flex;
+    flex-direction: column;
+}
+
+.up-data {
+    margin-bottom: 10px;
+}
+
+.phone-number {
+    display: flex;
+    flex-direction: column;
+}
+
+.align-sc {
+    align-self: center;
+}
+
+/* BACK CARD */
+.regulations ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+}
+
+.text-jus {
+    text-align: justify;
+}

@@ -62,3 +62,4 @@ checkboxes.forEach(function (checkbox) {
     });
 });
 
+// Export to PDF

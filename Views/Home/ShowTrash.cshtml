@@ -16,12 +16,21 @@
             </div> *@
         </div>
         <div id="checkbox-action" class="">
-            <div class="display-flex-center-all gap-5 underline">
-                <div onclick="deletePernament()" class="delete-selected hover-pointer">
+            <div class="display-flex-center-all gap-5">
+                <div onclick="deletePernament()" class="delete-selected hover-pointer underline">
                     <span>Delete pernamently</span>
                 </div>
-                <div onclick="restore()" class="restore-user-selected hover-pointer">
+                <div onclick="restore()" class="restore-user-selected hover-pointer underline">
                     <span>Restore selected</span>
+                </div>
+                <div id="export" class="export" >
+                    <select id="export-action" name="export-action" onchange="">
+                        <option name="all" value="all">Export</option>
+                        <option name="toExcelTrash" value="toExcelTrash">Export to Excel</option>
+                        <option name="toCsv" value="toCsv">Export to PDF</option>
+                    </select>
+                    <button class="button-apply" onclick="exportAction()">Apply</button>
+                   
                 </div>
             </div>
             <div id="count-item">
@@ -31,6 +40,7 @@
         <div class="table-crud">
             <table id="prd-table">
                 <colgroup>
+                    <col style="width: 5%" />
                     <col style="width: 5%" />
                     <col style="width: 15%" />
                     <col style="width: 5%" />
@@ -48,6 +58,7 @@
                         <th class="alg-center">
                             <input id="check-all" type="checkbox" onclick="handleCheck(this)" />
                         </th>
+                        <th>Image</th>
                         <th class="prd-text-left">Name</th>
                         <th>Age</th>
                         <th>Gender</th>
@@ -66,6 +77,16 @@
                         <tr>
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-@user.Id" type="checkbox" />
+                            </td>
+                            <td onclick="handleToEdit(@user.Id)">
+                                @if (@user.Image != null)
+                                {
+                                    <img width="50" height="50" src="~/uploads/@user.Image" />
+                                }
+                                else
+                                {
+                                    <img width="50" height="50" src="~/img/meobongbong.jpg" />
+                                }
                             </td>
                             <td onclick="handleToEdit(@user.Id)" class="prd-text-left">@user.Name</td>
                             <td onclick="handleToEdit(@user.Id)">@user.Age</td>

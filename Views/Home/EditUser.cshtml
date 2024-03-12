@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Edit User";
 }
-
+@model UserViewsModel
 <div class="content">
     <div id="back-btn">
         <a asp-controller="Home" asp-action="Index">
@@ -13,11 +13,19 @@
             <span>Edit User</span>
         </div>
         <div class="form">
-            <form action="/Home/EditUserDo" method="post">
+            <form action="/Home/EditUserDo" method="post" enctype="multipart/form-data">
                 <div class="f-1">
+                    <div class="form-flex">
+                        <label asp-for="Photo">Avatar</label>
+                        <div class="input-photo">
+                            <input id="imgInp" onchange="previewImg()" asp-for="Photo" class="form-control" type="file" />
+                            <img id="img-show" src="~/uploads/@ViewBag.UserPhoto" alt="my img" />
+
+                        </div>
+                    </div>
                     <div class="form-flex hidden">
                         <label for="id">Id</label>
-                        <input type="number"
+                        <input asp-for="Id" type="number"
                                name="id"
                                id="id"
                                placeholder="Id"
@@ -25,7 +33,7 @@
                     </div>
                     <div class="form-flex">
                         <label for="name">Name</label>
-                        <input type="text"
+                        <input asp-for="Name" type="text"
                                name="name"
                                id="name"
                                placeholder="Name user"
@@ -33,7 +41,7 @@
                     </div>
                     <div class="form-flex">
                         <label for="age">Age</label>
-                        <input type="number"
+                        <input asp-for="Age" type="number"
                                name="age"
                                id="age"
                                placeholder="Age"
@@ -45,14 +53,14 @@
                             @if (@Model.Gender == "Male")
                             {
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Gender" type="radio"
                                            name="gender"
                                            id="female"
                                            value="Female" required />
                                     <label for="female">Female</label><br>
                                 </div>
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Gender" type="radio"
                                            name="gender"
                                            id="male"
                                            value="Male"
@@ -63,14 +71,14 @@
                             else
                             {
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Gender" type="radio"
                                            name="gender"
                                            id="female"
                                            value="Female" checked />
                                     <label for="female">Female</label><br>
                                 </div>
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Gender" type="radio"
                                            name="gender"
                                            id="male"
                                            value="Male" required />
@@ -83,7 +91,7 @@
                     <div class="form-flex">
                         <label for="number">Phone Number</label>
                         <div class="input-span">
-                            <input onkeyup="validatePhoneNumber()" type="text"
+                            <input asp-for="Number" onkeyup="validatePhoneNumber()" type="text"
                                    name="number"
                                    id="number"
                                    placeholder="Number"
@@ -95,7 +103,7 @@
                     <div class="form-flex">
                         <label for="username">Username</label>
                         <div class="input-span">
-                            <input type="text"
+                            <input asp-for="Username" type="text"
                                    name="username"
                                    id="username"
                                    placeholder="Username"
@@ -106,7 +114,7 @@
                     <div class="form-flex">
                         <label for="password">Password</label>
                         <div class="input-span">
-                            <input onkeyup="validatePassword()" type="text"
+                            <input asp-for="Password" onkeyup="validatePassword()" type="text"
                                    name="password"
                                    id="password"
                                    placeholder="Password"
@@ -121,7 +129,7 @@
                             @if (@Model.Status == "Open")
                             {
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Status" type="radio"
                                            name="status"
                                            id="lock"
                                            value="Lock"
@@ -129,7 +137,7 @@
                                     <label for="lock">Lock</label><br>
                                 </div>
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Status" type="radio"
                                            name="status"
                                            id="open"
                                            value="Open" checked />
@@ -139,14 +147,14 @@
                             else
                             {
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Status" type="radio"
                                            name="status"
                                            id="lock"
                                            value="Lock" checked required />
                                     <label for="lock">Lock</label><br>
                                 </div>
                                 <div>
-                                    <input type="radio"
+                                    <input asp-for="Status" type="radio"
                                            name="status"
                                            id="open"
                                            value="Open" />
@@ -158,7 +166,7 @@
                     </div>
                     <div class="form-flex">
                         <label for="priority">Priority</label>
-                        <select name="priority" id="priority" required>
+                        <select asp-for="Priority" name="priority" id="priority" required>
                             @if (@Model.Priority == "admin")
                             {
                                 <option value="admin" selected>Admin</option>

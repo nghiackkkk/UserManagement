@@ -1,0 +1,181 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Helvetica" />
+</head>
+
+<body>
+    <style>
+        .body {
+            font-family: Helvetica !important;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .m-b-5 {
+            margin-bottom: 5px;
+        }
+
+        .container {
+            font-family: Helvetica !important;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+        }
+
+        .form {
+            width: 8.56cm;
+            height: 5.398cm;
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .colored {
+            background: linear-gradient(135deg, #ffffff, #74b9ff);
+        }
+
+        .name-card {
+            text-align: center;
+            font-weight: bolder;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        /* FRONT CARD */
+        .up-data {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .text-bold {
+            font-weight: bolder;
+        }
+
+        .text-italic {
+            font-style: italic;
+        }
+
+        .information {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .image {
+            width: 100px;
+            height: 100px;
+            background-color: aqua;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
+            .image img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+
+        #name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .up-data {
+            margin-bottom: 10px;
+        }
+
+        .phone-number {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .align-sc {
+            align-self: center;
+        }
+
+        /* BACK CARD */
+        .regulations ul {
+            text-decoration: none;
+            list-style: none;
+            padding: 0;
+        }
+
+        .text-jus {
+            text-align: justify;
+        }
+
+    </style>
+    <h1>USER: USERNAME</h1>
+    <div class="container">
+        <div id="front" class="form colored">
+            <div class="name-card">ID CARD</div>
+            <div class="front-content">
+                <div class="up-data">
+                    <div class="image">
+                        <img src="~/uploads/60c0dbec-242f-45bf-9d9f-6431ecf160cd_0697.jpg" />
+                    </div>
+                    <div class="information">
+                        <div id="id-user m-b-5">
+                            <span class="text-bold text-italic">ID:</span>
+                            <span class="text-bold text-italic">126125341623145</span>
+                        </div>
+                        <div id="name">
+                            <span class="text-bold">Name:</span>
+                            <span>DAMIAN SWAGGER SSSS</span>
+                        </div>
+                        <div class="gender">
+                            <span class="text-bold">Gender:</span>
+                            <span>Female</span>
+                        </div>
+                        <div class="role">
+                            <span class="text-bold">Role:</span>
+                            <span>Admin</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-number">
+                    <span class="text-bold m-b-5">Phone number:</span>
+                    <span class="align-sc">0123456789</span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div id="back" class="form colored">
+            <div class="name-card">REGULATIONS</div>
+            <div class="regulations">
+                <ul>
+                    <li>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipi scing elit.</span>
+                    </li>
+                    <br />
+                    <li>
+                        <span class="text-jus">
+                            Lorem ipsum dolor sit amet, consectetur adipi elit. Maecenas
+                            sed scelerisque magna, acot porttitor sapien. Pellentesque
+                            rutrum, sapien vel aliquet vulputate, est est gravida purus,
+                            lobortis elementum diam diam non leo.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
