@@ -1,0 +1,402 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+
+    <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+    <title>Blank Page | AdminKit Demo</title>
+
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/custom_ShowUser.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Side_bar.cshtml"></partial>
+
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+
+                    <h1 class="h3 mb-3">Users Page</h1>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary">
+                                                <i class="fas fa-plus fa-lg"></i>
+                                                Add User
+                                            </a>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3">
+                                            <label class="d-flex flex-row gap-2">
+                                                Search:
+                                                <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatables-orders">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3 row">
+                                            <label class="col-form-label col-md-2 text-sm-center wid-bulk">Bulk action:</label>
+                                            <div class="col-sm-6 ps-0">
+                                                <select class="col-md-2 form-select">
+                                                    <option selected="">Open this select menu</option>
+                                                    <option>Reset password</option>
+                                                    <option>Move to trash</option>
+                                                    <option>Export id card</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 p-0">
+                                                <button class="btn btn-primary">Apply</button>
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-6">
+                                            <label class="col-form-label col-md-2 text-sm-end wid-sort">Sort:</label>
+                                            <div class="col-sm-4 ps-0">
+                                                <select class="col-md-1 form-select">
+                                                    <option selected="">Open this to sort</option>
+                                                    <option>Name A-Z</option>
+                                                    <option>Name Z-A</option>
+                                                    <option>Username A-Z</option>
+                                                    <option>Username Z-A</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div id="datatables-orders_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-3">
+                                                <div class="dataTables_length d-flex align-items-center" id="datatables-orders_length">
+                                                    <label class="d-flex flex-row align-items-center gap-2">
+                                                        Show
+                                                        <select name="datatables-orders_length" aria-controls="datatables-orders" class="form-select w-50">
+                                                            <option value="10">10</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
+                                                        </select>
+                                                        entries
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input id="check-all" type="checkbox" onclick="handleCheck(this)" />
+                                                    </th>
+                                                    <th>Name</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Date of Birth</th>
+                                                    <th>Username</th>
+                                                    <th>Lock</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-5.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Vanessa
+                                                        Tucker
+                                                    </td>
+                                                    <td>864-348-0485</td>
+                                                    <td>June 21, 1961</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-2.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> William
+                                                        Harris
+                                                    </td>
+                                                    <td>914-939-2458</td>
+                                                    <td>May 15, 1948</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-3.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Sharon
+                                                        Lessman
+                                                    </td>
+                                                    <td>704-993-5435</td>
+                                                    <td>September 14, 1965</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-4.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Christina
+                                                        Mason
+                                                    </td>
+                                                    <td>765-382-8195</td>
+                                                    <td>April 2, 1971</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-4.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Christina
+                                                        Mason
+                                                    </td>
+                                                    <td>765-382-8195</td>
+                                                    <td>April 2, 1971</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-4.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Christina
+                                                        Mason
+                                                    </td>
+                                                    <td>765-382-8195</td>
+                                                    <td>April 2, 1971</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-4.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Christina
+                                                        Mason
+                                                    </td>
+                                                    <td>765-382-8195</td>
+                                                    <td>April 2, 1971</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-4.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Christina
+                                                        Mason
+                                                    </td>
+                                                    <td>765-382-8195</td>
+                                                    <td>April 2, 1971</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-4.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Christina
+                                                        Mason
+                                                    </td>
+                                                    <td>765-382-8195</td>
+                                                    <td>April 2, 1971</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="checkbox-child" type="checkbox" />
+                                                    </td>
+                                                    <td>
+                                                        <img src="/template/img/avatars/avatar-4.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Christina
+                                                        Mason
+                                                    </td>
+                                                    <td>765-382-8195</td>
+                                                    <td>April 2, 1971</td>
+                                                    <td>Tukkee</td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-action">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="dataTables_info" id="datatables-orders_info" role="status" aria-live="polite">Showing 1 to 10 of 15 entries</div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers" id="datatables-orders_paginate">
+                                                    <ul class="pagination justify-content-end">
+                                                        <li class="paginate_button page-item previous disabled" id="datatables-orders_previous">
+                                                            <a aria-controls="datatables-orders" aria-disabled="true" aria-role="link" data-dt-idx="previous" tabindex="0" class="page-link">Previous</a>
+                                                        </li>
+
+                                                        <li class="paginate_button page-item active">
+                                                            <a href="#" aria-controls="datatables-orders" aria-role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a>
+                                                        </li>
+
+                                                        <li class="paginate_button page-item ">
+                                                            <a href="#" aria-controls="datatables-orders" aria-role="link" data-dt-idx="1" tabindex="0" class="page-link">2</a>
+                                                        </li>
+
+                                                        <li class="paginate_button page-item next" id="datatables-orders_next">
+                                                            <a href="#" aria-controls="datatables-orders" aria-role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/template/js/app.js"></script>
+
+</body>
+
+</html>

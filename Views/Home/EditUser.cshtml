@@ -17,10 +17,12 @@
                 <div class="f-1">
                     <div class="form-flex">
                         <label asp-for="Photo">Avatar</label>
-                        <div class="input-photo">
+                        <div id="add-photo" class="input-photo">
                             <input id="imgInp" onchange="previewImg()" asp-for="Photo" class="form-control" type="file" />
-                            <img id="img-show" src="~/uploads/@ViewBag.UserPhoto" alt="my img" />
-
+                            @if (ViewBag.UserPhoto != null)
+                            {
+                                <img id="img-show" src="~/uploads/@ViewBag.UserPhoto" alt="my img" />
+                            }
                         </div>
                     </div>
                     <div class="form-flex hidden">

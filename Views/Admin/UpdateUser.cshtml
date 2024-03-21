@@ -1,0 +1,605 @@
+﻿@{
+    Layout = null;
+}
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+
+    <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+
+    <title>Update User</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/custom_ShowUser.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Side_bar.cshtml"></partial>
+
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+
+                    <h1 class="h3 mb-3">Update User</h1>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row" id="">
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label" for="inputEmail4">Cover Image</label>
+                                                <input class="form-control" type="file">
+                                            </div>
+                                            <div class="mb-3 col-md-6 d-flex flex-row justify-content-center align-items-center">
+                                                <img class="previewImage" src="~/uploads/27e96c5c70e0884229247755b0671be2_8d95.jpg" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label" for="inputEmail4">Email</label>
+                                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                                @* <div class="invalid-feedback">
+                                                Username are already used.
+                                                </div> *@
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label" for="inputPassword4">Password</label>
+                                                <input type="password" class="form-control is-invalid" id="inputPassword4" placeholder="Password">
+                                                <div class="invalid-feedback">
+                                                    Password must include uppercase, lowercase, number, 3-10 letter and special symbol.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label" for="fullname">Full Name</label>
+                                                <input type="text" class="form-control is-invalid" id="fullname" placeholder="e.g. Croward Admin">
+                                                <div class="invalid-feedback">
+                                                    Name seem unreal.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-3">
+                                                <label class="form-label" for="gender">Gender</label>
+                                                <select class="form-select flex-grow-1">
+                                                    <option>Male</option>
+                                                    <option>Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-3">
+                                                <label class="form-label" for="dateOfBirth">Date of birth</label>
+                                                <input type="date" class="form-control is-invalid">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3 col-md-4">
+                                                <label class="form-label" for="phoneNumber">Phone Number</label>
+                                                <input type="text" class="form-control is-invalid" id="phoneNumber" placeholder="None">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <label class="form-label" for="ethnicGroup">Ethnic Group</label>
+                                                <input type="text" class="form-control is-invalid" id="ethnicGroup" placeholder="Kinh">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <label class="form-label" for="regilion">Regilion</label>
+                                                <input type="text" class="form-control is-invalid" id="regilion" placeholder="None">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label" for="idCard">ID Card No</label>
+                                                <input type="text" class="form-control is-invalid" id="idCard" placeholder="01230123012033">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label" for="cultrulaStarndard">Cultural Standard</label>
+                                                <input type="text" class="form-control is-invalid" id="cultrulaStarndard" placeholder="12/12">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6 row">
+                                                <label class="form-label" for="dateHCMY">Date of admitting to Ho Chi Minh Communist Youth Union</label>
+                                                <div class="col-md-6">
+                                                    <input type="date" class="form-control is-invalid" id="dateHCMY" placeholder="01230123012033">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control is-invalid" id="whereHCMY" placeholder="Place join">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-6 row">
+                                                <label class="form-label" for="idCard">Date of admitting to Vietnamese Communist Party</label>
+                                                <div class="col-md-6">
+                                                    <input type="date" class="form-control is-invalid" id="dateVNP" placeholder="01230123012033">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control is-invalid" id="whereVNP" placeholder="Place join">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="form-label" for="inputAddress">Permanent Residence</label>
+                                            <div class="col-md-2">
+                                                <label class="form-label" for="inputAddress">City</label>
+                                                <input type="text" class="form-control" id="prCity" placeholder="Ha Noi">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label" for="inputAddress">District</label>
+                                                <input type="text" class="form-control" id="prDistrict" placeholder="Hoan Kiem">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label" for="inputAddress">Commune</label>
+                                                <input type="text" class="form-control" id="prCommune" placeholder="Ba Dinh">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="inputAddress">Address</label>
+                                                <input type="text" class="form-control" id="prAddress" placeholder="1234 Main St">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="form-label" for="inputAddress">Regular Address</label>
+                                            <div class="col-md-2">
+                                                <label class="form-label" for="inputAddress">City</label>
+                                                <input type="text" class="form-control" id="raCity" placeholder="Ha Noi">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label" for="inputAddress">District</label>
+                                                <input type="text" class="form-control" id="raDistrict" placeholder="Hoan Kiem">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label" for="inputAddress">Commune</label>
+                                                <input type="text" class="form-control" id="raCommune" placeholder="Ba Dinh">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="inputAddress">Address</label>
+                                                <input type="text" class="form-control" id="raAddress" placeholder="1234 Main St">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <h2>Family Members</h2>
+                                        <div id="fatherInformation">
+                                            <h3>Father</h3>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-label" for="fatherName">Father's name</label>
+                                                    <input type="text" class="form-control" id="fatherName" placeholder="e.g Luthor Crown">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label class="form-label" for="fatherYoB">Year of birth</label>
+                                                    <input type="text" class="form-control" id="fatherYoB" placeholder="e.g 1975">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <label class="form-label" for="fatherCurrentResident">Current Resident</label>
+                                                    <input type="text" class="form-control" id="fatherCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="fatherCurrentResident">Current Occupation</label>
+                                                    <input type="text" class="form-control" id="fatherCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="fatherCurrentResident">Working Agency</label>
+                                                    <input type="text" class="form-control" id="fatherCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="motherInformation">
+                                            <h3>Mother</h3>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-label" for="motherName">Mother's name</label>
+                                                    <input type="text" class="form-control" id="motherName" placeholder="e.g Alisa Crown">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label class="form-label" for="motherYoB">Year of birth</label>
+                                                    <input type="text" class="form-control" id="motherYoB" placeholder="e.g 1975">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <label class="form-label" for="motherCurrentResident">Current Resident</label>
+                                                    <input type="text" class="form-control" id="motherCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="motherCurrentResident">Current Occupation</label>
+                                                    <input type="text" class="form-control" id="motherCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="motherCurrentResident">Working Agency</label>
+                                                    <input type="text" class="form-control" id="motherCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="partnerInformation">
+                                            <h3>Husband/Wife</h3>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-label" for="partnerName">Name</label>
+                                                    <input type="text" class="form-control" id="partnerName" placeholder="e.g Alisa Crown">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label class="form-label" for="partnerYoB">Year of birth</label>
+                                                    <input type="text" class="form-control" id="partnerYoB" placeholder="e.g 1975">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <label class="form-label" for="partnerCurrentResident">Current Resident</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="partnerCurrentResident">Current Occupation</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="partnerCurrentResident">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="siblingsInformation">
+                                            <h3>Siblings</h3>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label" for="siblings">Siblings' fullname: age? which job? where?</label>
+                                                    <textarea class="form-control" rows="5" placeholder="" id="siblings">-</textarea>
+                                                    <span class="text-muted">e.g "- Alice Crown - 22 - Agency - London."</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div id="studyProcess">
+                                            <h2>Study Process (From latest)</h2>
+                                            <div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div><div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div><div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div><div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
+                                                <div class="btn btn-primary" onclick="addListProcess('studying')">
+                                                    <i class="fa fa-solid fa-plus-circle me-1"></i>
+                                                    </svg>ADD
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div id="workingProcess">
+                                            <h2>Working Process (From latest)</h2>
+                                            <div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Start time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">End time</label>
+                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="form-label" for="siblings">Working Agency</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label" for="siblings">Position</label>
+                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                </div>
+                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
+                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                        <i class="fa fa-solid fa-minus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
+                                                <div class="btn btn-primary" onclick="addListProcess('working')">
+                                                    <i class="fa fa-solid fa-plus-circle me-1"></i>
+                                                    </svg>ADD
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/template/js/app.js"></script>
+    <script src="/template/js/custom_admin_adduser.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Choices.js
+            new Choices(document.querySelector(".choices-single"));
+            new Choices(document.querySelector(".choices-multiple"));
+            // Flatpickr
+            flatpickr(".flatpickr-minimum");
+            flatpickr(".flatpickr-datetime", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+            });
+            flatpickr(".flatpickr-human", {
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+            });
+            flatpickr(".flatpickr-multiple", {
+                mode: "multiple",
+                dateFormat: "Y-m-d"
+            });
+            flatpickr(".flatpickr-range", {
+                mode: "range",
+                dateFormat: "Y-m-d"
+            });
+            flatpickr(".flatpickr-time", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            setTimeout(function () {
+                if (localStorage.getItem('popState') !== 'shown') {
+                    window.notyf.open({
+                        type: "success",
+                        message: "Get access to all 500+ components and 45+ pages with AdminKit PRO. <u><a class=\"text-white\" href=\"https://adminkit.io/pricing\" target=\"_blank\">More info</a></u> 🚀",
+                        duration: 10000,
+                        ripple: true,
+                        dismissible: false,
+                        position: {
+                            x: "left",
+                            y: "bottom"
+                        }
+                    });
+
+                    localStorage.setItem('popState', 'shown');
+                }
+            }, 15000);
+        });
+    </script>
+</body>
+
+</html>
+

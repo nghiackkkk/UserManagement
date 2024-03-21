@@ -618,7 +618,6 @@ namespace UserManagement.Controllers
             }
 
             return GenerateExcel(fileName, user);
-
         }
 
         private FileResult GenerateExcel(string fileName, IEnumerable<User> users)
@@ -652,6 +651,7 @@ namespace UserManagement.Controllers
                 {
                     wb.SaveAs(ms);
                     return File(ms.ToArray(),
+                        // ?
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                         fileName);
                 }

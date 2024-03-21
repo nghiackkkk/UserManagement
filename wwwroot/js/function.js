@@ -1,4 +1,13 @@
-﻿function deleteButton(username, id) {
+﻿function showLoading(type) {
+    if (type == 'on') {
+        document.getElementById('content-main-main').classList.add('blur');
+        document.getElementById('notification-2').classList.remove('hidden');
+    } else {
+        document.getElementById('content-main-main').classList.remove('blur');
+        document.getElementById('notification-2').classList.add('hidden');
+    }
+}
+function deleteButton(username, id) {
     let h3 = notification.querySelector('h3');
     h3.textContent = "Are you sure to delete " + username + "?";
 
@@ -718,9 +727,11 @@ function createIdCard() {
     });
     listChecked = listChecked.filter(checked => !isNaN(checked));
 
+    showLoading('on');
+
     if (listChecked.length != 0) {
         var idString = listChecked.join(',');
-
+        
         $.ajax({
             url: '../Home/ExportCard1',
             type: 'GET',
@@ -729,6 +740,7 @@ function createIdCard() {
                 responseType: 'blob'
             },
             success: function (data) {
+                showLoading('off');
                 var blob = new Blob([data]);
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);

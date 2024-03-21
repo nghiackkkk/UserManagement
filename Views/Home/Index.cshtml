@@ -92,7 +92,7 @@
                 <tbody>
                     @foreach (var user in Model)
                     {
-                        <tr>
+                        <tr onclick="checkedRow()">
                             <td id="td-checkbox" class="alg-center">
                                 <input id="checkbox-child-@user.Id" type="checkbox" />
                             </td>

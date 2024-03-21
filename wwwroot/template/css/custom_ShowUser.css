@@ -1,0 +1,37 @@
+﻿.wid-bulk {
+    width: 101px !important;
+}
+
+.wid-sort {
+    width: 60px !important;
+}
+
+.wid-select {
+    width: 250px !important;
+}
+
+.checked-color {
+    background-color: #778beb !important;
+}
+
+    .checked-color td {
+        color: #FFF !important;
+    }
+    .checked-color a {
+        color: #FFF !important;
+    }
+
+.previewImage {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+#imageField {
+    border: 1px solid #000000;
+}
+
+.bigger-checkbox{
+    width: 50px !important;
+    height: 20px !important;
+}
