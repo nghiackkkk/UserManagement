@@ -32,6 +32,10 @@
 }
 
 .bigger-checkbox{
+    width: 20px !important;
+    height: 20px !important;
+}
+.bigger-checkbox-2 {
     width: 50px !important;
     height: 20px !important;
 }

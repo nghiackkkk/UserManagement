@@ -68,7 +68,7 @@
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="inputPassword4">Password</label>
-                                                <input type="password" class="form-control is-invalid" id="inputPassword4" placeholder="Password">
+                                                <input type="password" class="form-control " id="inputPassword4" placeholder="Password">
                                                 <div class="invalid-feedback">
                                                     Password must include uppercase, lowercase, number, 3-10 letter and special symbol.
                                                 </div>
@@ -77,7 +77,7 @@
                                         <div class="row">
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="fullname">Full Name</label>
-                                                <input type="text" class="form-control is-invalid" id="fullname" placeholder="e.g. Croward Admin">
+                                                <input type="text" class="form-control " id="fullname" placeholder="e.g. Croward Admin">
                                                 <div class="invalid-feedback">
                                                     Name seem unreal.
                                                 </div>
@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="mb-3 col-md-3">
                                                 <label class="form-label" for="dateOfBirth">Date of birth</label>
-                                                <input type="date" class="form-control is-invalid">
+                                                <input type="date" class="form-control ">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
@@ -100,21 +100,21 @@
                                         <div class="row">
                                             <div class="mb-3 col-md-4">
                                                 <label class="form-label" for="phoneNumber">Phone Number</label>
-                                                <input type="text" class="form-control is-invalid" id="phoneNumber" placeholder="None">
+                                                <input type="text" class="form-control " id="phoneNumber" placeholder="None">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
                                             </div>
                                             <div class="mb-3 col-md-4">
                                                 <label class="form-label" for="ethnicGroup">Ethnic Group</label>
-                                                <input type="text" class="form-control is-invalid" id="ethnicGroup" placeholder="Kinh">
+                                                <input type="text" class="form-control " id="ethnicGroup" placeholder="Kinh">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
                                             </div>
                                             <div class="mb-3 col-md-4">
                                                 <label class="form-label" for="regilion">Regilion</label>
-                                                <input type="text" class="form-control is-invalid" id="regilion" placeholder="None">
+                                                <input type="text" class="form-control " id="regilion" placeholder="None">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
@@ -123,14 +123,14 @@
                                         <div class="row">
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="idCard">ID Card No</label>
-                                                <input type="text" class="form-control is-invalid" id="idCard" placeholder="01230123012033">
+                                                <input type="text" class="form-control " id="idCard" placeholder="01230123012033">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="cultrulaStarndard">Cultural Standard</label>
-                                                <input type="text" class="form-control is-invalid" id="cultrulaStarndard" placeholder="12/12">
+                                                <input type="text" class="form-control " id="cultrulaStarndard" placeholder="12/12">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
@@ -140,13 +140,13 @@
                                             <div class="mb-3 col-md-6 row">
                                                 <label class="form-label" for="dateHCMY">Date of admitting to Ho Chi Minh Communist Youth Union</label>
                                                 <div class="col-md-6">
-                                                    <input type="date" class="form-control is-invalid" id="dateHCMY" placeholder="01230123012033">
+                                                    <input type="date" class="form-control " id="dateHCMY" placeholder="01230123012033">
                                                     <div class="invalid-feedback">
                                                         Field required.
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control is-invalid" id="whereHCMY" placeholder="Place join">
+                                                    <input type="text" class="form-control " id="whereHCMY" placeholder="Place join">
                                                     <div class="invalid-feedback">
                                                         Field required.
                                                     </div>
@@ -155,13 +155,13 @@
                                             <div class="mb-3 col-md-6 row">
                                                 <label class="form-label" for="idCard">Date of admitting to Vietnamese Communist Party</label>
                                                 <div class="col-md-6">
-                                                    <input type="date" class="form-control is-invalid" id="dateVNP" placeholder="01230123012033">
+                                                    <input type="date" class="form-control " id="dateVNP" placeholder="01230123012033">
                                                     <div class="invalid-feedback">
                                                         Field required.
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control is-invalid" id="whereVNP" placeholder="Place join">
+                                                    <input type="text" class="form-control " id="whereVNP" placeholder="Place join">
                                                     <div class="invalid-feedback">
                                                         Field required.
                                                     </div>
@@ -290,7 +290,18 @@
                                             </div>
                                         </div>
                                         <div id="siblingsInformation">
-                                            <h3>Siblings</h3>
+                                            <div class="row">
+                                                <h3 class="col-md-6">Siblings</h3>
+                                                <div class="row col-md-6">
+                                                    <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
+                                                        <div class="btn btn-primary" onclick="addListProcess('siblings')">
+                                                            <i class="fa fa-solid fa-plus-circle me-1"></i>
+                                                            ADD SIBLINGS
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="eachSibling">
                                                 <div class="row mb-3">
                                                     <div class="col-md-4">
@@ -306,7 +317,7 @@
                                                         <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g 123 That St, London, England">
                                                     </div>
                                                     <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                        <div class="btn btn-secondary" onclick="removeElementProcess(this, 'sibling')">
+                                                        <div class="btn btn-danger" onclick="removeElementProcess(this, 'sibling')">
                                                             <i class="fa fa-solid fa-minus-circle"></i>
                                                         </div>
                                                     </div>
@@ -323,17 +334,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
-                                                <div class="btn btn-primary" onclick="addListProcess('siblings')">
-                                                    <i class="fa fa-solid fa-plus-circle me-1"></i>
-                                                    ADD SIBLINGS
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <hr />
                                         <div id="studyProcess">
-                                            <h2>Study Process (From latest)</h2>
+                                            <div class="row">
+                                                <h2 class="col-md-6">Study Process (From latest)</h2>
+                                                <div class="row col-md-6">
+                                                    <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
+                                                        <div class="btn btn-primary" onclick="addListProcess('studying')">
+                                                            <i class="fa fa-solid fa-plus-circle me-1"></i>
+                                                            </svg>ADD
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">Start time</label>
@@ -352,23 +366,27 @@
                                                     <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this, 'process')">
+                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
                                                         <i class="fa fa-solid fa-minus-circle"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
-                                                <div class="btn btn-primary" onclick="addListProcess('studying')">
-                                                    <i class="fa fa-solid fa-plus-circle me-1"></i>
-                                                    </svg>ADD
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <hr />
                                         <div id="workingProcess">
-                                            <h2>Working Process (From latest)</h2>
+                                            
+                                            <div class="row">
+                                                <h2 class="col-md-6">Working Process (From latest)</h2>
+                                                <div class="row col-md-6">
+                                                    <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
+                                                        <div class="btn btn-primary" onclick="addListProcess('working')">
+                                                            <i class="fa fa-solid fa-plus-circle me-1"></i>
+                                                            </svg>ADD
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">Start time</label>
@@ -387,7 +405,7 @@
                                                     <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this, 'process')">
+                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
                                                         <i class="fa fa-solid fa-minus-circle"></i>
                                                     </div>
                                                 </div>
@@ -410,7 +428,7 @@
                                                     <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this, 'process')">
+                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
                                                         <i class="fa fa-solid fa-minus-circle"></i>
                                                     </div>
                                                 </div>
@@ -433,7 +451,7 @@
                                                     <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this, 'process')">
+                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
                                                         <i class="fa fa-solid fa-minus-circle"></i>
                                                     </div>
                                                 </div>
@@ -456,20 +474,13 @@
                                                     <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this, 'process')">
+                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
                                                         <i class="fa fa-solid fa-minus-circle"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
-                                                <div class="btn btn-primary" onclick="addListProcess('working')">
-                                                    <i class="fa fa-solid fa-plus-circle me-1"></i>
-                                                    </svg>ADD
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <hr />
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </form>
@@ -512,7 +523,7 @@
     </div>
 
     <script src="/template/js/app.js"></script>
-    <script src="/template/js/custom_admin_adduser.js"></script>
+    <script src="/template/js/custom_adduser.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Choices.js

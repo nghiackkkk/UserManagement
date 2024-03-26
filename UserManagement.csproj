@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\template\js\custom_admin_adduser.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\template\js\custom_admin_adduser.js" />
+    <Content Remove="wwwroot\template\js\custom_adduser.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\template\js\custom_admin_adduser.js" />
+    <None Include="wwwroot\template\js\custom_adduser.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Viewsmodel\" />
   </ItemGroup>
 
 </Project>

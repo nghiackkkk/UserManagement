@@ -17,13 +17,23 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
 
-	<title>Sign In | AdminKit Demo</title>
+	<title>Sign In</title>
 
 	<link href="/template/css/app.css" rel="stylesheet">
+	<link href="/template/css/light.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
+	@if (TempData["RegisterDone"] != null)
+	{
+		<div id="successNotification" class="alert alert-primary alert-dismissible fixed-top" role="alert">
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			<div class="alert-message d-flex justify-content-center">
+				@TempData["RegisterDone"]
+			</div>
+		</div>
+	}
 	<main class="d-flex w-100">
 		<div class="container d-flex flex-column">
 			<div class="row vh-100">
@@ -40,14 +50,17 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="m-sm-3">
-									<form>
+									<form method="POST" action="/Account/CheckLogin">
 										<div class="mb-3">
 											<label class="form-label">Username</label>
-											<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
+											<input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username" />
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Password</label>
 											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
+										</div>
+										<div class="text-danger	d-flex justify-content-center mb-3">
+											@ViewBag.ErrorLogin
 										</div>
 										<div>
 											<div class="form-check align-items-center">
@@ -56,7 +69,7 @@
 											</div>
 										</div>
 										<div class="d-grid gap-2 mt-3">
-											<a href="index.html" class="btn btn-lg btn-primary">Sign in</a>
+											<button type="submit" class="btn btn-lg btn-primary">Sign in</button>
 										</div>
 									</form>
 								</div>
@@ -72,6 +85,8 @@
 	</main>
 
 	<script src="/template/js/app.js"></script>
+	<script src="/template/js/custom_account.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 </body>
 

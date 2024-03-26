@@ -1,11 +1,18 @@
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Models;
+using UserManagement.Services.Account;
+using UserManagement.Services.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddDbContext<UserManagement2Context>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
@@ -18,14 +25,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
-
-
-//Connection db
-//builder.Services.AddDbContext<UserDBContext>(options =>
-//{
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-//});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -44,7 +43,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Login}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 app.UseSession();
 app.UseCors("AllowAllOrigins");
 app.Run();

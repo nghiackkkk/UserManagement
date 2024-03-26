@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    <div class="wrapper">
+    <div id="wrapper" class="wrapper">
         <partial name="~/Views/Partials/Side_bar.cshtml"></partial>
 
         <div class="main">
@@ -42,44 +42,53 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row mb-3">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label class="d-flex flex-row gap-2">
+                                                Search:
+                                                <input type="search"
+                                                       class="form-control form-control-sm"
+                                                       placeholder=""
+                                                       aria-controls="datatables-orders"
+                                                       id="searchInput">
+                                            </label>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6 d-flex justify-content-end">
                                             <a asp-controller="Admin" asp-action="AddUser" class="btn btn-primary">
                                                 <i class="fas fa-plus fa-lg"></i>
                                                 Add User
                                             </a>
                                         </div>
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3">
-                                            <label class="d-flex flex-row gap-2">
-                                                Search:
-                                                <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatables-orders">
-                                            </label>
-                                        </div>
+                                        
+                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4 mb-3 row">
                                             <label class="col-form-label col-md-2 text-sm-center wid-bulk">Bulk action:</label>
                                             <div class="col-sm-6 ps-0">
-                                                <select class="col-md-2 form-select">
-                                                    <option selected="">Open this select menu</option>
-                                                    <option>Reset password</option>
-                                                    <option>Move to trash</option>
-                                                    <option>Export id card</option>
+                                                <select id="select-bulk" class="col-md-2 form-select">
+                                                    <option value="none" selected="">Open this select menu</option>
+                                                    <option value="reset-password">Reset password</option>
+                                                    <option value="move-to-trash">Move to trash</option>
+                                                    @* <option value="export-card">Export id card</option> *@
                                                 </select>
                                             </div>
                                             <div class="col-md-2 p-0">
-                                                <button class="btn btn-primary">Apply</button>
+                                                <button onclick="bulkAction()" class="btn btn-primary">Apply</button>
                                             </div>
                                         </div>
-                                        <div class="row col-md-6">
+                                        <div class="row col-md-4"></div>
+                                        <div class="row col-md-4 d-flex justify-content-end">
                                             <label class="col-form-label col-md-2 text-sm-end wid-sort">Sort:</label>
-                                            <div class="col-sm-4 ps-0">
-                                                <select class="col-md-1 form-select">
-                                                    <option selected="">Open this to sort</option>
-                                                    <option>Name A-Z</option>
-                                                    <option>Name Z-A</option>
-                                                    <option>Username A-Z</option>
-                                                    <option>Username Z-A</option>
+                                            <div class="col-sm-6 ps-0">
+                                                <select onchange="sortAction(@ViewBag.PageNumber)" id="selectSort" class="col-md-1 form-select">
+                                                    <option value="" selected>Open this to sort</option>
+                                                    <option value="latest">Latest</option>
+                                                    <option value="oldest">Oldest</option>
+                                                    <option value="nameaz">Name A-Z</option>
+                                                    <option value="nameza">Name Z-A</option>
+                                                    <option value="usernameaz">Username A-Z</option>
+                                                    <option value="usernameza">Username Z-A</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -92,7 +101,12 @@
                                                 <div class="dataTables_length d-flex align-items-center" id="datatables-orders_length">
                                                     <label class="d-flex flex-row align-items-center gap-2">
                                                         Show
-                                                        <select name="datatables-orders_length" aria-controls="datatables-orders" class="form-select w-50">
+                                                        <select onchange="redirectToLink(@ViewBag.PageNumber)"
+                                                                id="datatables-orders-length"
+                                                                name="datatables-orders_length"
+                                                                aria-controls="datatables-orders"
+                                                                class="form-select w-50">
+
                                                             <option value="10">10</option>
                                                             <option value="25">25</option>
                                                             <option value="50">50</option>
@@ -103,76 +117,111 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-9 d-flex justify-content-end align-items-center">
-                                                <div class="dataTables_info pe-5 pt-0" id="datatables-orders_info" role="status" aria-live="polite">Showing 1 to 10 of 15 entries</div>
+                                                <div class="dataTables_info pe-5 pt-0" id="datatables-orders_info" role="status" aria-live="polite">Showing 1 to @ViewBag.PageSize of @ViewBag.TotalUsers entries</div>
                                             </div>
                                         </div>
-                                        <table class="table table-hover">
+                                        <table class="table table-hover mt-3">
                                             <thead>
                                                 <tr>
                                                     <th>
-                                                        <input id="check-all" type="checkbox" onclick="handleCheck(this)" />
+                                                        <input class="bigger-checkbox" id="check-all" type="checkbox" onclick="handleCheck(this)" />
                                                     </th>
-                                                    <th>Name</th>
+                                                    <th>Full Name</th>
+                                                    <th>City</th>
                                                     <th>Phone Number</th>
                                                     <th>Date of Birth</th>
                                                     <th>Username</th>
-                                                    <th>Lock</th>
+                                                    <th>Open/Lock</th>
                                                     <th class="d-flex justify-content-center align-items-center">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td onclick="checkedRow(this)">
-                                                        <input id="checkbox-child" class="checkbox-child" type="checkbox" />
-                                                    </td>
-                                                    <td onclick="checkedRow(this)">
-                                                        <img src="/template/img/avatars/avatar-5.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar"> Vanessa
-                                                        Tucker
-                                                    </td>
-                                                    <td onclick="checkedRow(this)">864-348-0485</td>
-                                                    <td onclick="checkedRow(this)">June 21, 1961</td>
-                                                    <td onclick="checkedRow(this)">Tukkee</td>
-                                                    <td>
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input bigger-checkbox" type="checkbox" id="flexSwitchCheckDefault">
-                                                        </div>
-                                                    </td>
-                                                    <td class="table-action" onclick="checkedRow(this)">
-                                                        <div class="d-flex justify-content-around align-items-center">
-                                                            <a href="#">
-                                                                <i data-feather="edit"></i>
-                                                            </a>
-                                                            <a href="#">
-                                                                <i data-feather="trash"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                
+                                                @foreach (var user in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <input onclick="checkedRowCB(this)" id="checkbox-child-@user.Id" class="checkbox-child bigger-checkbox" type="checkbox" />
+                                                        </td>
+                                                        <td onclick="checkedRow(this)">
+                                                            <img src="/template/img/avatars/avatar-5.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
+                                                            @user.FullName
+                                                        </td>
+                                                        <td onclick="checkedRow(this)">@((user.IdPernamentResidence != null) ? "City" : "null")</td>
+                                                        <td onclick="checkedRow(this)">@((user.PhoneNumber != null) ? user.PhoneNumber : "null")</td>
+                                                        <td onclick="checkedRow(this)">
+                                                            @{
+                                                                var formattedDate = (user.DateOfBirth != null) ? user.DateOfBirth.ToString("yyyy-MM-dd") : "null";
+                                                            }
+                                                            @formattedDate
+                                                        </td>
+                                                        <td onclick="checkedRow(this)">@user.Username</td>
+                                                        <td>
+                                                            <div class="form-check form-switch">
+                                                                <input onclick="toggleStatus(@user.Id, this, '@user.Status')" 
+                                                                class="form-check-input bigger-checkbox-2" type="checkbox" id="flexSwitchCheckDefault"
+                                                                @(user.Status == "Open" ? "checked" : "")>
+                                                            </div>
+                                                        </td>
+                                                        <td class="table-action">
+                                                            <div class="d-flex justify-content-around align-items-center">
+                                                                <a href="#">
+                                                                    <i data-feather="edit"></i>
+                                                                </a>
+                                                                <a onclick="moveToTrash(@user.Id, @ViewBag.PageNumber, @ViewBag.PageSize)">
+                                                                    <i data-feather="trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
                                             </tbody>
                                         </table>
                                         <div class="row">
-                                            <div class="col-md-5">
-                                                @* <div class="dataTables_info" id="datatables-orders_info" role="status" aria-live="polite">Showing 1 to 10 of 15 entries</div> *@
-                                            </div>
-                                            <div class="col-md-7">
-                                                <div class="dataTables_paginate paging_simple_numbers" id="datatables-orders_paginate">
-                                                    <ul class="pagination justify-content-end">
-                                                        <li class="paginate_button page-item previous disabled" id="datatables-orders_previous">
-                                                            <a aria-controls="datatables-orders" aria-disabled="true" aria-role="link" data-dt-idx="previous" tabindex="0" class="page-link">Previous</a>
-                                                        </li>
+                                            <div class="col-md-12">
+                                                <div class="dataTables_paginate paging_simple_numbers d-flex justify-content-center" id="datatables-orders_paginate">
+                                                    <ul id="ulPaginate" class="pagination justify-content-end">
+                                                        @if (ViewBag.PageNumber > 1)
+                                                        {
+                                                            <li class="paginate_button page-item previous" id="datatables-orders_previous">
+                                                                <a href="@Url.Action("ShowUser", new {sort=ViewBag.SortType, pageNumber = ViewBag.PageNumber - 1, pageSize = ViewBag.PageSize })" aria-controls="datatables-orders" aria-disabled="true" aria-role="link" data-dt-idx="previous" tabindex="0" class="page-link">Previous</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="paginate_button page-item previous disabled" id="datatables-orders_previous">
+                                                                <a href="#" aria-controls="datatables-orders" aria-disabled="true" aria-role="link" data-dt-idx="previous" tabindex="0" class="page-link">Previous</a>
+                                                            </li>
+                                                        }
 
-                                                        <li class="paginate_button page-item active">
-                                                            <a href="#" aria-controls="datatables-orders" aria-role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a>
-                                                        </li>
+                                                        @for (var i = 1; i <= ViewBag.TotalPage; i++)
+                                                        {
+                                                            @if (i != ViewBag.PageNumber)
+                                                            {
+                                                                <li class="paginate_button page-item">
+                                                                    <a href="/Admin/ShowUser?sort=@ViewBag.SortType&pageNumber=@i&pageSize=@ViewBag.PageSize" aria-controls="datatables-orders" aria-role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">@i</a>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li class="paginate_button page-item active">
+                                                                    <a href="/Admin/ShowUser?sort=@ViewBag.SortType&pageNumber=@i&pageSize=@ViewBag.PageSize" aria-controls="datatables-orders" aria-role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">@i</a>
+                                                                </li>
+                                                            }
 
-                                                        <li class="paginate_button page-item ">
-                                                            <a href="#" aria-controls="datatables-orders" aria-role="link" data-dt-idx="1" tabindex="0" class="page-link">2</a>
-                                                        </li>
+                                                        }
 
-                                                        <li class="paginate_button page-item next" id="datatables-orders_next">
-                                                            <a href="#" aria-controls="datatables-orders" aria-role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a>
-                                                        </li>
+                                                        @if (ViewBag.PageNumber < ViewBag.TotalPage)
+                                                        {
+                                                            <li class="paginate_button page-item next" id="datatables-orders_next">
+                                                                <a href="@Url.Action("ShowUser", new {sort = ViewBag.SortType, pageNumber = ViewBag.PageNumber + 1, pageSize = ViewBag.PageSize})" aria-controls="datatables-orders" aria-role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="paginate_button page-item next disabled" id="datatables-orders_next">
+                                                                <a aria-controls="datatables-orders" aria-role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a>
+                                                            </li>
+                                                        }
                                                     </ul>
                                                 </div>
                                             </div>
@@ -217,8 +266,8 @@
     </div>
 
     <script src="/template/js/app.js"></script>
-    <script src="/template/js/custom_admin.js"></script>
-    <script src="/template/js/custom_admin_function.js"></script>
+    <script src="/template/js/custom_showuser.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 </body>
 

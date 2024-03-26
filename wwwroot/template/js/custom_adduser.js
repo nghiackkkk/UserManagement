@@ -22,7 +22,7 @@ function addListProcess(type) {
                                                     <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this)">
+                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'working')">
                                                         <i class="fa fa-solid fa-minus-circle"></i>
                                                     </div>
                                                 </div>`
@@ -50,7 +50,7 @@ function addListProcess(type) {
                                                     <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-secondary" onclick="removeElementProcess(this, 'process')">
+                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
                                                         <i class="fa fa-solid fa-minus-circle"></i>
                                                     </div>
                                                 </div>`
@@ -75,7 +75,7 @@ function addListProcess(type) {
                                         <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g 123 That St, London, England">
                                     </div>
                                     <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                        <div class="btn btn-secondary" onclick="removeElementProcess(this, 'sibling')">
+                                        <div class="btn btn-danger" onclick="removeElementProcess(this, 'sibling')">
                                             <i class="fa fa-solid fa-minus-circle"></i>
                                         </div>
                                     </div>
@@ -101,6 +101,10 @@ function removeElementProcess(element, type) {
             parentnode.remove();
             break;
         case 'process':
+            var parentnode = element.parentNode.parentNode;
+            parentnode.remove();
+            break;
+        case 'working':
             var parentnode = element.parentNode.parentNode;
             parentnode.remove();
             break;

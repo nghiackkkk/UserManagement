@@ -5,7 +5,7 @@ namespace UserManagement.Controllers
 {
     public class UserController : Controller
     {
-        UserManagementContext db = new UserManagementContext();
+        UserManagement2Context db = new UserManagement2Context();
         private readonly ILogger<HomeController> _logger;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
 
