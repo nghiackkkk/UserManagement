@@ -93,17 +93,22 @@ function innerUser(response) {
 
     for (var i = 0; i < users.length; i++) {
         var idStatus = (users[i].status == 'Open') ? 'checked' : '';
-
+        var imgSrc = '';
+        if (users[i].coverImage != null) {
+            imgSrc = '/uploads/' + users[i].coverImage;
+        } else {
+            imgSrc = '/img/meobongbong.jpg';
+        }
         tbody.innerHTML +=
             `<tr>
                 <td>
                     <input onclick="checkedRowCB(this)" id="checkbox-child" class="checkbox-child bigger-checkbox" type="checkbox" />
                 </td>
                 <td onclick="checkedRow(this)">
-                    <img src="/template/img/avatars/avatar-5.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
+                    <img src="`+ imgSrc + `" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
                     `+ users[i].fullName + `
                 </td>
-                <td onclick="checkedRow(this)">null</td>
+                <td onclick="checkedRow(this)">`+ users[i].idCard + `</td>
                 <td onclick="checkedRow(this)">`+ users[i].phoneNumber + `</td>
                 <td onclick="checkedRow(this)">`+ users[i].dateOfBirth + `</td>
                 <td onclick="checkedRow(this)">`+ users[i].username + `</td>

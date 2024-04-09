@@ -4,3 +4,12 @@
 .bg-female {
     background: #f7d794 !important;
 }
+#table-chart7 {
+    border-collapse: collapse;
+}
+
+    #table-chart7 th,
+    #table-chart7 td {
+        border: 1px solid black;
+        padding: 8px; /* Adjust padding as needed */
+    }

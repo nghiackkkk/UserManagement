@@ -54,13 +54,13 @@
                                         </div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-6 d-flex justify-content-end">
-                                            <a asp-controller="Admin" asp-action="AddUser" class="btn btn-primary">
+                                            <a asp-controller="Admin" asp-action="AddUser" class="btn btn-primary w-75">
                                                 <i class="fas fa-plus fa-lg"></i>
                                                 Add User
                                             </a>
                                         </div>
-                                        
-                                        
+
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4 mb-3 row">
@@ -70,7 +70,9 @@
                                                     <option value="none" selected="">Open this select menu</option>
                                                     <option value="reset-password">Reset password</option>
                                                     <option value="move-to-trash">Move to trash</option>
-                                                    @* <option value="export-card">Export id card</option> *@
+                                                    <option value="print-card">Print ID Card</option>
+                                                    <option value="print-profile">Print Profile</option>
+                                                    
                                                 </select>
                                             </div>
                                             <div class="col-md-2 p-0">
@@ -127,12 +129,12 @@
                                                         <input class="bigger-checkbox" id="check-all" type="checkbox" onclick="handleCheck(this)" />
                                                     </th>
                                                     <th>Full Name</th>
-                                                    <th>City</th>
+                                                    <th>ID Card</th>
                                                     <th>Phone Number</th>
                                                     <th>Date of Birth</th>
                                                     <th>Username</th>
                                                     <th>Open/Lock</th>
-                                                    <th class="d-flex justify-content-center align-items-center">Actions</th>
+                                                    <th class="d-flex justify-content-center align-items-center" style="height:50px">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -143,10 +145,18 @@
                                                             <input onclick="checkedRowCB(this)" id="checkbox-child-@user.Id" class="checkbox-child bigger-checkbox" type="checkbox" />
                                                         </td>
                                                         <td onclick="checkedRow(this)">
-                                                            <img src="/template/img/avatars/avatar-5.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
-                                                            @user.FullName
+                                                            @if (user.CoverImage != null)
+                                                            {
+                                                                <img src="/uploads/@user.CoverImage" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
+                                                                @user.FullName
+                                                            }else
+                                                            {
+                                                                <img src="/img/meobongbong.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
+                                                                @user.FullName
+                                                            }
+
                                                         </td>
-                                                        <td onclick="checkedRow(this)">@((user.IdPernamentResidence != null) ? "City" : "null")</td>
+                                                        <td onclick="checkedRow(this)">@((user.IdCard != null) ? user.IdCard : "null")</td>
                                                         <td onclick="checkedRow(this)">@((user.PhoneNumber != null) ? user.PhoneNumber : "null")</td>
                                                         <td onclick="checkedRow(this)">
                                                             @{
@@ -157,14 +167,14 @@
                                                         <td onclick="checkedRow(this)">@user.Username</td>
                                                         <td>
                                                             <div class="form-check form-switch">
-                                                                <input onclick="toggleStatus(@user.Id, this, '@user.Status')" 
-                                                                class="form-check-input bigger-checkbox-2" type="checkbox" id="flexSwitchCheckDefault"
+                                                                <input onclick="toggleStatus(@user.Id, this, '@user.Status')"
+                                                                       class="form-check-input bigger-checkbox-2" type="checkbox" id="flexSwitchCheckDefault"
                                                                 @(user.Status == "Open" ? "checked" : "")>
                                                             </div>
                                                         </td>
                                                         <td class="table-action">
                                                             <div class="d-flex justify-content-around align-items-center">
-                                                                <a href="#">
+                                                                <a href="/Admin/UpdateUser?id=@user.Id">
                                                                     <i data-feather="edit"></i>
                                                                 </a>
                                                                 <a onclick="moveToTrash(@user.Id, @ViewBag.PageNumber, @ViewBag.PageSize)">
@@ -268,6 +278,13 @@
     <script src="/template/js/app.js"></script>
     <script src="/template/js/custom_showuser.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="/template/js/custom_navbar.js"></script>
 
 </body>
 

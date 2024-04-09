@@ -112,12 +112,12 @@
                                                         <input class="bigger-checkbox" id="check-all" type="checkbox" onclick="handleCheck(this)" />
                                                     </th>
                                                     <th>Full Name</th>
-                                                    <th>City</th>
+                                                    <th>ID Card</th>
                                                     <th>Phone Number</th>
                                                     <th>Date of Birth</th>
                                                     <th>Username</th>
                                                     <th>Open/Lock</th>
-                                                    <th class="d-flex justify-content-center align-items-center">Actions</th>
+                                                    <th class="d-flex justify-content-center align-items-center" style="height:50px">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -128,10 +128,18 @@
                                                             <input onclick="checkedRowCB(this)" id="checkbox-child-@user.Id" class="checkbox-child bigger-checkbox" type="checkbox" />
                                                         </td>
                                                         <td onclick="checkedRow(this)">
-                                                            <img src="/template/img/avatars/avatar-5.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
-                                                            @user.FullName
+                                                            @if (user.CoverImage != null)
+                                                            {
+                                                                <img src="/uploads/@user.CoverImage" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
+                                                                @user.FullName
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="/img/meobongbong.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
+                                                                @user.FullName
+                                                            }
                                                         </td>
-                                                        <td onclick="checkedRow(this)">@((user.IdPernamentResidence != null) ? "City" : "null")</td>
+                                                        <td onclick="checkedRow(this)">@((user.IdCard != null) ? user.IdCard : "null")</td>
                                                         <td onclick="checkedRow(this)">@((user.PhoneNumber != null) ? user.PhoneNumber : "null")</td>
                                                         <td onclick="checkedRow(this)">
                                                             @{
@@ -149,7 +157,7 @@
                                                         </td>
                                                         <td class="table-action">
                                                             <div class="d-flex justify-content-around align-items-center">
-                                                                <a href="#">
+                                                                <a href="/Admin/UpdateUser?id=@user.Id">
                                                                     <i data-feather="edit"></i>
                                                                 </a>
                                                                 <a onclick="moveToTrash(@user.Id, @ViewBag.PageNumber, @ViewBag.PageSize)">
@@ -253,6 +261,7 @@
     <script src="/template/js/app.js"></script>
     <script src="/template/js/custom_showtrash.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="/template/js/custom_navbar.js"></script>
 
 </body>
 

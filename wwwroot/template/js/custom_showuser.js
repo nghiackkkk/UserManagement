@@ -98,17 +98,22 @@ function innerUser(response) {
 
     for (var i = 0; i < users.length; i++) {
         var idStatus = (users[i].status == 'Open') ? 'checked' : '';
-
+        var imgSrc = '';
+        if (users[i].coverImage != null) {
+            imgSrc = '/uploads/' + users[i].coverImage;
+        } else {
+            imgSrc = '/img/meobongbong.jpg';
+        }
         tbody.innerHTML +=
             `<tr>
                 <td>
                     <input onclick="checkedRowCB(this)" id="checkbox-child" class="checkbox-child bigger-checkbox" type="checkbox" />
                 </td>
                 <td onclick="checkedRow(this)">
-                    <img src="/template/img/avatars/avatar-5.jpg" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
+                    <img src="`+ imgSrc + `" width="48" height="48" class="rounded-circle me-2" alt="Avatar">
                     `+ users[i].fullName + `
                 </td>
-                <td onclick="checkedRow(this)">null</td>
+                <td onclick="checkedRow(this)">`+ users[i].idCard + `</td>
                 <td onclick="checkedRow(this)">`+ users[i].phoneNumber + `</td>
                 <td onclick="checkedRow(this)">`+ users[i].dateOfBirth + `</td>
                 <td onclick="checkedRow(this)">`+ users[i].username + `</td>
@@ -278,18 +283,136 @@ function bulkAction() {
 
     var listId = getAllChecked();
     var listIdLe = listId.length;
-
+    console.log(selectedValue);
     //alert(listIdLe);
-
-    if (selectedValue === "reset-password") {
-        resetPassword(listId);
-    } else if (selectedValue === "move-to-trash") {
-        for (let i = 0; i < listIdLe; i++) {
-            moveToTrash(listId[i]);
+    if (listId.length != 0) {
+        if (selectedValue === "reset-password") {
+            resetPassword(listId);
+        } else if (selectedValue === "move-to-trash") {
+            for (let i = 0; i < listIdLe; i++) {
+                moveToTrash(listId[i]);
+            }
+        } else if (selectedValue === "print-card") {
+            printCard(listId);
+        } else if (selectedValue === "print-profile") {
+            
+            printProfile(listId);
         }
-    } else {
-        window.location.href = "/Admin/ShowUser";
+        else {
+            window.location.href = "/Admin/ShowUser";
+        }
     }
+    
+}
+
+function printProfile(listId) {
+    $.ajax({
+        url: "/Admin/PrintProfile",
+        type: "GET",
+        data: {
+            ids: listId
+        },
+        traditional: true,
+        dataType: "html",
+        success: function (data) {
+            // Convert the HTML string into a DOM object
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, "text/html");
+
+            // Choose the elements that your content will be rendered to.
+            const elements = doc.getElementsByClassName('profile-id');
+            const zip = new JSZip();
+
+            var promises = [];
+            var opt = {
+                margin: [0, 0, 1, 0],
+                filename: 'Profiles.zip', // Change filename to zip file
+                jsPDF: { unit: 'cm', format: 'A4', orientation: 'p' }
+            };
+
+            for (let i = 0; i < elements.length; i++) {
+                // Choose the element and save the PDF for your user.
+                const element = elements[i];
+                const filename = `Profile_${listId[i]}.pdf`;
+
+                // Generate PDF and add to zip
+                const pdfPromise = html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .outputPdf()
+                    .then(function (pdf) {
+                        zip.file(filename, pdf, { binary: true });
+                    });
+
+                promises.push(pdfPromise);
+            }
+
+            // Wait for all promises to resolve
+            Promise.all(promises).then(function () {
+                // Generate zip file
+                zip.generateAsync({ type: "blob" })
+                    .then(function (content) {
+                        // Offer the zip file for download
+                        saveAs(content, "Profiles.zip");
+                    });
+            });
+        }
+    });
+}
+
+function printCard(listId) {
+    $.ajax({
+        url: "/Admin/PrintCard",
+        type: "GET",
+        data: {
+            listId: listId
+        },
+        traditional: true,
+        dataType: "html",
+        success: function (data) {
+            // Convert the HTML string into a DOM object
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, "text/html");
+
+            // Choose the elements that your content will be rendered to.
+            const elements = doc.getElementsByClassName('id-card-id');
+            const zip = new JSZip();
+
+            var promises = [];
+            var opt = {
+                margin: [0, 0, 0, 0],
+                filename: 'ID_Cards.zip', // Change filename to zip file
+                jsPDF: { unit: 'cm', format: 'letter', orientation: 'l' }
+            };
+
+            for (let i = 0; i < elements.length; i++) {
+                // Choose the element and save the PDF for your user.
+                const element = elements[i];
+                const filename = `ID_Card_${listId[i]}.pdf`;
+
+                // Generate PDF and add to zip
+                const pdfPromise = html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .outputPdf()
+                    .then(function (pdf) {
+                        zip.file(filename, pdf, { binary: true });
+                    });
+
+                promises.push(pdfPromise);
+            }
+
+            // Wait for all promises to resolve
+            Promise.all(promises).then(function () {
+                // Generate zip file
+                zip.generateAsync({ type: "blob" })
+                    .then(function (content) {
+                        // Offer the zip file for download
+                        saveAs(content, "ID_Cards.zip");
+                    });
+            });
+        }
+    });
 }
 
 function getAllChecked() {

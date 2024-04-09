@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.102.2" />
+    <PackageReference Include="EPPlus" Version="7.1.1" />
+    <PackageReference Include="ExcelPackage" Version="1.0.0" />
     <PackageReference Include="itext7.pdfhtml" Version="4.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
@@ -26,10 +28,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\template\js\custom_adduser.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Viewsmodel\" />
   </ItemGroup>
 
 </Project>

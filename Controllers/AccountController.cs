@@ -48,7 +48,10 @@ namespace UserManagement.Controllers
                 // User login
                 if (user.Priority != "Admin")
                 {
-                    return View("~/Views/User/Index.cshtml");
+                    HttpContext.Session.SetString("FullName", user.FullName);
+                    HttpContext.Session.SetString("IDUserLogin", user.Id.ToString());
+                    TempData["FullName"] = HttpContext.Session.GetString("FullName");
+                    return RedirectToAction("Home", "User");
                 }
 
                 HttpContext.Session.SetString("FullName", user.FullName);

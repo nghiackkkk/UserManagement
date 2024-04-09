@@ -1,9 +1,7 @@
 ﻿@{
     Layout = null;
 }
-@{
-    Layout = null;
-}
+@model UserManagement.Models.Viewsmodel.UserViewModel
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,30 +43,34 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-
                                 <div class="card-body">
-                                    <form>
+                                    <form asp-controller="Admin" asp-action="CreateUser" method="POST" enctype="multipart/form-data">
                                         <div class="row" id="">
                                             <div class="mb-3 col-md-6">
-                                                <label class="form-label" for="inputEmail4">Cover Image</label>
-                                                <input class="form-control" type="file">
+                                                <label asp-for="CoverImage" class="form-label" for="inputEmail4">Cover Image</label>
+                                                <input id="imgInp" onchange="previewImg()" asp-for="CoverImage" class="form-control" type="file">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
-                                            <div class="mb-3 col-md-6 d-flex flex-row justify-content-center align-items-center">
-                                                <img class="previewImage" src="~/uploads/27e96c5c70e0884229247755b0671be2_8d95.jpg" />
+                                            <div id="add-photo" class="mb-3 col-md-6 d-flex flex-row justify-content-center align-items-center">
+                                                <img id="img-show" class="previewImage object-fit-cover" src="~/uploads/27e96c5c70e0884229247755b0671be2_8d95.jpg" />
                                             </div>
                                         </div>
                                         <div class="row">
 
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="username">Username</label>
-                                                <input type="text" class="form-control" id="username" placeholder="Username">
-                                                @* <div class="invalid-feedback">
-                                                Username are already used.
-                                                </div> *@
+                                                <input onblur="validateUsername()" asp-for="Username" type="text" class="form-control"
+                                                       id="username" placeholder="Username">
+                                                <div class="invalid-feedback">
+                                                    Username are already used.
+                                                </div>
                                             </div>
                                             <div class="mb-3 col-md-6">
-                                                <label class="form-label" for="inputPassword4">Password</label>
-                                                <input type="password" class="form-control " id="inputPassword4" placeholder="Password">
+                                                <label class="form-label" for="inputPassword">Password</label>
+                                                <input asp-for="Password" type="password" class="form-control"
+                                                       id="inputPassword" placeholder="Password" onkeyup="validatePassword()">
                                                 <div class="invalid-feedback">
                                                     Password must include uppercase, lowercase, number, 3-10 letter and special symbol.
                                                 </div>
@@ -77,21 +79,21 @@
                                         <div class="row">
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="fullname">Full Name</label>
-                                                <input type="text" class="form-control " id="fullname" placeholder="e.g. Croward Admin">
+                                                <input asp-for="FullName" type="text" class="form-control " id="fullname" placeholder="e.g. Croward Admin">
                                                 <div class="invalid-feedback">
                                                     Name seem unreal.
                                                 </div>
                                             </div>
                                             <div class="mb-3 col-md-3">
                                                 <label class="form-label" for="gender">Gender</label>
-                                                <select class="form-select flex-grow-1">
+                                                <select asp-for="Gender" class="form-select flex-grow-1">
                                                     <option>Male</option>
                                                     <option>Female</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3 col-md-3">
                                                 <label class="form-label" for="dateOfBirth">Date of birth</label>
-                                                <input type="date" class="form-control ">
+                                                <input id="dob" asp-for="DateOfBirth" type="date" class="form-control ">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
@@ -100,21 +102,22 @@
                                         <div class="row">
                                             <div class="mb-3 col-md-4">
                                                 <label class="form-label" for="phoneNumber">Phone Number</label>
-                                                <input type="text" class="form-control " id="phoneNumber" placeholder="None">
+                                                <input asp-for="PhoneNumber" type="text" class="form-control"
+                                                       id="phoneNumber" placeholder="None">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
                                             </div>
                                             <div class="mb-3 col-md-4">
                                                 <label class="form-label" for="ethnicGroup">Ethnic Group</label>
-                                                <input type="text" class="form-control " id="ethnicGroup" placeholder="Kinh">
+                                                <input asp-for="EthnicGroup" type="text" class="form-control " id="ethnicGroup" placeholder="Kinh">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
                                             </div>
                                             <div class="mb-3 col-md-4">
-                                                <label class="form-label" for="regilion">Regilion</label>
-                                                <input type="text" class="form-control " id="regilion" placeholder="None">
+                                                <label class="form-label" for="regilion">Religion</label>
+                                                <input asp-for="Religion" type="text" class="form-control " id="regilion" placeholder="None">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
@@ -123,169 +126,242 @@
                                         <div class="row">
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="idCard">ID Card No</label>
-                                                <input type="text" class="form-control " id="idCard" placeholder="01230123012033">
+                                                <input asp-for="IdCard" type="text" class="form-control " id="idCard" placeholder="01230123012033">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label class="form-label" for="cultrulaStarndard">Cultural Standard</label>
-                                                <input type="text" class="form-control " id="cultrulaStarndard" placeholder="12/12">
+                                                <input asp-for="CulturalStandard" type="text" class="form-control " id="cultrulaStarndard" placeholder="12/12">
                                                 <div class="invalid-feedback">
                                                     Field required.
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="mb-3 col-md-6 row">
-                                                <label class="form-label" for="dateHCMY">Date of admitting to Ho Chi Minh Communist Youth Union</label>
-                                                <div class="col-md-6">
-                                                    <input type="date" class="form-control " id="dateHCMY" placeholder="01230123012033">
-                                                    <div class="invalid-feedback">
-                                                        Field required.
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" class="form-control " id="whereHCMY" placeholder="Place join">
-                                                    <div class="invalid-feedback">
-                                                        Field required.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 col-md-6 row">
-                                                <label class="form-label" for="idCard">Date of admitting to Vietnamese Communist Party</label>
-                                                <div class="col-md-6">
-                                                    <input type="date" class="form-control " id="dateVNP" placeholder="01230123012033">
-                                                    <div class="invalid-feedback">
-                                                        Field required.
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" class="form-control " id="whereVNP" placeholder="Place join">
-                                                    <div class="invalid-feedback">
-                                                        Field required.
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        @* <div class="row">
+                                        <div class="mb-3 col-md-6 row">
+                                        <label class="form-label" for="dateHCMY">Date of admitting to Ho Chi Minh Communist Youth Union</label>
+                                        <div class="col-md-6">
+                                        <input asp-for="Password" type="date" class="form-control " id="dateHCMY" placeholder="01230123012033">
+                                        <div class="invalid-feedback">
+                                        Field required.
                                         </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <input type="text" class="form-control " id="whereHCMY" placeholder="Place join">
+                                        <div class="invalid-feedback">
+                                        Field required.
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6 row">
+                                        <label class="form-label" for="idCard">Date of admitting to Vietnamese Communist Party</label>
+                                        <div class="col-md-6">
+                                        <input type="date" class="form-control " id="dateVNP" placeholder="01230123012033">
+                                        <div class="invalid-feedback">
+                                        Field required.
+                                        </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <input type="text" class="form-control " id="whereVNP" placeholder="Place join">
+                                        <div class="invalid-feedback">
+                                        Field required.
+                                        </div>
+                                        </div>
+                                        </div>
+                                        </div> *@
                                         <div class="mb-3 row">
                                             <label class="form-label" for="inputAddress">Permanent Residence</label>
                                             <div class="col-md-2">
                                                 <label class="form-label" for="inputAddress">City</label>
-                                                <input type="text" class="form-control" id="prCity" placeholder="Ha Noi">
+                                                <input asp-for="PermanentResidenceCity" type="text" class="form-control" id="prCity" placeholder="Ha Noi">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label" for="inputAddress">District</label>
-                                                <input type="text" class="form-control" id="prDistrict" placeholder="Hoan Kiem">
+                                                <input asp-for="PermanentResidenceDistrict" type="text" class="form-control" id="prDistrict" placeholder="Hoan Kiem">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label" for="inputAddress">Commune</label>
-                                                <input type="text" class="form-control" id="prCommune" placeholder="Ba Dinh">
+                                                <input asp-for="PermanentResidenceCommune" type="text" class="form-control" id="prCommune" placeholder="Ba Dinh">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label" for="inputAddress">Address</label>
-                                                <input type="text" class="form-control" id="prAddress" placeholder="1234 Main St">
+                                                <input asp-for="PermanentResidenceAddress" type="text" class="form-control" id="prAddress" placeholder="1234 Main St">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="form-label" for="inputAddress">Regular Address</label>
                                             <div class="col-md-2">
                                                 <label class="form-label" for="inputAddress">City</label>
-                                                <input type="text" class="form-control" id="raCity" placeholder="Ha Noi">
+                                                <input asp-for="RegularAddressCity" type="text" class="form-control" id="raCity" placeholder="Ha Noi">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label" for="inputAddress">District</label>
-                                                <input type="text" class="form-control" id="raDistrict" placeholder="Hoan Kiem">
+                                                <input asp-for="RegularAddressDistrict" type="text" class="form-control" id="raDistrict" placeholder="Hoan Kiem">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label" for="inputAddress">Commune</label>
-                                                <input type="text" class="form-control" id="raCommune" placeholder="Ba Dinh">
+                                                <input asp-for="RegularAddressCommune" type="text" class="form-control" id="raCommune" placeholder="Ba Dinh">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label" for="inputAddress">Address</label>
-                                                <input type="text" class="form-control" id="raAddress" placeholder="1234 Main St">
+                                                <input asp-for="RegularAddressAddress" type="text" class="form-control" id="raAddress" placeholder="1234 Main St">
+                                                <div class="invalid-feedback">
+                                                    Field required.
+                                                </div>
                                             </div>
                                         </div>
                                         <hr />
                                         <h2>Family Members</h2>
                                         <div id="fatherInformation">
                                             <h3>Father</h3>
+                                            <input asp-for="Siblings[0].Realtionship" type="hidden" value="Father" class="form-control" id="">
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <label class="form-label" for="fatherName">Father's name</label>
-                                                    <input type="text" class="form-control" id="fatherName" placeholder="e.g Luthor Crown">
+                                                    <input asp-for="Siblings[0].FullName" type="text" class="form-control s-valid" id="fatherName" placeholder="e.g Luthor Crown">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label class="form-label" for="fatherYoB">Year of birth</label>
-                                                    <input type="text" class="form-control" id="fatherYoB" placeholder="e.g 1975">
+                                                    <input asp-for="Siblings[0].YearOfBirth" type="text" class="form-control s-valid" id="fatherYoB" placeholder="e.g 1975">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <label class="form-label" for="fatherCurrentResident">Current Resident</label>
-                                                    <input type="text" class="form-control" id="fatherCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                    <input asp-for="Siblings[0].CurrentResident" type="text" class="form-control s-valid" id="fatherCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label" for="fatherCurrentResident">Current Occupation</label>
-                                                    <input type="text" class="form-control" id="fatherCurrentResident" placeholder="e.g CEO">
+                                                    <input asp-for="Siblings[0].CurrentOcupation" type="text" class="form-control s-valid" id="fatherCurrentResident" placeholder="e.g CEO">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label" for="fatherCurrentResident">Working Agency</label>
-                                                    <input type="text" class="form-control" id="fatherCurrentResident" placeholder="e.g ABC Company">
+                                                    <input asp-for="Siblings[0].WorkingAgency" type="text" class="form-control s-valid" id="fatherCurrentResident" placeholder="e.g ABC Company">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div id="motherInformation">
                                             <h3>Mother</h3>
+                                            <input asp-for="Siblings[1].Realtionship" type="hidden" value="Mother" class="form-control" id="">
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <label class="form-label" for="motherName">Mother's name</label>
-                                                    <input type="text" class="form-control" id="motherName" placeholder="e.g Alisa Crown">
+                                                    <input asp-for="Siblings[1].FullName" type="text" class="form-control s-valid" id="motherName" placeholder="e.g Alisa Crown">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label class="form-label" for="motherYoB">Year of birth</label>
-                                                    <input type="text" class="form-control" id="motherYoB" placeholder="e.g 1975">
+                                                    <input asp-for="Siblings[1].YearOfBirth" type="text" class="form-control s-valid" id="motherYoB" placeholder="e.g 1975">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <label class="form-label" for="motherCurrentResident">Current Resident</label>
-                                                    <input type="text" class="form-control" id="motherCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                    <input asp-for="Siblings[1].CurrentResident" type="text" class="form-control s-valid" id="motherCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label" for="motherCurrentResident">Current Occupation</label>
-                                                    <input type="text" class="form-control" id="motherCurrentResident" placeholder="e.g CEO">
+                                                    <input asp-for="Siblings[1].CurrentOcupation" type="text" class="form-control s-valid" id="motherCurrentOccupation" placeholder="e.g CEO">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label" for="motherCurrentResident">Working Agency</label>
-                                                    <input type="text" class="form-control" id="motherCurrentResident" placeholder="e.g ABC Company">
+                                                    <input asp-for="Siblings[1].WorkingAgency" type="text" class="form-control s-valid" id="motherWorkingAgency" placeholder="e.g ABC Company">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div id="partnerInformation">
                                             <h3>Husband/Wife</h3>
+                                            <input asp-for="Siblings[2].Realtionship" type="hidden" value="Husband/Wife" class="form-control" id="">
+
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <label class="form-label" for="partnerName">Name</label>
-                                                    <input type="text" class="form-control" id="partnerName" placeholder="e.g Alisa Crown">
+                                                    <input asp-for="Siblings[2].FullName" type="text" class="form-control s-valid" id="partnerName" placeholder="e.g Alisa Crown">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label class="form-label" for="partnerYoB">Year of birth</label>
-                                                    <input type="text" class="form-control" id="partnerYoB" placeholder="e.g 1975">
+                                                    <input asp-for="Siblings[2].YearOfBirth" type="text" class="form-control s-valid" id="partnerYoB" placeholder="e.g 1975">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <label class="form-label" for="partnerCurrentResident">Current Resident</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                    <input asp-for="Siblings[2].CurrentResident" type="text" class="form-control s-valid" id="partnerCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label" for="partnerCurrentResident">Current Occupation</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                    <input asp-for="Siblings[2].CurrentOcupation" type="text" class="form-control s-valid" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label" for="partnerCurrentResident">Working Agency</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                    <input asp-for="Siblings[2].WorkingAgency" type="text" class="form-control s-valid" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -301,20 +377,33 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="eachSibling">
+
+                                            <div class="each-sibling">
+                                                <input type="hidden" value="Sibling" class="form-control s-rel" id="">
+
                                                 <div class="row mb-3">
                                                     <div class="col-md-4">
                                                         <label class="form-label" for="partnerName">Name</label>
-                                                        <input type="text" class="form-control" id="partnerName" placeholder="e.g Alisa Crown">
+                                                        <input  value="" type="text"
+                                                               class="form-control s-name s-valid" id="" placeholder="e.g Alisa Crown">
+                                                        <div class="invalid-feedback">
+                                                            Field required.
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-1">
                                                         <label class="form-label" for="partnerYoB">Year of birth</label>
-                                                        <input type="text" class="form-control" id="partnerYoB" placeholder="e.g 1975">
+                                                        <input  value="" type="text"
+                                                               class="form-control s-yob s-valid" id="" placeholder="e.g 1975">
+                                                        <div class="invalid-feedback">
+                                                            Field required.
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="partnerCurrentResident">Current Resident</label>
-                                                        <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g 123 That St, London, England">
+                                                        <input value="" type="text" class="form-control s-cr s-valid" id="" placeholder="e.g 123 That St, London, England">
+                                                        <div class="invalid-feedback">
+                                                            Field required.
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
                                                         <div class="btn btn-danger" onclick="removeElementProcess(this, 'sibling')">
@@ -325,45 +414,67 @@
                                                 <div class="row mb-3">
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="partnerCurrentResident">Current Occupation</label>
-                                                        <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                        <input value="" type="text" class="form-control s-co s-valid" id="" placeholder="e.g CEO">
+                                                        <div class="invalid-feedback">
+                                                            Field required.
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="partnerCurrentResident">Working Agency</label>
-                                                        <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                        <input value="" type="text" class="form-control s-wa s-valid" id="" placeholder="e.g ABC Company">
+                                                        <div class="invalid-feedback">
+                                                            Field required.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <hr />
-                                        <div id="studyProcess">
+                                        <div id="studyProcess" onblur="addStudyProcess()">
                                             <div class="row">
                                                 <h2 class="col-md-6">Study Process (From latest)</h2>
                                                 <div class="row col-md-6">
                                                     <div class="col-md-12 d-flex flex-column justify-content-end align-items-end">
                                                         <div class="btn btn-primary" onclick="addListProcess('studying')">
                                                             <i class="fa fa-solid fa-plus-circle me-1"></i>
-                                                            </svg>ADD
+                                                            ADD
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3 count-studying">
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">Start time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                    <input type="date" value=""
+                                                           class="form-control st-start-time" id="" placeholder="01230123012033">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">End time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                    <input type="date" value=""
+                                                           class="form-control st-end-time" id="" placeholder="01230123012033">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-5">
                                                     <label class="form-label" for="siblings">School/University</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                    <input type="text" value=""
+                                                           class="form-control st-school" id="" placeholder="e.g ABC Company">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">Mode of study</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                    <input type="text" value=""
+                                                           class="form-control st-mode-study" id="" placeholder="e.g CEO">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
                                                     <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
@@ -372,10 +483,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <hr />
                                         <div id="workingProcess">
-                                            
+
                                             <div class="row">
                                                 <h2 class="col-md-6">Working Process (From latest)</h2>
                                                 <div class="row col-md-6">
@@ -387,22 +498,38 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3 count-working">
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">Start time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                    <input type="date" value=""
+                                                           class="form-control w-start-time" id="" placeholder="01230123012033">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">End time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
+                                                    <input type="date" value=""
+                                                           class="form-control w-end-time" id="" placeholder="01230123012033">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-5">
                                                     <label class="form-label" for="siblings">Working Agency</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
+                                                    <input type="text" value=""
+                                                           class="form-control w-work" id="" placeholder="e.g ABC Company">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-label" for="siblings">Position</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
+                                                    <input type="text" value=""
+                                                           class="form-control w-position" id="" placeholder="e.g CEO">
+                                                    <div class="invalid-feedback">
+                                                        Field required.
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
                                                     <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
@@ -410,79 +537,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">Start time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">End time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label class="form-label" for="siblings">Working Agency</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">Position</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
-                                                </div>
-                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
-                                                        <i class="fa fa-solid fa-minus-circle"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">Start time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">End time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label class="form-label" for="siblings">Working Agency</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">Position</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
-                                                </div>
-                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
-                                                        <i class="fa fa-solid fa-minus-circle"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">Start time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">End time</label>
-                                                    <input type="date" class="form-control" id="dateHCMY" placeholder="01230123012033">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label class="form-label" for="siblings">Working Agency</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g ABC Company">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label class="form-label" for="siblings">Position</label>
-                                                    <input type="text" class="form-control" id="partnerCurrentResident" placeholder="e.g CEO">
-                                                </div>
-                                                <div class="col-md-1 d-flex flex-column justify-content-end align-items-center">
-                                                    <div class="btn btn-danger" onclick="removeElementProcess(this, 'process')">
-                                                        <i class="fa fa-solid fa-minus-circle"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         </div>
-                                        
+
                                         <hr />
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <div class="mb-3">
+                                            <label class="form-check m-0">
+                                                <input id="checkTC" onchange="checkTermsCond()" type="checkbox" class="form-check-input">
+                                                <span class="form-check-label">I agree with terms and condition</span>
+                                            </label>
+                                        </div>
+                                        <button id="btn-submit" type="submit" class="btn btn-primary btn-lg" disabled>Submit</button>
                                     </form>
                                 </div>
                             </div>
@@ -524,58 +589,9 @@
 
     <script src="/template/js/app.js"></script>
     <script src="/template/js/custom_adduser.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Choices.js
-            new Choices(document.querySelector(".choices-single"));
-            new Choices(document.querySelector(".choices-multiple"));
-            // Flatpickr
-            flatpickr(".flatpickr-minimum");
-            flatpickr(".flatpickr-datetime", {
-                enableTime: true,
-                dateFormat: "Y-m-d H:i",
-            });
-            flatpickr(".flatpickr-human", {
-                altInput: true,
-                altFormat: "F j, Y",
-                dateFormat: "Y-m-d",
-            });
-            flatpickr(".flatpickr-multiple", {
-                mode: "multiple",
-                dateFormat: "Y-m-d"
-            });
-            flatpickr(".flatpickr-range", {
-                mode: "range",
-                dateFormat: "Y-m-d"
-            });
-            flatpickr(".flatpickr-time", {
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function (event) {
-            setTimeout(function () {
-                if (localStorage.getItem('popState') !== 'shown') {
-                    window.notyf.open({
-                        type: "success",
-                        message: "Get access to all 500+ components and 45+ pages with AdminKit PRO. <u><a class=\"text-white\" href=\"https://adminkit.io/pricing\" target=\"_blank\">More info</a></u> 🚀",
-                        duration: 10000,
-                        ripple: true,
-                        dismissible: false,
-                        position: {
-                            x: "left",
-                            y: "bottom"
-                        }
-                    });
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="/template/js/custom_navbar.js"></script>
 
-                    localStorage.setItem('popState', 'shown');
-                }
-            }, 15000);
-        });
-    </script>
 </body>
 
 </html>

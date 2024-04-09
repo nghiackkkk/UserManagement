@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+    dynamic fullName = ViewBag.FullName;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+
+    <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+    <title>Admin - Print Card</title>
+
+    <link href="/template/css/custom_home.css" rel="stylesheet">
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/custom_printCard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    @foreach (var user in Model)
+    {
+        <div class="wrapper bg-white id-card-id">
+            <div class="main bg-white">
+                <main class="content fs-4">
+                    <div class="container-fluid p-0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="h1 mb-3 d-flex justify-content-center">
+                                    <strong>ID CARD</strong>
+
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class="col-md-12 d-flex justify-content-end mb-3">
+                                Ha Noi, @ViewBag.DateNow
+                            </span>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <div class="front-card border border-black rounded-4" style="width: 500px; height: 315px">
+                                <div class="my-3 d-flex justify-content-center">
+                                    <h3>ID CARD</h3>
+                                </div>
+                                <div class="row mx-2">
+                                    <div id="cover" class="col-md-4 pr-0 pe-0">
+                                        <div><img width="150" height="170" class="object-fit-cover" src="/uploads/@user.CoverImage" /></div>
+
+                                        <div class="expire my-2 d-flex justify-content-center fs-6">Expire: @user.ExpireDate</div>
+                                    </div>
+                                    <div id="info-1" class="col-md-8">
+                                        <div>
+                                            <span><strong>ID no:</strong> @user.IdCard</span>
+                                        </div>
+                                        <div>
+                                            <div><strong>Fullname:</strong></div>
+                                            <div class="d-flex justify-content-center">@user.Fullname</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Date of birth:</strong></div>
+                                            <div class="col-md-6">@user.DateOfBirth</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4"><strong>Gender:</strong></div>
+                                            <div class="col-md-6">@user.Gender</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4"><strong>Address:</strong></div>
+                                            <div class="d-flex justify-content-center">@user.Address</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" d-flex justify-content-center">
+                            <div class="front-card border border-black rounded-4" style="width: 500px; height: 315px">
+                                <div class="my-3 d-flex justify-content-center">
+                                    <h3>Rules</h3>
+                                </div>
+                                <div class="row mx-2">
+                                    <div class="text-center">
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit. Etiam tempor libero nec
+                                        placerat venenati. Integer efficitur sit amet
+                                        velit eget hendrerit. Aliquam ante lorem, euismod
+                                        volutpat odio nec, dapibus imperdiet diam.
+                                        volutpat odio nec, dapibus imperdiet diam.
+                                        volutpat odio nec, dapibus imperdiet diam.
+                                        volutpat odio nec, dapibus imperdiet diam.
+                                        volutpat odio nec, dapibus imperdiet diam.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    }
+
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- DataTables CSS CDN -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- DataTables JS CDN -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="/template/js/app.js"></script>
+
+    <script src="/template/js/custom_chart.js"></script>
+    <script src="/template/js/custom_home.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+</body>
+
+</html>
