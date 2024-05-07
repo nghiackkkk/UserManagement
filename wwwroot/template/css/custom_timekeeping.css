@@ -1,0 +1,8 @@
+﻿.hover-bigger:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.hover-bigger {
+    transition: transform 0.5s ease;
+}

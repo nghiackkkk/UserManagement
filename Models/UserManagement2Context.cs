@@ -15,13 +15,21 @@ public partial class UserManagement2Context : DbContext
     {
     }
 
+    public virtual DbSet<Absence> Absences { get; set; }
+
     public virtual DbSet<Address> Addresses { get; set; }
 
+    public virtual DbSet<AttendanceCheck> AttendanceChecks { get; set; }
+
     public virtual DbSet<Family> Families { get; set; }
+
+    public virtual DbSet<Staff> Staff { get; set; }
 
     public virtual DbSet<Studyprocess> Studyprocesses { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<WorkingDay> WorkingDays { get; set; }
 
     public virtual DbSet<Workingprocess> Workingprocesses { get; set; }
 
@@ -32,6 +40,26 @@ public partial class UserManagement2Context : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Latin1_General_100_CI_AS_SC_UTF8");
+
+        modelBuilder.Entity<Absence>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ABSENCE__3213E83F76960B74");
+
+            entity.ToTable("ABSENCE");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Accepted)
+                .HasMaxLength(255)
+                .HasColumnName("accepted");
+            entity.Property(e => e.DayFrom).HasColumnName("day_from");
+            entity.Property(e => e.DayTo).HasColumnName("day_to");
+            entity.Property(e => e.IdStaff).HasColumnName("id_staff");
+            entity.Property(e => e.Reason).HasColumnName("reason");
+
+            entity.HasOne(d => d.IdStaffNavigation).WithMany(p => p.Absences)
+                .HasForeignKey(d => d.IdStaff)
+                .HasConstraintName("FK__ABSENCE__id_staf__0880433F");
+        });
 
         modelBuilder.Entity<Address>(entity =>
         {
@@ -52,6 +80,27 @@ public partial class UserManagement2Context : DbContext
             entity.Property(e => e.District)
                 .HasMaxLength(255)
                 .HasColumnName("district");
+        });
+
+        modelBuilder.Entity<AttendanceCheck>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ATTENDAN__3213E83F4F25FD0A");
+
+            entity.ToTable("ATTENDANCE_CHECK");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Accepted)
+                .HasMaxLength(255)
+                .HasColumnName("accepted");
+            entity.Property(e => e.Day).HasColumnName("day");
+            entity.Property(e => e.IdStaff).HasColumnName("id_staff");
+            entity.Property(e => e.Reason).HasColumnName("reason");
+            entity.Property(e => e.TimeIn).HasColumnName("time_in");
+            entity.Property(e => e.TimeOut).HasColumnName("time_out");
+
+            entity.HasOne(d => d.IdStaffNavigation).WithMany(p => p.AttendanceChecks)
+                .HasForeignKey(d => d.IdStaff)
+                .HasConstraintName("FK__ATTENDANC__id_st__7849DB76");
         });
 
         modelBuilder.Entity<Family>(entity =>
@@ -82,6 +131,26 @@ public partial class UserManagement2Context : DbContext
             entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Families)
                 .HasForeignKey(d => d.IdUser)
                 .HasConstraintName("FK__FAMILY__id_user__59FA5E80");
+        });
+
+        modelBuilder.Entity<Staff>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__STAFF__3213E83FA3E89B0C");
+
+            entity.ToTable("STAFF");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Department)
+                .HasMaxLength(255)
+                .HasColumnName("department");
+            entity.Property(e => e.IdUser).HasColumnName("id_user");
+            entity.Property(e => e.Position)
+                .HasMaxLength(255)
+                .HasColumnName("position");
+
+            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Staff)
+                .HasForeignKey(d => d.IdUser)
+                .HasConstraintName("FK__STAFF__id_user__756D6ECB");
         });
 
         modelBuilder.Entity<Studyprocess>(entity =>
@@ -169,6 +238,23 @@ public partial class UserManagement2Context : DbContext
             entity.HasOne(d => d.IdRegularAddressNavigation).WithMany(p => p.UserIdRegularAddressNavigations)
                 .HasForeignKey(d => d.IdRegularAddress)
                 .HasConstraintName("FK__USERS__id_regula__571DF1D5");
+        });
+
+        modelBuilder.Entity<WorkingDay>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__WORKING___3213E83F6D69AB13");
+
+            entity.ToTable("WORKING_DAY");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IdStaff).HasColumnName("id_staff");
+            entity.Property(e => e.Month).HasColumnName("month");
+            entity.Property(e => e.NumberChecked).HasColumnName("number_checked");
+            entity.Property(e => e.Year).HasColumnName("year");
+
+            entity.HasOne(d => d.IdStaffNavigation).WithMany(p => p.WorkingDays)
+                .HasForeignKey(d => d.IdStaff)
+                .HasConstraintName("FK__WORKING_D__id_st__7B264821");
         });
 
         modelBuilder.Entity<Workingprocess>(entity =>

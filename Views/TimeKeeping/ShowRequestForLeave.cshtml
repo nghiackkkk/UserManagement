@@ -1,0 +1,158 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+    <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+    <title>Request for leave</title>
+
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="/template/js/DataTables/datatables.min.css" rel="stylesheet" />
+</head>
+
+<body id="body-rfl">
+
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Side_bar.cshtml"></partial>
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+            <main class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="h3 mb-3"><strong>REQUEST FOR LEAVE</strong></h1>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card p-3">
+                                <div class="fw-bold fs-4 mb-2">Filter</div>
+                                <div class="mb-5 row">
+                                    <div class="col-md-2">
+                                        <select id="status-select" class="form-select" aria-label="Default select example">
+                                            <option value="">-- ALL STATUS --</option>
+                                            <option value="Accepted">Accepted</option>
+                                            <option value="Rejected">Rejected</option>
+                                            <option value="False">Not yet</option>
+                                           
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select id="department-select" class="form-select" aria-label="Default select example">
+                                            <option value="">-- ALL DEPARTMENT --</option>
+                                            <option value="HR">HR</option>
+                                            <option value="SALE">SALE</option>
+                                            <option value="IT">IT</option>
+                                            <option value="MARKETING">MARKETING</option>
+                                            <option value="MEDIA">MEDIA</option>
+                                            <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select id="position-select" class="form-select" aria-label="Default select example">
+                                            <option value="">-- ALL POSITION --</option>
+                                            <option value="Leader">Leader</option>
+                                            <option value="Junior">Junior</option>
+                                            <option value="Fresher">Fresher</option>
+                                            <option value="Intern">Intern</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <buton onclick="filterRFL()" class="btn btn-primary w-100">Filter</buton>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <buton onclick="refreshRFL()" class="btn btn-info w-100">
+                                            <i data-feather="refresh-cw"></i> Refresh
+                                        </buton>
+                                    </div>
+                                    
+                                </div>
+
+                                <table id="rfl-table" class="stripe hover row-border w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>ID Staff</th>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Position</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Reason</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>ID Staff</th>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Position</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Reason</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- MODAL -->
+
+            <div class="modal fade" id="timecheck-modal" tabindex="-1" aria-labelledby="timecheck-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="timecheck-modal-label">DETAIL INFO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="reason">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger">Discard</button>
+                            <button type="button" class="btn btn-primary">Accept</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END MODAL-->
+            <partial name="~/Views/Partials/Footer.cshtml"></partial>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="/template/js/DataTables/datatables.min.js"></script>
+
+    <script src="/template/js/app.js"></script>
+    <script src="/template/js/TimeKeeping/modal.js"></script>
+    <script src="/template/js/TimeKeeping/datatables.js"></script>
+    <script src="/template/js/TimeKeeping/timekeeping.js"></script>
+    <script src="/template/js/custom_navbar.js"></script>
+
+</body>
+</html>

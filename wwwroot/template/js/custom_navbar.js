@@ -65,7 +65,7 @@ function printAllProfile() {
             const elements = doc.getElementsByClassName('profile-id');
             const idss = doc.getElementsByClassName('id-profile');
             const zip = new JSZip();
-            
+
             var promises = [];
             var opt = {
                 margin: [0, 0, 1, 0],
@@ -76,10 +76,10 @@ function printAllProfile() {
             for (let i = 0; i < elements.length; i++) {
                 // Choose the element and save the PDF for your user.
                 const element = elements[i];
-               
+
                 const idUser = idss[i].value;
                 const filename = `Profile_${idUser}.pdf`;
-                
+
                 // Generate PDF and add to zip
                 const pdfPromise = html2pdf()
                     .set(opt)
@@ -104,6 +104,45 @@ function printAllProfile() {
         }
     });
 }
+
 function exportExcel() {
     window.location.href = "/Admin/ExportExcel";
+}
+
+function printQR() {
+    $.ajax({
+        url: '/Admin/TimeKeeping/PrintQRCheckIO',
+        type: "GET",
+        traditional: true,
+        dataType: "html",
+        success: function (data) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, "text/html");
+
+            var qrcode = new QRCode(doc.getElementById('qr-code'), {
+                text: "http://localhost:5093/User/CheckIO",
+                width: 700,
+                height: 700,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            // Choose the elements that your content will be rendered to.
+            const elements = doc.getElementById('printable');
+
+            var opt = {
+                margin: [-2, 0, 3, 0],
+                filename: 'QR_CheckIO.pdf',
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'p' }
+            }
+
+            html2pdf()
+                .set(opt)
+                .from(elements)
+                .save();
+        },
+        error(xhr, status, error) {
+            console.log(error);
+        }
+    });
 }

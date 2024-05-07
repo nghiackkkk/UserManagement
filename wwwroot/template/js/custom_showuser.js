@@ -1,4 +1,5 @@
-﻿// Get ther search input by press Enter
+﻿
+// Get ther search input by press Enter
 document.addEventListener("DOMContentLoaded", function () {
     var searchInput = document.getElementById("searchInput");
 
@@ -295,14 +296,14 @@ function bulkAction() {
         } else if (selectedValue === "print-card") {
             printCard(listId);
         } else if (selectedValue === "print-profile") {
-            
+
             printProfile(listId);
         }
         else {
             window.location.href = "/Admin/ShowUser";
         }
     }
-    
+
 }
 
 function printProfile(listId) {
@@ -320,47 +321,30 @@ function printProfile(listId) {
             const doc = parser.parseFromString(data, "text/html");
 
             // Choose the elements that your content will be rendered to.
-            const elements = doc.getElementsByClassName('profile-id');
-            const zip = new JSZip();
-
-            var promises = [];
+            const elements = doc.body;
+            var amargin = [];
+            if (doc.querySelectorAll('.profile-id').length % 2 == 0) {
+                amargin = [-3, 0, 1, 0];
+            } else {
+                amargin = [];
+            }
             var opt = {
-                margin: [0, 0, 1, 0],
-                filename: 'Profiles.zip', // Change filename to zip file
+                margin: [-5, 0, 0, 0],
+                filename: 'Profiles.pdf', // Change filename to zip file
+                pagebreak: { after: '.profile-id'},
                 jsPDF: { unit: 'cm', format: 'A4', orientation: 'p' }
             };
 
-            for (let i = 0; i < elements.length; i++) {
-                // Choose the element and save the PDF for your user.
-                const element = elements[i];
-                const filename = `Profile_${listId[i]}.pdf`;
-
-                // Generate PDF and add to zip
-                const pdfPromise = html2pdf()
-                    .set(opt)
-                    .from(element)
-                    .outputPdf()
-                    .then(function (pdf) {
-                        zip.file(filename, pdf, { binary: true });
-                    });
-
-                promises.push(pdfPromise);
-            }
-
-            // Wait for all promises to resolve
-            Promise.all(promises).then(function () {
-                // Generate zip file
-                zip.generateAsync({ type: "blob" })
-                    .then(function (content) {
-                        // Offer the zip file for download
-                        saveAs(content, "Profiles.zip");
-                    });
-            });
+            html2pdf().set(opt).from(elements).save();
         }
     });
 }
+;
 
 function printCard(listId) {
+    // Show a loader indicator (example using a basic element with ID 'loader')
+    $('#loader').show();
+
     $.ajax({
         url: "/Admin/PrintCard",
         type: "GET",
@@ -370,50 +354,29 @@ function printCard(listId) {
         traditional: true,
         dataType: "html",
         success: function (data) {
-            // Convert the HTML string into a DOM object
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, "text/html");
 
-            // Choose the elements that your content will be rendered to.
-            const elements = doc.getElementsByClassName('id-card-id');
-            const zip = new JSZip();
-
-            var promises = [];
-            var opt = {
-                margin: [0, 0, 0, 0],
-                filename: 'ID_Cards.zip', // Change filename to zip file
+            const element = doc.body;
+            const options = {
+                margin: [-5, 0, 0, 0],
+                filename: 'ID_Cards.pdf',
+                pagebreak: {after: '.id-card-id' },
                 jsPDF: { unit: 'cm', format: 'letter', orientation: 'l' }
             };
+            html2pdf().set(options).from(element).save();
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching card data:", error);
 
-            for (let i = 0; i < elements.length; i++) {
-                // Choose the element and save the PDF for your user.
-                const element = elements[i];
-                const filename = `ID_Card_${listId[i]}.pdf`;
-
-                // Generate PDF and add to zip
-                const pdfPromise = html2pdf()
-                    .set(opt)
-                    .from(element)
-                    .outputPdf()
-                    .then(function (pdf) {
-                        zip.file(filename, pdf, { binary: true });
-                    });
-
-                promises.push(pdfPromise);
-            }
-
-            // Wait for all promises to resolve
-            Promise.all(promises).then(function () {
-                // Generate zip file
-                zip.generateAsync({ type: "blob" })
-                    .then(function (content) {
-                        // Offer the zip file for download
-                        saveAs(content, "ID_Cards.zip");
-                    });
-            });
+            $('#loader').hide();
         }
     });
 }
+
+
+
+
 
 function getAllChecked() {
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');

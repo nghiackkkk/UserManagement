@@ -1,4 +1,19 @@
-﻿function printCard() {
+﻿$(document).ready(function () {
+    var url = window.location.href;
+    var urlWithoutQuery = url.split('?')[0]; 
+    var urlSegments = urlWithoutQuery.split("/"); 
+
+    var lastTwoSegments = urlSegments.slice(-2).join('/'); 
+
+    if (lastTwoSegments == "User/TimeKeeping") {
+        $('#u-checkio').toggleClass('active');
+    } else if (lastTwoSegments == "User/Home") {
+        $('#u-profile').toggleClass('active');
+    } else {
+        // Handle other URL patterns or display a default menu item (optional)
+    }
+});
+function printCard() {
     $.ajax({
         url: "/User/PrintCard",
         type: "GET",
@@ -31,7 +46,7 @@
         }
     });
 }
-function printProfile(){
+function printProfile() {
     $.ajax({
         url: "/User/PrintProfile",
         type: "GET",
@@ -46,7 +61,7 @@ function printProfile(){
             const elements = doc.getElementsByClassName('profile-id');
             var opt = {
                 margin: [0, 0, 1, 0],
-                filename: 'Profile.pdf', 
+                filename: 'Profile.pdf',
                 jsPDF: { unit: 'cm', format: 'A4', orientation: 'p' }
             };
 

@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml.FormulaParsing;
+using System.Globalization;
+using System.Net.NetworkInformation;
 using UserManagement.Models;
 using UserManagement.Models.Viewsmodel;
 using UserManagement.Services.Admin;
@@ -7,7 +11,7 @@ namespace UserManagement.Controllers
 {
     public class UserController : Controller
     {
-        UserManagement2Context db = new UserManagement2Context();
+        UserManagement2Context _db = new UserManagement2Context();
         private readonly ILogger<HomeController> _logger;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
         private readonly IAdminService _adminService;
@@ -18,6 +22,16 @@ namespace UserManagement.Controllers
             _logger = logger;
             _hostingEnvironment = environment;
             _adminService = adminService;
+        }
+        private bool IsLogin()
+        {
+            var fullname = HttpContext.Session.GetString("FullName");
+            if (fullname != null)
+            {
+                ViewBag.FullName = fullname;
+                return true;
+            }
+            return false;
         }
         //SHOW VIEW
         public IActionResult Home()
@@ -106,7 +120,204 @@ namespace UserManagement.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        [HttpGet("User/TimeKeeping")]
+        public IActionResult ShowTimeKeeping()
+        {
+            if (IsLogin())
+            {
+                return View("~/Views/TimeKeeping/UserTimeKeeping.cshtml");
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet("User/CheckIO")]
+        public IActionResult CheckIO()
+        {
+            return View();
+        }
         //END SHOW VIEW
+
+        [HttpPost("User/DoCheckIO")]
+        public IActionResult DoCheckIO(string username, string password)
+        {
+            List<User> users = _db.Users.ToList();
+
+            User user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+
+            if (user != null)
+            {
+                if (user.Status != "Open")
+                {
+                    ViewBag.ErrorLogin = "User is locked";
+                    return View("Login");
+                }
+
+                // check date time today if user have timein in table atendence_check
+                var dateNow = DateTime.Now;
+                var time = dateNow.ToString("hh:mm:ss");
+                DateOnly dateOnly = new DateOnly(dateNow.Year, dateNow.Month, dateNow.Day);
+                TimeOnly timeOnly = new TimeOnly(dateNow.Hour, dateNow.Minute, dateNow.Second);
+
+                var result = from u in _db.Users
+                             join s in _db.Staff on u.Id equals s.IdUser
+                             join a in _db.AttendanceChecks on s.Id equals a.IdStaff
+                             where a.Day == dateOnly && u.Id == user.Id
+                             select new
+                             {
+                                 id_staff = s.Id,
+                                 id_user = user.Id,
+                                 full_name = user.FullName,
+                                 day = a.Day,
+                                 time_in = a.TimeIn,
+                                 time_out = a.TimeOut
+                             };
+                var lResult = result.ToList();
+                bool hasResult = result.Any();
+                if (!hasResult || lResult.All(check => check.time_in != null && check.time_out != null))
+                {
+                    // if dont have result or (timein != null and timeput != null) to add new checkin
+                    var idStaff = _db.Staff
+                        .Where(s => s.IdUser == user.Id)
+                        .Select(s => s.Id)
+                        .FirstOrDefault();
+
+                    if (idStaff != null)
+                    {
+                        AttendanceCheck ac = new AttendanceCheck
+                        {
+                            IdStaff = idStaff,
+                            Day = dateOnly,
+                            TimeIn = timeOnly
+                        };
+                        _db.AttendanceChecks.Add(ac);
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                        ViewBag.ErrorLogin = "User is not a staff!";
+                        return View("CheckIO");
+                    }
+                }
+                else
+                {
+                    // if have time in then put to time out
+                    foreach (var check in lResult)
+                    {
+                        if (check.time_in != null && check.time_out == null)
+                        {
+                            var attendanceCheck = _db.AttendanceChecks
+                                .FirstOrDefault(ac => ac.IdStaff == check.id_staff && ac.Day == dateOnly && ac.TimeOut == null);
+
+                            if (attendanceCheck != null)
+                            {
+                                attendanceCheck.TimeOut = timeOnly;
+                                _db.SaveChanges();
+                            }
+                        }
+                    }
+                }
+
+                return RedirectToAction("CheckIO", "User");
+            }
+
+            ViewBag.ErrorLogin = "Incorrect Username or Password!";
+            return RedirectToAction("CheckIO", "User");
+
+        }
+
+        // API
+        [HttpGet("User/API/GetDataIO")]
+        public IActionResult GetDataIO()
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+            var result = from u in _db.Users
+                         join s in _db.Staff on u.Id equals s.IdUser
+                         join a in _db.AttendanceChecks on s.Id equals a.IdStaff
+                         where u.Id == idUser
+                         orderby a.Day descending
+                         select new
+                         {
+                             id_staff = s.Id,
+                             id_user = u.Id,
+                             fullName = u.FullName,
+                             day = a.Day,
+                             timeIn = a.TimeIn,
+                             timeOut = a.TimeOut,
+                             reason = a.Reason,
+                             accepted = a.Accepted
+                         };
+
+            return Json(new { data = result });
+        }
+        [HttpGet("User/API/GetDataABS")]
+        public IActionResult GetDataABS()
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+            var result = from u in _db.Users
+                         join s in _db.Staff on u.Id equals s.IdUser
+                         join a in _db.Absences on s.Id equals a.IdStaff
+                         where u.Id == idUser
+                         orderby a.Id descending
+                         select new
+                         {
+                             id_staff = s.Id,
+                             id_user = u.Id,
+                             fullName = u.FullName,
+                             day_from = a.DayFrom,
+                             day_to = a.DayTo,
+                             reason = a.Reason,
+                             accepted = a.Accepted
+                         };
+
+            return Json(new { data = result });
+        }
+        // END API
+
+        [HttpPost("User/CreateReason")]
+        public IActionResult CreateReason(string reason, string day, string timein, string timeout)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+            var idStaff = _db.Staff.Where(s => s.IdUser == idUser).Select(a => a.Id).FirstOrDefault();
+            var dayOnly = DateOnly.Parse(day);
+            var timeinOnly = TimeOnly.Parse(timein);
+            var timeoutOnly = TimeOnly.Parse(timeout);
+            var attendanceCheck = _db.AttendanceChecks
+                .FirstOrDefault(a =>
+                    a.IdStaff == idStaff &&
+                    a.Day == dayOnly &&
+                    a.TimeIn == timeinOnly &&
+                    a.TimeOut == timeoutOnly);
+
+            attendanceCheck.Reason = reason;
+            attendanceCheck.Accepted = "False";
+            _db.SaveChanges();
+
+            return RedirectToAction("ShowTimeKeeping", "User");
+        }
+
+        [HttpPost("User/CreateAbsence")]
+        public IActionResult CreateAbsence(string dayfrom, string dayto, string reasonabs)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+            var idStaff = _db.Staff.Where(s => s.IdUser == idUser).Select(a => a.Id).FirstOrDefault();
+
+            var dayfromO = DateOnly.Parse(dayfrom);
+            var daytoO = DateOnly.Parse(dayto);
+
+            var absence = new Absence
+            {
+                IdStaff = idStaff,
+                DayFrom = dayfromO,
+                DayTo = daytoO,
+                Reason = reasonabs,
+                Accepted = "False"
+            };
+
+            _db.Absences.Add(absence);
+            _db.SaveChanges();
+
+            return RedirectToAction("ShowTimeKeeping", "User");
+        }
         public IActionResult PrintCard()
         {
             var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
@@ -236,10 +447,10 @@ namespace UserManagement.Controllers
                 User userExist = _adminService.GetUserById(idUser);
 
                 // Update address
-                var addPR = db.Addresses
+                var addPR = _db.Addresses
                     .Where(a => a.Id == userExist.IdPernamentResidence)
                     .FirstOrDefault();
-                var addRA = db.Addresses
+                var addRA = _db.Addresses
                    .Where(a => a.Id == userExist.IdRegularAddress)
                    .FirstOrDefault();
 

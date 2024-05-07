@@ -1,0 +1,321 @@
+﻿@{
+    Layout = null;
+}
+@model UserManagement.Models.Viewsmodel.UserViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+    <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+    <title>Check-in/out</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="/template/css/custom_timekeeping.css" rel="stylesheet">
+    <link href="/template/js/DataTables/datatables.min.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body id="body-usertk">
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Sidebar_user.cshtml"></partial>
+
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="mb-5"><h1>CHECK-IN/OUT</h1></div>
+                        <div class="col-md-12 d-flex justify-content-center gap-4">
+                            <div id="btn-checkin" class="card hover-bigger d-flex align-items-center justify-content-center bg-primary text-white" style="height:400px; width: 400px">
+                                <span class="fs-1 fw-bold">CHECK IN/OUT</span>
+                                <div id="qrcode-i"></div>
+                            </div>
+                            <div data-bs-toggle="modal"
+                                 data-bs-target="#user-statistic-modal"
+                                 class="card hover-bigger d-flex align-items-center justify-content-center bg-info text-white" style="height:400px; width: 400px">
+                                <span class="fs-1 fw-bold">STATISTIC</span>
+
+                            </div>
+                            <div data-bs-toggle="modal"
+                                 data-bs-target="#user-absence-modal"
+                                 class="card hover-bigger d-flex align-items-center justify-content-center bg-warning text-white" style="height:400px; width: 400px">
+                                <span class="fs-1 fw-bold text-center">REQUEST FOR LEAVE OF ABSENCE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+            <!-- MODAL -->
+            <div class="modal fade" id="user-leave-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">REASON FOR ABSENCE</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/User/CreateAbsence">
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="from-name" class="col-form-label">From:</label>
+                                        <input type="date" class="form-control" id="from-name" name="dayfrom">
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="to-name" class="col-form-label">To:</label>
+                                        <input type="date" class="form-control" id="to-name" name="dayto">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">Reason:</label>
+                                    <textarea class="form-control" id="" rows="5" name="reasonabs"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#user-absence-modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="user-absence-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">ABSENCE</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#user-leave-modal">Create</button>
+                            </div>
+                            <table id="absence-table" class="w-100 table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Reason</th>
+                                        <th>Accepted</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Reason</th>
+                                        <th>Accepted</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="user-statistic-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">CHECK IN/OUT STATISTIC</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="checkio-table" class="w-100 table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Day</th>
+                                        <th>Time in</th>
+                                        <th>Time out</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Day</th>
+                                        <th>Time in</th>
+                                        <th>Time out</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="user-success-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">SUCCESSFUL!</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Your check-in/out is saved to database.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="user-reason-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">REASON FOR CHECK-IN LATE!</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/User/CreateReason">
+                                <div class="mb-3">
+                                    <div>
+                                        <span class="fw-bold">Day:</span>
+                                        <span id="day-reason"> 25-04-2024</span>
+                                        <input id="inp-day" type="hidden" name="day"/>
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold">Time in:</span>
+                                        <span id="timein-reason"> 08:00:00</span>
+                                        <input id="inp-timein" type="hidden" name="timein" />
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold">Time out:</span>
+                                        <span id="timeout-reason"> 08:00:00</span>
+                                        <input id="inp-timeout" type="hidden" name="timeout" />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">Reason:</label>
+                                    <textarea class="form-control" id="message-text" rows="5" name="reason"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#user-statistic-modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="user-submitted-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">REASON FOR CHECK-IN LATE!</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post">
+                                <div class="mb-3">
+                                    <div>
+                                        <span class="fw-bold">Day:</span>
+                                        <span id="day-submitted"> 25-04-2024</span>
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold">Time in:</span>
+                                        <span id="timein-submitted"> 08:00:00</span>
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold">Time out:</span>
+                                        <span id="timeout-submitted"> 08:00:00</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="col-form-label fw-bold">Reason:</label>
+                                    <span id="reason-submitted"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="col-form-label fw-bold">Accepted:</label>
+                                    <span id="accepted-submitted"></span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#user-statistic-modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- END MODAL -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="/template/js/DataTables/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/template/js/DataTables/datatables.min.js"></script>
+
+    <script src="/template/js/app.js"></script>
+    <script src="/template/js/custom_user.js"></script>
+    <script src="/template/js/TimeKeeping/datatables.js"></script>
+    <script src="/template/js/TimeKeeping/user.js"></script>
+    <script src="/template/js/custom_navbar.js"></script>
+
+</body>
+
+</html>
+

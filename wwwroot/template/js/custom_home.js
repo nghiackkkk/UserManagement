@@ -20,8 +20,9 @@ function printReport() {
 
             const formattedDate = getCurrentDate();
             var opt = {
-                margin: [0, 0, 0, 0],
+                margin: [10, 0, 2, 0],
                 filename: 'report' + formattedDate + '.pdf',
+                pagebreak: { mode: 'avoid-all'}
             };
 
             // Choose the element and save the PDF for your user.

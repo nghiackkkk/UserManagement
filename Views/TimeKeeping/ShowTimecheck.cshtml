@@ -1,0 +1,178 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+    <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+    <title>Time Check</title>
+
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="/template/js/DataTables/datatables.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Side_bar.cshtml"></partial>
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+            <main class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="h3 mb-3"><strong>TIME CHECK</strong></h1>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card p-3">
+                                <div class="fw-bold fs-4 mb-2">Filter</div>
+                                <div class="mb-5 row">
+                                    <div class="col-md-2 d-flex flex-row gap-2 align-items-center">
+                                        <label for="" class="fw-bold">Day:</label>
+                                        <input type="date" class="form-control" id="day-input">
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <select id="department-select" class="form-select" aria-label="Default select example">
+                                            <option value="">All department</option>
+                                            <option value="HR">HR</option>
+                                            <option value="SALE">SALE</option>
+                                            <option value="IT">IT</option>
+                                            <option value="MARKETING">MARKETING</option>
+                                            <option value="MEDIA">MEDIA</option>
+                                            <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select id="position-select" class="form-select" aria-label="Default select example">
+                                            <option value="">All position</option>
+                                            <option value="Leader">Leader</option>
+                                            <option value="Junior">Junior</option>
+                                            <option value="Fresher">Fresher</option>
+                                            <option value="Intern">Intern</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <buton onclick="filterTC()" class="btn btn-primary w-100">Filter</buton>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <buton onclick="refreshTC()" class="btn btn-info w-100">
+                                            <i data-feather="refresh-cw"></i> Refresh
+                                        </buton>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <buton onclick="todayTC()" class="btn btn-success w-100">Today</buton>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="row col-md-12 mb-3 text-center fw-bold fs-2">
+                                        <div class="col-md-6">
+                                            <span id="live-date"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span id="live-time"></span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <table id="timecheck-table" class="stripe hover row-border">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>#</th>
+                                            <th>ID Staff</th>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Position</th>
+                                            <th>Day</th>
+                                            <th>Time in</th>
+                                            <th>Time out</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>#</th>
+                                            <th>ID Staff</th>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Position</th>
+                                            <th>Day</th>
+                                            <th>Time in</th>
+                                            <th>Time out</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- MODAL -->
+
+            <div class="modal fade" id="timecheck-modal" tabindex="-1" aria-labelledby="timecheck-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="timecheck-modal-label">DETAIL INFO</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="reason" class="mb-3"></div>
+                            <div class="fw-bold">Status: <span id="accept" class="fw-normal"></span></div>
+                        </div>
+                        <div id="modal-footer" class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END MODAL-->
+            <partial name="~/Views/Partials/Footer.cshtml"></partial>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="/template/js/DataTables/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.0.0/jspdf.umd.min.js" integrity="sha512-g77bZKU4ktH2I5nNioWzOMcbd3fN/svB0vQM73Uo5GRn/EGfcSJB0DlR1ithxnFsDaa0HmlOwHYiUFeM1P3RRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    
+
+    <script src="/template/js/app.js"></script>
+    <script src="/template/js/TimeKeeping/modal.js"></script>
+    <script src="/template/js/TimeKeeping/datatables.js"></script>
+    <script src="/template/js/TimeKeeping/timekeeping.js"></script>
+    <script src="/template/js/custom_navbar.js"></script>
+
+</body>
+
+</html>

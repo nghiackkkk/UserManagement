@@ -51,7 +51,7 @@ namespace UserManagement.Controllers
                     HttpContext.Session.SetString("FullName", user.FullName);
                     HttpContext.Session.SetString("IDUserLogin", user.Id.ToString());
                     TempData["FullName"] = HttpContext.Session.GetString("FullName");
-                    return RedirectToAction("Home", "User");
+                    return RedirectToAction("ShowTimeKeeping", "User");
                 }
 
                 HttpContext.Session.SetString("FullName", user.FullName);

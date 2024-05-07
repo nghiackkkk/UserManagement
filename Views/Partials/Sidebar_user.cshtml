@@ -8,11 +8,18 @@
             <li class="sidebar-header">
                 Pages
             </li>
-            <li class="sidebar-item active">
-                <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+            <li id="u-checkio" class="sidebar-item">
+                <a asp-controller="User" asp-action="ShowTimekeeping" class="sidebar-link">
+                    <i class="align-middle" data-feather="check-circle"></i> <span class="align-middle">Check-in/out</span>
                 </a>
             </li>
+
+            <li id="u-profile" class="sidebar-item">
+                <a asp-controller="User" asp-action="Home" class="sidebar-link">
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                </a>
+            </li>
+           
             <li class="sidebar-item">
                 <span onclick="printCard()" class="sidebar-link">
                     <i class="align-middle" data-feather="download"></i> <span class="align-middle">Print ID Card</span>

@@ -293,7 +293,7 @@ namespace UserManagement.Controllers
 
             // New user past 7 day
             Dictionary<string, int> data = new Dictionary<string, int>();
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 30; i++)
             {
                 DateTime pastDay = today.AddDays(-i - 1);
                 string dayMonth = pastDay.ToString("dd/MM");
@@ -311,7 +311,7 @@ namespace UserManagement.Controllers
 
             // User by province
 
-            //
+            // Add to view model
             ReportViewModel model = new ReportViewModel
             {
                 Total = total,

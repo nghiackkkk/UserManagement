@@ -49,6 +49,8 @@ public partial class User
 
     public virtual Address? IdRegularAddressNavigation { get; set; }
 
+    public virtual ICollection<Staff> Staff { get; set; } = new List<Staff>();
+
     public virtual ICollection<Studyprocess> Studyprocesses { get; set; } = new List<Studyprocess>();
 
     public virtual ICollection<Workingprocess> Workingprocesses { get; set; } = new List<Workingprocess>();
