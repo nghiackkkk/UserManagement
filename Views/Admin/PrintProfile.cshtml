@@ -30,429 +30,431 @@
 </head>
 
 <body>
-    @foreach (var user in Model)
-    {
-        <div id="" class="wrapper bg-white profile-id">
-            <input id="id-profile" class="id-profile" type="hidden" value="@user.Id" />
-            <div class="main bg-white">
-                <main class="content">
-                    <div class="container-fluid p-0">
-                        <div class="row mb-4">
-                            <div class="col-md-3">
-                                <img width="150" height="170" src="/uploads/@user.Cover" />
-                            </div>
-                            <div class="col-md-9 d-flex justify-content-center">
-                                <div class="row">
-                                    <div class="col-md-12 d-flex justify-content-center">
-                                        <h1 class="h1 mb-3">
-                                            <strong>SOCIALIST REPUBLIC OF VIET NAM</strong>
-                                        </h1>
+    <div @ViewBag.WidthPreview>
+        @foreach (var user in Model)
+        {
+            <div id="" class="wrapper bg-white profile-id">
+                <input id="id-profile" class="id-profile" type="hidden" value="@user.Id" />
+                <div class="main bg-white">
+                    <main class="content">
+                        <div class="container-fluid p-0">
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <img width="150" height="170" src="/uploads/@user.Cover" />
+                                </div>
+                                <div class="col-md-9 d-flex justify-content-center">
+                                    <div class="row">
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <h1 class="h1 mb-3">
+                                                <strong>SOCIALIST REPUBLIC OF VIET NAM</strong>
+                                            </h1>
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <h2>Independence - Freedom - Happiness</h2>
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <h2>-----------------------</h2>
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <h1 class="h1 mb-3">
+                                                <strong>CURRICULUM VITAE</strong>
+                                            </h1>
+                                        </div>
                                     </div>
-                                    <div class="col-md-12 d-flex justify-content-center">
-                                        <h2>Independence - Freedom - Happiness</h2>
-                                    </div>
-                                    <div class="col-md-12 d-flex justify-content-center">
-                                        <h2>-----------------------</h2>
-                                    </div>
-                                    <div class="col-md-12 d-flex justify-content-center">
-                                        <h1 class="h1 mb-3">
-                                            <strong>CURRICULUM VITAE</strong>
-                                        </h1>
-                                    </div>
+                                    @*  <div class="row">
+                                <span class="col-md-12 d-flex justify-content-end mb-3">
+                                Ha Noi, April 5th, 2024
+                                </span>
+                                </div> *@
+
                                 </div>
-                                @*  <div class="row">
-                            <span class="col-md-12 d-flex justify-content-end mb-3">
-                            Ha Noi, April 5th, 2024
-                            </span>
-                            </div> *@
-
                             </div>
-                        </div>
-                        @* PART I -------------------------------------------- *@
-                        <div class="col-md-12 d-flex justify-content-center">
-                            <h3 class="h3 mb-3">
-                                <strong>PART I: PERSONAL INFORMATION</strong>
-                            </h3>
-                        </div>
-                        <div>
-                            <div class="row mb-3">
-                                <div class="col-md-8"><strong>1.NAME AND SURNAME:</strong> @user.FullName</div>
-                                <div class="col-md-4"><strong>2. GENDER:</strong> @user.Gender</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6"><strong>3. D.O.B:</strong> @user.DateOfBirth</div>
-                                <div class="col-md-6"><strong>4. ID CARD NO:</strong> @user.IdCard</div>
-                            </div>
-                            <div class="mb-3">
-                                <div><strong>5. REGULAR ADDRESS:</strong> @user.RegularAddressAddress</div>
-                            </div>
-                            <div class="mb-3">
-                                <div><strong>6. PERNAMENT RESIDENCE:</strong> @user.PermanentResidenceAddress</div>
-                            </div>
-                            <div class="mb-3">
-                                <div><strong>7. PHONE NUMBER:</strong> @user.PhoneNumber</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6"><strong>8. ETHNIC GROUP:</strong> @user.EthnicGroup</div>
-                                <div class="col-md-6"><strong>9. RELIGION:</strong> @user.Religion</div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6"><strong>10. CULTURAL STANDARD:</strong> @user.CulturalStandard</div>
-                                @* <div class="col-md-6"><strong>11. ID CARD NO:</strong> 012345678999</div> *@
-                            </div>
-                        </div>
-
-                        @* PART II -------------------------------------------- *@
-                        <div class="col-md-12 d-flex justify-content-center">
-                            <h3 class="h3 mb-3">
-                                <strong>PART II: FAMILY RELATIONS</strong>
-                            </h3>
-                        </div>
-                        <div>
-                            <div class="">
-                                <div class="mb-3">
-                                    <div class=""><strong>11. FATHER</strong></div>
-                                </div>
-                                @{
-                                    var trueRela = "Father";
-                                    var check = true;
-                                    foreach(var sib in user.Siblings)
-                                    {
-                                        if (sib.Realtionship == trueRela)
-                                        {
-                                            <div class="ps-5">
-                                                <div class="row mb-3">
-                                                    <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
-                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
-                                                </div>
-                                            </div>
-                                            check = false;
-                                        } 
-
-                                    }
-                                    if (check == true)
-                                    {
-                                        <div class="ps-5">
-                                            <div class="row mb-3">
-                                                <div class="col-md-5"><strong>- NAME:</strong></div>
-                                                <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT RESIDENCE: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT OCCUPATION: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- WORKING AGENCY: </strong> </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                                
-                            </div>
-                            <div>
-                                <div class="mb-3">
-                                    <div class=""><strong>12. MOTHER</strong></div>
-                                </div>
-                                @{
-                                    trueRela = "Mother";
-                                    check = true;
-                                    foreach (var sib in user.Siblings)
-                                    {
-                                        if (sib.Realtionship == trueRela)
-                                        {
-                                            <div class="ps-5">
-                                                <div class="row mb-3">
-                                                    <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
-                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
-                                                </div>
-                                            </div>
-                                            check = false;
-                                        }
-
-                                    }
-                                    if (check == true)
-                                    {
-                                        <div class="ps-5">
-                                            <div class="row mb-3">
-                                                <div class="col-md-5"><strong>- NAME:</strong></div>
-                                                <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT RESIDENCE: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT OCCUPATION: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- WORKING AGENCY: </strong> </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            </div>
-
-                            <div>
-                                <div class="mb-3 mt-3">
-                                    <div class=""><strong>13. HUSBAND/WIFE</strong></div>
-                                </div>
-                                @{
-                                    trueRela = "Husband/Wife";
-                                    check = true;
-                                    foreach (var sib in user.Siblings)
-                                    {
-                                        if (sib.Realtionship == trueRela)
-                                        {
-                                            <div class="ps-5">
-                                                <div class="row mb-3">
-                                                    <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
-                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
-                                                </div>
-                                            </div>
-                                            check = false;
-                                        }
-
-                                    }
-                                    if (check == true)
-                                    {
-                                        <div class="ps-5">
-                                            <div class="row mb-3">
-                                                <div class="col-md-5"><strong>- NAME:</strong></div>
-                                                <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT RESIDENCE: </strong> </div>
-                                            </div>
-                                            <div class="mb-3 mt-5">
-                                                <div><strong>- CURRENT OCCUPATION: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- WORKING AGENCY: </strong> </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                                
-                            </div>
-                            <div>
-                                <div class="mb-3">
-                                    <div class=""><strong>14. SIBLINGS</strong></div>
-                                </div>
-                                @{
-                                    trueRela = "Sibling";
-                                    check = true;
-                                    var count = 1;
-                                    foreach (var sib in user.Siblings)
-                                    {
-                                        
-                                        if (sib.Realtionship == trueRela)
-                                        {
-                                            <div class="ps-4"><strong>SIBLING @count</strong></div>
-                                            <div class="ps-5 mb-3">
-                                                <div class="row mb-3">
-                                                    <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
-                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
-                                                </div>
-                                            </div>
-                                            count++;
-                                            check = false;
-                                        }
-
-                                    }
-                                    if (check == true)
-                                    {
-                                        <div class="ps-4"><strong>SIBLING 1</strong></div>
-                                        <div class="ps-5 mb-3">
-
-                                            <div class="row mb-3">
-                                                <div class="col-md-5"><strong>- NAME:</strong> </div>
-                                                <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT RESIDENCE: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT OCCUPATION: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- WORKING AGENCY: </strong> </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="ps-4"><strong>SIBLING 2</strong></div>
-                                        <div class="ps-5 mb-5">
-                                            <div class="row mb-3">
-                                                <div class="col-md-5"><strong>- NAME:</strong> </div>
-                                                <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT RESIDENCE: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- CURRENT OCCUPATION: </strong> </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div><strong>- WORKING AGENCY: </strong> </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                               
-                            </div>
-                            @* PART III -------------------------------------------- *@
+                            @* PART I -------------------------------------------- *@
                             <div class="col-md-12 d-flex justify-content-center">
                                 <h3 class="h3 mb-3">
-                                    <strong>PART III: STUDY PROCESS</strong>
+                                    <strong>PART I: PERSONAL INFORMATION</strong>
                                 </h3>
                             </div>
                             <div>
-                                <table class="w-100 mb-3 table-bordered">
-                                    <thead>
-                                        <tr class="">
-                                            <th class="text-center">Start</th>
-                                            <th class="text-center">End</th>
-                                            <th class="text-center">School/University</th>
-                                            <th class="text-center">Mode of study</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach(var st in user.StudyProcesses)
-                                        {
-                                            var start = st.StartTime.ToString("dd-MM-yyyy");
-                                            var end = st.EndTime.ToString("dd-MM-yyyy");
-                                            <tr>
-                                                <td class="text-center">@start</td>
-                                                <td class="text-center">@end</td>
-                                                <td class="text-center">@st.SchoolUniversity</td>
-                                                <td class="text-center">@st.ModeOfStudy</td>
-                                            </tr>
-                                        }
-                                        @{
-                                            var countStudy = user.StudyProcesses.Count;
-                                        }
-                                        @if (countStudy < 4)
-                                        {
-                                            for(var i = 0; i < 4 - countStudy; i++)
-                                            {
-                                                <tr>
-                                                    <td class="text-center" style="height: 24px"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                            }
-                                        }
-                                        
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                            @* PART IV -------------------------------------------- *@
-                            <div class="col-md-12 d-flex justify-content-center">
-                                <h3 class="h3 mb-3 mt-3">
-                                    <strong>PART IV: WORKING PROCESS</strong>
-                                </h3>
-                            </div>
-                            <div>
-                                <table class="w-100 my-3 table-bordered">
-                                    <thead>
-                                        <tr class="">
-                                            <th class="text-center">Start</th>
-                                            <th class="text-center">End</th>
-                                            <th class="text-center">Working Agency</th>
-                                            <th class="text-center">Position</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var st in user.WorkingProcesses)
-                                        {
-                                            var start = st.StartTime.ToString("dd-MM-yyyy");
-                                            var end = st.EndTime.ToString("dd-MM-yyyy");
-                                            <tr>
-                                                <td class="text-center">@start</td>
-                                                <td class="text-center">@end</td>
-                                                <td class="text-center">@st.WorkingAgency</td>
-                                                <td class="text-center">@st.Position</td>
-                                            </tr>
-                                        }
-                                        @{
-                                            var countWorking = user.WorkingProcesses.Count;
-                                        }
-                                        @if (countWorking < 4)
-                                        {
-                                            for (var i = 0; i < 4 - countWorking; i++)
-                                            {
-                                                <tr>
-                                                    <td class="text-center" style="height: 24px"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"></td>
-                                                </tr>
-                                            }
-                                        }
-                                    </tbody>
-                                </table>
+                                <div class="row mb-3">
+                                    <div class="col-md-8"><strong>1.NAME AND SURNAME:</strong> @user.FullName</div>
+                                    <div class="col-md-4"><strong>2. GENDER:</strong> @user.Gender</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6"><strong>3. D.O.B:</strong> @user.DateOfBirth</div>
+                                    <div class="col-md-6"><strong>4. ID CARD NO:</strong> @user.IdCard</div>
+                                </div>
+                                <div class="mb-3">
+                                    <div><strong>5. REGULAR ADDRESS:</strong> @user.RegularAddressAddress</div>
+                                </div>
+                                <div class="mb-3">
+                                    <div><strong>6. PERNAMENT RESIDENCE:</strong> @user.PermanentResidenceAddress</div>
+                                </div>
+                                <div class="mb-3">
+                                    <div><strong>7. PHONE NUMBER:</strong> @user.PhoneNumber</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6"><strong>8. ETHNIC GROUP:</strong> @user.EthnicGroup</div>
+                                    <div class="col-md-6"><strong>9. RELIGION:</strong> @user.Religion</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6"><strong>10. CULTURAL STANDARD:</strong> @user.CulturalStandard</div>
+                                    @* <div class="col-md-6"><strong>11. ID CARD NO:</strong> 012345678999</div> *@
+                                </div>
                             </div>
 
-                            @* PART V -------------------------------------------- *@
-                            <div class="row my-5">
-                                <div class="confirm col-md-6">
-                                    <div class="text-center fs-4 mb-3"><strong>Confirmation from working place or the locality registered.</strong></div>
-                                    <div>...........................................................................................</div>
-                                    <div>...........................................................................................</div>
-                                    <div>...........................................................................................</div>
-                                    <div>...........................................................................................</div>
-                                    <div>...........................................................................................</div>
+                            @* PART II -------------------------------------------- *@
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <h3 class="h3 mb-3">
+                                    <strong>PART II: FAMILY RELATIONS</strong>
+                                </h3>
+                            </div>
+                            <div>
+                                <div class="">
+                                    <div class="mb-3">
+                                        <div class=""><strong>11. FATHER</strong></div>
+                                    </div>
+                                    @{
+                                        var trueRela = "Father";
+                                        var check = true;
+                                        foreach (var sib in user.Siblings)
+                                        {
+                                            if (sib.Realtionship == trueRela)
+                                            {
+                                                <div class="ps-5">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
+                                                        <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
+                                                    </div>
+                                                </div>
+                                                check = false;
+                                            }
+
+                                        }
+                                        if (check == true)
+                                        {
+                                            <div class="ps-5">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-5"><strong>- NAME:</strong></div>
+                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT RESIDENCE: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT OCCUPATION: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- WORKING AGENCY: </strong> </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
 
                                 </div>
-                                <div class="sign col-md-6">
-                                    <div class="fs-4 text-center"><strong>Person making the declaration</strong></div>
-                                    <div class="fs-7 text-center"><em>(Personal signature)</em></div>
+                                <div>
+                                    <div class="mb-3">
+                                        <div class=""><strong>12. MOTHER</strong></div>
+                                    </div>
+                                    @{
+                                        trueRela = "Mother";
+                                        check = true;
+                                        foreach (var sib in user.Siblings)
+                                        {
+                                            if (sib.Realtionship == trueRela)
+                                            {
+                                                <div class="ps-5">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
+                                                        <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
+                                                    </div>
+                                                </div>
+                                                check = false;
+                                            }
+
+                                        }
+                                        if (check == true)
+                                        {
+                                            <div class="ps-5">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-5"><strong>- NAME:</strong></div>
+                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT RESIDENCE: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT OCCUPATION: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- WORKING AGENCY: </strong> </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                                <div>
+                                    <div class="mb-3 mt-3">
+                                        <div class=""><strong>13. HUSBAND/WIFE</strong></div>
+                                    </div>
+                                    @{
+                                        trueRela = "Husband/Wife";
+                                        check = true;
+                                        foreach (var sib in user.Siblings)
+                                        {
+                                            if (sib.Realtionship == trueRela)
+                                            {
+                                                <div class="ps-5">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
+                                                        <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
+                                                    </div>
+                                                </div>
+                                                check = false;
+                                            }
+
+                                        }
+                                        if (check == true)
+                                        {
+                                            <div class="ps-5">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-5"><strong>- NAME:</strong></div>
+                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT RESIDENCE: </strong> </div>
+                                                </div>
+                                                <div class="mb-3 mt-5">
+                                                    <div><strong>- CURRENT OCCUPATION: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- WORKING AGENCY: </strong> </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                                <div>
+                                    <div class="mb-3">
+                                        <div class=""><strong>14. SIBLINGS</strong></div>
+                                    </div>
+                                    @{
+                                        trueRela = "Sibling";
+                                        check = true;
+                                        var count = 1;
+                                        foreach (var sib in user.Siblings)
+                                        {
+
+                                            if (sib.Realtionship == trueRela)
+                                            {
+                                                <div class="ps-4"><strong>SIBLING @count</strong></div>
+                                                <div class="ps-5 mb-3">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-5"><strong>- NAME:</strong> @sib.FullName</div>
+                                                        <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> @sib.YearOfBirth</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT RESIDENCE: </strong> @sib.CurrentResident</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- CURRENT OCCUPATION: </strong> @sib.CurrentOcupation</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <div><strong>- WORKING AGENCY: </strong> @sib.WorkingAgency</div>
+                                                    </div>
+                                                </div>
+                                                count++;
+                                                check = false;
+                                            }
+
+                                        }
+                                        if (check == true)
+                                        {
+                                            <div class="ps-4"><strong>SIBLING 1</strong></div>
+                                            <div class="ps-5 mb-3">
+
+                                                <div class="row mb-3">
+                                                    <div class="col-md-5"><strong>- NAME:</strong> </div>
+                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT RESIDENCE: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT OCCUPATION: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- WORKING AGENCY: </strong> </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ps-4"><strong>SIBLING 2</strong></div>
+                                            <div class="ps-5 mb-5">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-5"><strong>- NAME:</strong> </div>
+                                                    <div class="col-md-6"><strong>- YEAR OF BIRTH:</strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT RESIDENCE: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- CURRENT OCCUPATION: </strong> </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div><strong>- WORKING AGENCY: </strong> </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                                @* PART III -------------------------------------------- *@
+                                <div class="col-md-12 d-flex justify-content-center">
+                                    <h3 class="h3 mb-3">
+                                        <strong>PART III: STUDY PROCESS</strong>
+                                    </h3>
+                                </div>
+                                <div>
+                                    <table class="w-100 mb-3 table-bordered">
+                                        <thead>
+                                            <tr class="">
+                                                <th class="text-center">Start</th>
+                                                <th class="text-center">End</th>
+                                                <th class="text-center">School/University</th>
+                                                <th class="text-center">Mode of study</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var st in user.StudyProcesses)
+                                            {
+                                                var start = st.StartTime.ToString("dd-MM-yyyy");
+                                                var end = st.EndTime.ToString("dd-MM-yyyy");
+                                                <tr>
+                                                    <td class="text-center">@start</td>
+                                                    <td class="text-center">@end</td>
+                                                    <td class="text-center">@st.SchoolUniversity</td>
+                                                    <td class="text-center">@st.ModeOfStudy</td>
+                                                </tr>
+                                            }
+                                            @{
+                                                var countStudy = user.StudyProcesses.Count;
+                                            }
+                                            @if (countStudy < 4)
+                                            {
+                                                for (var i = 0; i < 4 - countStudy; i++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center" style="height: 24px"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                    </tr>
+                                                }
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @* PART IV -------------------------------------------- *@
+                                <div class="col-md-12 d-flex justify-content-center">
+                                    <h3 class="h3 mb-3 mt-3">
+                                        <strong>PART IV: WORKING PROCESS</strong>
+                                    </h3>
+                                </div>
+                                <div>
+                                    <table class="w-100 my-3 table-bordered">
+                                        <thead>
+                                            <tr class="">
+                                                <th class="text-center">Start</th>
+                                                <th class="text-center">End</th>
+                                                <th class="text-center">Working Agency</th>
+                                                <th class="text-center">Position</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var st in user.WorkingProcesses)
+                                            {
+                                                var start = st.StartTime.ToString("dd-MM-yyyy");
+                                                var end = st.EndTime.ToString("dd-MM-yyyy");
+                                                <tr>
+                                                    <td class="text-center">@start</td>
+                                                    <td class="text-center">@end</td>
+                                                    <td class="text-center">@st.WorkingAgency</td>
+                                                    <td class="text-center">@st.Position</td>
+                                                </tr>
+                                            }
+                                            @{
+                                                var countWorking = user.WorkingProcesses.Count;
+                                            }
+                                            @if (countWorking < 4)
+                                            {
+                                                for (var i = 0; i < 4 - countWorking; i++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center" style="height: 24px"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                @* PART V -------------------------------------------- *@
+                                <div class="row my-5">
+                                    <div class="confirm col-md-6">
+                                        <div class="text-center fs-4 mb-3"><strong>Confirmation from working place or the locality registered.</strong></div>
+                                        <div>...........................................................................................</div>
+                                        <div>...........................................................................................</div>
+                                        <div>...........................................................................................</div>
+                                        <div>...........................................................................................</div>
+                                        <div>...........................................................................................</div>
+
+                                    </div>
+                                    <div class="sign col-md-6">
+                                        <div class="fs-4 text-center"><strong>Person making the declaration</strong></div>
+                                        <div class="fs-7 text-center"><em>(Personal signature)</em></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </main>
+                    </main>
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
     <!-- jQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- DataTables CSS CDN -->

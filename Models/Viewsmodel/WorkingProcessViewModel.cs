@@ -2,6 +2,8 @@
 {
     public class WorkingProcessViewModel
     {
+        public int? Id { get; set; }
+
         public DateOnly StartTime { get; set; }
 
         public DateOnly EndTime { get; set; }

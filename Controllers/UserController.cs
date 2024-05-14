@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml.FormulaParsing;
 using System.Globalization;
@@ -28,10 +31,20 @@ namespace UserManagement.Controllers
             var fullname = HttpContext.Session.GetString("FullName");
             if (fullname != null)
             {
+                var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+                User user = _db.Users.FirstOrDefault(u => u.Id == idUser);
                 ViewBag.FullName = fullname;
+                ViewBag.Cover = user.CoverImage;
                 return true;
             }
             return false;
+        }
+        private User InitialUserById()
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+            var user = _db.Users.FirstOrDefault(x => x.Id == idUser);
+            ViewBag.IdUser = idUser;
+            return user;
         }
         //SHOW VIEW
         public IActionResult Home()
@@ -135,8 +148,238 @@ namespace UserManagement.Controllers
         {
             return View();
         }
+
+        [HttpGet("User/Profile/Account")]
+        public IActionResult ShowAccount()
+        {
+            if (IsLogin())
+            {
+                User user = InitialUserById();
+
+                ViewBag.Username = user.Username;
+                ViewBag.Password = user.Password;
+                ViewBag.Img = user.CoverImage;
+
+                return View("/Views/User/Profile/ShowAccount.cshtml");
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet("User/Profile/Personal-Information")]
+        public IActionResult ShowPersonalInfo()
+        {
+            if (IsLogin())
+            {
+                User user = InitialUserById();
+                UserViewModel vm = new UserViewModel();
+
+                // Address
+                Address pr = _db.Addresses.FirstOrDefault(a => user.IdPernamentResidence == a.Id);
+                Address ra = _db.Addresses.FirstOrDefault(a => a.Id == user.IdRegularAddress);
+
+                vm.FullName = user.FullName;
+                vm.Gender = user.Gender;
+                vm.DateOfBirth = user.DateOfBirth;
+                vm.PhoneNumber = user.PhoneNumber;
+                vm.EthnicGroup = user.EthnicGroup;
+                vm.Religion = user.Regilion;
+                vm.IdCard = user.IdCard;
+                vm.CulturalStandard = user.CulturalStandard;
+
+                vm.PermanentResidenceCity = pr.City;
+                vm.PermanentResidenceDistrict = pr.District;
+                vm.PermanentResidenceCommune = pr.Commune;
+                vm.PermanentResidenceAddress = pr.Address1;
+
+                vm.RegularAddressCity = ra.City;
+                vm.RegularAddressDistrict = ra.District;
+                vm.RegularAddressCommune = ra.Commune;
+                vm.RegularAddressAddress = ra.Address1;
+
+                return View("/Views/User/Profile/ShowPersonalInfo.cshtml", vm);
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet("User/Profile/Family-Members")]
+        public IActionResult ShowFamilyMember()
+        {
+            if (IsLogin())
+            {
+                User user = InitialUserById();
+                UserViewModel vm = new UserViewModel();
+
+                List<Family> families = _db.Families.Where(x => x.IdUser == user.Id).ToList();
+                foreach (Family family in families)
+                {
+                    SiblingViewModel sbp = new SiblingViewModel
+                    {
+                        Id = family.Id,
+                        Realtionship = family.Realtionship,
+                        FullName = family.FullName,
+                        YearOfBirth = family.YearOfBirth,
+                        CurrentResident = family.CurrentResident,
+                        CurrentOcupation = family.CurrentOcupation,
+                        WorkingAgency = family.WorkingAgency
+                    };
+                    vm.Siblings.Add(sbp);
+                }
+
+                return View("/Views/User/Profile/ShowFamilyMember.cshtml", vm);
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet("User/Profile/Study-Process")]
+        public IActionResult ShowStudyProcess()
+        {
+            if (IsLogin())
+            {
+                User user = InitialUserById();
+                UserViewModel vm = new UserViewModel();
+
+                List<Studyprocess> stp = _db.Studyprocesses
+                    .Where(x => x.IdUser == user.Id).ToList();
+                foreach (Studyprocess s in stp)
+                {
+                    StudyProcessViewModel sbp = new StudyProcessViewModel
+                    {
+                        Id = s.Id,
+                        StartTime = s.StartTime,
+                        EndTime = s.EndTime,
+                        SchoolUniversity = s.SchoolUniversity,
+                        ModeOfStudy = s.ModeOfStudy
+                    };
+                    vm.StudyProcesses.Add(sbp);
+                }
+
+                return View("/Views/User/Profile/ShowStudyProcess.cshtml", vm);
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet("User/Profile/Working-Process")]
+        public IActionResult ShowWorkingProcess()
+        {
+            if (IsLogin())
+            {
+                User user = InitialUserById();
+                UserViewModel vm = new UserViewModel();
+
+                List<Workingprocess> stp = _db.Workingprocesses
+                    .Where(x => x.IdUser == user.Id).ToList();
+                foreach (Workingprocess s in stp)
+                {
+                    WorkingProcessViewModel sbp = new WorkingProcessViewModel
+                    {
+                        Id = s.Id,
+                        StartTime = s.StartTime,
+                        EndTime = s.EndTime,
+                        WorkingAgency = s.WorkingAgency,
+                        Position = s.Position
+                    };
+                    vm.WorkingProcesses.Add(sbp);
+                }
+
+                return View("/Views/User/Profile/ShowWorkingProcess.cshtml", vm);
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet("User/Profile/Preview")]
+        public IActionResult ShowPreview()
+        {
+            if (IsLogin())
+            {
+                //ViewBag.WidthPreview = "style = \"width: 1000px !important\"";
+                return View("/Views/User/Profile/ShowPreview.cshtml");
+            }
+            return Redirect("/");
+        }
         //END SHOW VIEW
 
+
+
+        // API
+        [HttpGet("User/API/GetDataIO")]
+        public IActionResult GetDataIO()
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+            var result = from u in _db.Users
+                         join s in _db.Staff on u.Id equals s.IdUser
+                         join a in _db.AttendanceChecks on s.Id equals a.IdStaff
+                         where u.Id == idUser
+                         orderby a.Day descending
+                         select new
+                         {
+                             id_staff = s.Id,
+                             id_user = u.Id,
+                             fullName = u.FullName,
+                             day = a.Day,
+                             timeIn = a.TimeIn,
+                             timeOut = a.TimeOut,
+                             reason = a.Reason,
+                             accepted = a.Accepted
+                         };
+
+            return Json(new { data = result });
+        }
+
+        [HttpGet("User/API/GetDataABS")]
+        public IActionResult GetDataABS()
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+            var result = from u in _db.Users
+                         join s in _db.Staff on u.Id equals s.IdUser
+                         join a in _db.Absences on s.Id equals a.IdStaff
+                         where u.Id == idUser
+                         orderby a.Id descending
+                         select new
+                         {
+                             id_staff = s.Id,
+                             id_user = u.Id,
+                             fullName = u.FullName,
+                             day_from = a.DayFrom,
+                             day_to = a.DayTo,
+                             reason = a.Reason,
+                             accepted = a.Accepted
+                         };
+
+            return Json(new { data = result });
+        }
+
+        [HttpPost("User/API/RemoveFam")]
+        public IActionResult RemoveFam(int id)
+        {
+            Family fam = _db.Families.FirstOrDefault(f => f.Id == id);
+            _db.Families.Remove(fam);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost("User/API/RemoveSW")]
+        public IActionResult RemoveSW(int id, string table)
+        {
+            if (table == "study")
+            {
+                var stu = _db.Studyprocesses
+                    .FirstOrDefault(s => s.Id == id);
+                _db.Studyprocesses.Remove(stu);
+            }
+            else
+            {
+                var wor = _db.Workingprocesses
+                    .FirstOrDefault(w => w.Id == id);
+                _db.Workingprocesses.Remove(wor);
+            }
+            _db.SaveChanges();
+            return Ok();
+        }
+        // END API
+
+
+
+        // POST
         [HttpPost("User/DoCheckIO")]
         public IActionResult DoCheckIO(string username, string password)
         {
@@ -225,54 +468,6 @@ namespace UserManagement.Controllers
 
         }
 
-        // API
-        [HttpGet("User/API/GetDataIO")]
-        public IActionResult GetDataIO()
-        {
-            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
-            var result = from u in _db.Users
-                         join s in _db.Staff on u.Id equals s.IdUser
-                         join a in _db.AttendanceChecks on s.Id equals a.IdStaff
-                         where u.Id == idUser
-                         orderby a.Day descending
-                         select new
-                         {
-                             id_staff = s.Id,
-                             id_user = u.Id,
-                             fullName = u.FullName,
-                             day = a.Day,
-                             timeIn = a.TimeIn,
-                             timeOut = a.TimeOut,
-                             reason = a.Reason,
-                             accepted = a.Accepted
-                         };
-
-            return Json(new { data = result });
-        }
-        [HttpGet("User/API/GetDataABS")]
-        public IActionResult GetDataABS()
-        {
-            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
-            var result = from u in _db.Users
-                         join s in _db.Staff on u.Id equals s.IdUser
-                         join a in _db.Absences on s.Id equals a.IdStaff
-                         where u.Id == idUser
-                         orderby a.Id descending
-                         select new
-                         {
-                             id_staff = s.Id,
-                             id_user = u.Id,
-                             fullName = u.FullName,
-                             day_from = a.DayFrom,
-                             day_to = a.DayTo,
-                             reason = a.Reason,
-                             accepted = a.Accepted
-                         };
-
-            return Json(new { data = result });
-        }
-        // END API
-
         [HttpPost("User/CreateReason")]
         public IActionResult CreateReason(string reason, string day, string timein, string timeout)
         {
@@ -318,6 +513,7 @@ namespace UserManagement.Controllers
 
             return RedirectToAction("ShowTimeKeeping", "User");
         }
+
         public IActionResult PrintCard()
         {
             var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
@@ -540,6 +736,7 @@ namespace UserManagement.Controllers
             }
             return Redirect("/");
         }
+
         private string GetUniqueFileName(string fileName)
         {
             fileName = Path.GetFileName(fileName);
@@ -548,6 +745,7 @@ namespace UserManagement.Controllers
                       + Guid.NewGuid().ToString().Substring(0, 4)
                       + Path.GetExtension(fileName);
         }
+
         private Studyprocess ConstructStudyingP(StudyProcessViewModel spvm, int userId)
         {
             Studyprocess study = new Studyprocess();
@@ -584,5 +782,249 @@ namespace UserManagement.Controllers
             family.IdUser = userId;
             return family;
         }
+
+        [HttpPost("User/DoSaveAccount")]
+        public IActionResult DoSaveAccount(UserViewModel userViewsModel)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+
+            User userExist = _db.Users.FirstOrDefault(u => u.Id == idUser);
+            if (userExist == null)
+            {
+                return BadRequest("User not found");
+            }
+            else
+            {
+                userExist.Username = userViewsModel.Username;
+                userExist.Password = userViewsModel.Password;
+                if (userViewsModel.CoverImage != null)
+                {
+                    var uniqueFileName = GetUniqueFileName(userViewsModel.CoverImage.FileName);
+                    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                    var filePath = Path.Combine(uploads, uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        userViewsModel.CoverImage.CopyTo(fileStream);
+                    }
+                    userExist.CoverImage = uniqueFileName;
+                }
+            }
+            _db.SaveChanges();
+            TempData["SuccessMessage"] = "Account saved successfully.";
+            return RedirectToAction("ShowAccount");
+        }
+
+        [HttpPost("User/DoSavePersonalInfo")]
+        public IActionResult DoSavePersonalInfo(UserViewModel userViewsModel)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+
+            User userExist = _db.Users.FirstOrDefault(u => u.Id == idUser);
+            if (userExist == null)
+            {
+                return BadRequest("User not found");
+            }
+            else
+            {
+                Address pr = _db.Addresses.FirstOrDefault(a => userExist.IdPernamentResidence == a.Id);
+                Address ra = _db.Addresses.FirstOrDefault(a => a.Id == userExist.IdRegularAddress);
+
+                userExist.FullName = userViewsModel.FullName;
+                userExist.Gender = userViewsModel.Gender;
+                userExist.DateOfBirth = userViewsModel.DateOfBirth;
+                userExist.PhoneNumber = userViewsModel.PhoneNumber;
+                userExist.EthnicGroup = userViewsModel.EthnicGroup;
+                userExist.Regilion = userViewsModel.Religion;
+                userExist.IdCard = userViewsModel.IdCard;
+                userExist.CulturalStandard = userExist.CulturalStandard;
+
+                pr.City = userViewsModel.PermanentResidenceCity;
+                pr.District = userViewsModel.PermanentResidenceDistrict;
+                pr.Commune = userViewsModel.PermanentResidenceCommune;
+                pr.Address1 = userViewsModel.PermanentResidenceAddress;
+
+                ra.City = userViewsModel.RegularAddressCity;
+                ra.District = userViewsModel.RegularAddressDistrict;
+                ra.Commune = userViewsModel.RegularAddressCommune;
+                ra.Address1 = userViewsModel.RegularAddressAddress;
+            }
+            _db.SaveChanges();
+            TempData["SuccessMessage"] = "Account saved successfully.";
+            return RedirectToAction("ShowPersonalInfo");
+        }
+
+        [HttpPost("User/DoSaveFamilyMem")]
+        public IActionResult DoSaveFamilyMem(UserViewModel userViewsModel)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+
+            User userExist = _db.Users.FirstOrDefault(u => u.Id == idUser);
+            if (userExist == null)
+            {
+                return BadRequest("User not found");
+            }
+            else
+            {
+                foreach (var family in userViewsModel.Siblings)
+                {
+                    var famExist = _db.Families.FirstOrDefault(u => u.Id == family.Id);
+                    if (famExist != null)
+                    {
+                        famExist.Realtionship = family.Realtionship;
+                        famExist.FullName = family.FullName;
+                        famExist.YearOfBirth = family.YearOfBirth;
+                        famExist.CurrentResident = family.CurrentResident;
+                        famExist.CurrentOcupation = family.CurrentOcupation;
+                        famExist.WorkingAgency = family.WorkingAgency;
+                    }
+                    else
+                    {
+                        Family fam = new Family
+                        {
+                            Realtionship = family.Realtionship,
+                            FullName = family.FullName,
+                            YearOfBirth = family.YearOfBirth,
+                            CurrentResident = family.CurrentResident,
+                            CurrentOcupation = family.CurrentOcupation,
+                            WorkingAgency = family.WorkingAgency
+                        };
+                    }
+                    _db.SaveChanges();
+                }
+            }
+
+            TempData["SuccessMessage"] = "Family members saved successfully.";
+            return RedirectToAction("ShowFamilyMember");
+        }
+
+        [HttpPost("User/Profile/DoAddFamilyMem")]
+        public IActionResult DoAddFamilyMem(string relationship, string fullname, int yob,
+            string cr, string co, string wa)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+
+            User userExist = _db.Users.FirstOrDefault(u => u.Id == idUser);
+            if (userExist == null)
+            {
+                return BadRequest("User not found");
+            }
+            else
+            {
+                Family family = new Family
+                {
+                    Realtionship = relationship,
+                    FullName = fullname,
+                    YearOfBirth = yob,
+                    CurrentOcupation = cr,
+                    CurrentResident = cr,
+                    WorkingAgency = wa,
+                    IdUser = idUser
+                };
+                _db.Families.Add(family);
+                _db.SaveChanges();
+            }
+
+            TempData["SuccessMessage"] = "Family members added successfully!";
+            return RedirectToAction("ShowFamilyMember");
+        }
+
+        [HttpPost("User/Profile/DoAddStudyProcess")]
+        public IActionResult DoAddStudyProcess(string startTime, string endTime,
+            string su, string mot)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+
+            User userExist = _db.Users.FirstOrDefault(u => u.Id == idUser);
+            if (userExist == null)
+            {
+                return BadRequest("User not found");
+            }
+            else
+            {
+                DateOnly startDateTime;
+                DateOnly endDateTime;
+
+                // Parse start time
+                if (!DateOnly.TryParseExact(startTime, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDateTime))
+                {
+                    // Handle parsing error
+                    return BadRequest("Invalid start time format");
+                }
+
+                // Parse end time
+                if (!DateOnly.TryParseExact(endTime, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDateTime))
+                {
+                    // Handle parsing error
+                    return BadRequest("Invalid end time format");
+                }
+                Studyprocess sp = new Studyprocess
+                {
+                    StartTime = startDateTime,
+                    EndTime = endDateTime,
+                    SchoolUniversity = su,
+                    ModeOfStudy = mot,
+                    IdUser = idUser
+                };
+                _db.Studyprocesses.Add(sp);
+                _db.SaveChanges();
+            }
+
+            TempData["SuccessMessage"] = "Studyprocess added successfully!";
+            return RedirectToAction("ShowStudyProcess");
+        }
+
+        [HttpPost("User/Profile/DoAddWorkingProcess")]
+        public IActionResult DoAddWorkingProcess(string startTime, string endTime,
+            string wag, string pos)
+        {
+            var idUser = Int32.Parse(HttpContext.Session.GetString("IDUserLogin"));
+
+            User userExist = _db.Users.FirstOrDefault(u => u.Id == idUser);
+            if (userExist == null)
+            {
+                return BadRequest("User not found");
+            }
+            else
+            {
+                DateOnly startDateTime;
+                DateOnly endDateTime;
+
+                // Parse start time
+                if (!DateOnly.TryParseExact(startTime, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDateTime))
+                {
+                    // Handle parsing error
+                    return BadRequest("Invalid start time format");
+                }
+
+                // Parse end time
+                if (!DateOnly.TryParseExact(endTime, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDateTime))
+                {
+                    // Handle parsing error
+                    return BadRequest("Invalid end time format");
+                }
+                Workingprocess sp = new Workingprocess
+                {
+                    StartTime = startDateTime,
+                    EndTime = endDateTime,
+                    WorkingAgency = wag,
+                    Position = pos,
+                    IdUser = idUser
+                };
+                _db.Workingprocesses.Add(sp);
+                _db.SaveChanges();
+            }
+
+            TempData["SuccessMessage"] = "Workingprocess added successfully!";
+            return RedirectToAction("ShowWorkingProcess");
+        }
+        // END POST
+    }
+
+    public class AccountViewModel()
+    {
+        public string? usn { get; set; }
+        public string? pas { get; set; }
+        public IFormFile? img { get; set; }
     }
 }

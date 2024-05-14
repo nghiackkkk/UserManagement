@@ -111,7 +111,9 @@ function validateUsernameU() {
     var value = usernameField.value.trim();
     var url = window.location.href;
     var id = parseInt(url.split('id=')[1]);
-    
+    if (isNaN(id)) {
+        id = $('#idUser').val();
+    }
     if (value != '') {
         $.ajax({
             url: "/Admin/CheckUsernameU",
@@ -124,9 +126,10 @@ function validateUsernameU() {
                 if (response.result == false) {
                     // If username exist
                     usernameField.classList.add('is-invalid');
+                    document.getElementById('btn-submit').disabled = true;
                 } else {
                     usernameField.classList.remove('is-invalid');
-
+                    document.getElementById('btn-submit').disabled = false;
                 }
             },
             error: function (xhr, status, error) {
@@ -145,7 +148,9 @@ function validatePassword() {
     if (!regex.test(newValue)) {
         errorField.classList.add('is-invalid');
         document.getElementById('btn-submit').disabled = true;
-        document.getElementById("checkTC").checked = false;
+        if ($('#checkTC').length > 0) {
+            document.getElementById("checkTC").checked = false;
+        }
     } else {
         errorField.classList.remove('is-invalid');
     }

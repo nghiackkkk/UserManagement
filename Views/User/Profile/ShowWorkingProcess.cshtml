@@ -1,0 +1,200 @@
+﻿@{
+    Layout = null;
+}
+@model UserManagement.Models.Viewsmodel.UserViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+    <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+    <title>Family Members</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="/template/css/custom_timekeeping.css" rel="stylesheet">
+    <link href="/template/js/DataTables/datatables.min.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body id="p-fam">
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Sidebar_user.cshtml"></partial>
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="h3 mb-3"><strong>Profile - Working process</strong></h1>
+                        </div>
+                    </div>
+                    <div class="card p-3">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Start time</th>
+                                    <th>End time</th>
+                                    <th>School / University</th>
+                                    <th>Mode of study</th>
+                                    <th class="d-flex justify-content-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var count = 1;
+                                }
+                                @foreach (var work in Model.WorkingProcesses)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>
+                                            @work.StartTime.ToString("dd-MM-yyyy")
+                                        </td>
+                                        <td>@work.EndTime.ToString("dd-MM-yyyy")</td>
+                                        <td>@work.WorkingAgency</td>
+                                        <td>@work.Position</td>
+                                        <td class="d-flex justify-content-center">
+                                            <span onclick="removeSW(@work.Id, 'work')" class="btn btn-danger">
+                                                <i data-feather="minus-circle"></i> Remove
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td class="d-flex justify-content-center">
+                                        <span class="btn btn-primary"
+                                              data-bs-toggle="modal"
+                                              data-bs-target="#addWor">
+                                            <i data-feather="plus-circle"></i> Add
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div id="successMessage"
+                                 class="alert text-white border rounded alert-success alert-dismissible position-fixed top-50 start-50 translate-middle z-index-9999"
+                                 role="alert"
+                                 style="width: 500px; height: 200px; background-color: rgba(116, 185, 255, 0.9); /* Màu với opacity */">
+                                @* <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> *@
+                                <div class="alert-message d-flex flex-column justify-content-center align-items-center">
+                                    <h4 class="alert-heading mb-3 fs-2">Well done!</h4>
+                                    <p class="fs-3">
+                                        @TempData["SuccessMessage"]
+                                    </p>
+                                </div>
+                            </div>
+                            <script>
+                                // Hide the success message after 5 seconds
+                                setTimeout(function () {
+                                    var successMessage = document.getElementById('successMessage');
+                                    if (successMessage) {
+                                        successMessage.style.display = 'none';
+                                    }
+                                }, 3000);
+                            </script>
+                        }
+                    </div>
+                </div>
+            </main>
+            <!-- MODAL -->
+            <div class="modal fade" id="addWor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">ADD FAMILY MEMBERS</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post" asp-action="DoAddWorkingProcess" asp-controller="User">
+                            <div class="modal-body">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Start time:</label>
+                                    <input name="startTime" type="date" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">End time:</label>
+                                    <input name="endTime" type="date" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Working agency:</label>
+                                    <input name="wag" type="text" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Position:</label>
+                                    <input name="pos" type="text" class="form-control" />
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- END MODAL -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <partial name="~/Views/Partials/Script/ScriptPDF.cshtml"></partial>
+
+    <script src="/template/js/app.js"></script>
+    <script src="/template/js/custom_user.js"></script>
+    <script src="/template/js/custom_navbar.js"></script>
+    <script src="/template/js/custom_userprofile.js"></script>
+</body>
+
+</html>
+

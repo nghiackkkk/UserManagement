@@ -1,0 +1,168 @@
+﻿@{
+    Layout = null;
+}
+@model UserManagement.Models.Viewsmodel.UserViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+    <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+    <title>Account</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="/template/css/custom_timekeeping.css" rel="stylesheet">
+    <link href="/template/js/DataTables/datatables.min.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body id="p-account">
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Sidebar_user.cshtml"></partial>
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="h3 mb-3"><strong>Profile - Account</strong></h1>
+                        </div>
+                    </div>
+                    <div class="card p-3">
+                        <input type="hidden" id="idUser" value="@ViewBag.IdUser" />
+                        <form method="post" asp-controller="User" asp-action="DoSaveAccount" enctype="multipart/form-data">
+                            <div class="row mb-3">
+
+                                <div id="avatar" class="col-md-6" aria-label="Click to upload avatar image">
+                                    <input asp-for="CoverImage" id="inp-avatar" type="file" class="mb-3 d-none" />
+                                    <div id="photo" class="w-100 d-flex justify-content-center">
+                                        <img id="img-show" class="border" width="500" height="500" src="~/uploads/@ViewBag.Img" />
+                                    </div>
+                                    <div>
+                                        <span class="fst-italic">*Click image to change</span>
+                                    </div>
+                                </div>
+                                <div id="account" class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Username</label>
+                                        <input asp-for="Username"
+                                               id="username"
+                                               type="text"
+                                               class="form-control"
+                                               placeholder="Username"
+                                               value="@ViewBag.Username"
+                                               onblur="validateUsernameU()">
+                                        <div class="invalid-feedback">
+                                            Username is already used!
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Password</label>
+                                        <div class="row">
+                                            <div class="col-md-11">
+                                                <input asp-for="Password"
+                                                       id="inputPassword"
+                                                       type="password"
+                                                       class="form-control"
+                                                       placeholder="Password"
+                                                       value="@ViewBag.Password"
+                                                       onkeyup="validatePassword()">
+                                                <div class="invalid-feedback">
+                                                    Password must include uppercase, lowercase, number, 3-10 letter and special symbol.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <span onclick="showHide()" class="btn btn-primary">
+                                                    <i data-feather="eye-off"></i>
+                                                </span>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100">
+                                <button id="btn-submit" type="submit" class="btn btn-primary w-100">Save</button>
+                            </div>
+                        </form>
+
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div id="successMessage"
+                                 class="alert text-white border rounded alert-success alert-dismissible position-fixed top-50 start-50 translate-middle z-index-9999" role="alert"
+                                 style="width: 500px; height: 200px; background-color: #74b9ff">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div class="alert-message d-flex flex-column justify-content-center align-items-center">
+                                    <h4 class="alert-heading mb-3 fs-2">Well done!</h4>
+                                    <p class="fs-3">
+                                        @TempData["SuccessMessage"]
+                                    </p>
+                                </div>
+                            </div>
+                            <script>
+                                // Hide the success message after 5 seconds
+                                setTimeout(function () {
+                                    var successMessage = document.getElementById('successMessage');
+                                    if (successMessage) {
+                                        successMessage.style.display = 'none';
+                                    }
+                                }, 3000);
+                            </script>
+                        }
+                    </div>
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <partial name="~/Views/Partials/Script/ScriptPDF.cshtml"></partial>
+
+    <script src="/template/js/app.js"></script>
+    <script src="/template/js/custom_user.js"></script>
+    <script src="/template/js/custom_edituser.js"></script>
+    <script src="/template/js/custom_navbar.js"></script>
+
+</body>
+
+</html>
+

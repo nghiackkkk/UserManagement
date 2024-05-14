@@ -3,6 +3,7 @@
     public class StudyProcessViewModel
     {
        
+        public int? Id { get; set; }
 
         public DateOnly StartTime { get; set; }
 

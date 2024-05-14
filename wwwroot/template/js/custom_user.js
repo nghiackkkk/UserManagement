@@ -1,16 +1,39 @@
 ﻿$(document).ready(function () {
     var url = window.location.href;
-    var urlWithoutQuery = url.split('?')[0]; 
-    var urlSegments = urlWithoutQuery.split("/"); 
+    var urlWithoutQuery = url.split('?')[0];
+    var urlSegments = urlWithoutQuery.split("/");
 
-    var lastTwoSegments = urlSegments.slice(-2).join('/'); 
+    var lastTwoSegments = urlSegments.slice(-2).join('/');
 
     if (lastTwoSegments == "User/TimeKeeping") {
         $('#u-checkio').toggleClass('active');
     } else if (lastTwoSegments == "User/Home") {
         $('#u-profile').toggleClass('active');
-    } else {
-        // Handle other URL patterns or display a default menu item (optional)
+    } else if (urlWithoutQuery.indexOf("/User/Profile/")) {
+        $('#u-profile-2').toggleClass('active');
+        var lastQ = urlWithoutQuery.split('/').slice(-1)[0];
+        switch (lastQ) {
+            case 'Account':
+                $('#up-ac').addClass('active');
+                break;
+            case 'Personal-Information':
+                $('#up-pi').addClass('active');
+                break;
+            case 'Family-Members':
+                $('#up-fm').addClass('active');
+                break;
+            case 'Study-Process':
+                $('#up-sp').addClass('active');
+                break;
+            case 'Working-Process':
+                $('#up-wp').addClass('active');
+                break;
+            case 'Preview':
+                $('#up-pv').addClass('active');
+                break;
+            default:
+                break;
+        }
     }
 });
 function printCard() {
@@ -75,4 +98,56 @@ function printProfile() {
             }
         }
     });
+}
+
+if ($('#p-account').length > 0) {
+    function showHide() {
+        var input = $('#inputPassword');
+        if (input.attr('type') === 'password') {
+            input.prop('type', 'text');
+        } else {
+            input.attr('type', 'password');
+        }
+    }
+
+    document.getElementById('avatar').addEventListener('click', function () {
+        document.getElementById('inp-avatar').click();
+    });
+
+    document.getElementById('inp-avatar').addEventListener('change', function () {
+        previewImg();
+    });
+
+    function previewImg() {
+        const imgInp = document.getElementById('inp-avatar');
+        const file = imgInp.files[0]; 
+
+        if (file) {
+            const previewImage = document.getElementById('img-show');
+            if (previewImage) {
+                URL.revokeObjectURL(previewImage.src); 
+                previewImage.src = URL.createObjectURL(file);
+            } else {
+                var img = new Image();
+                img.src = URL.createObjectURL(file);
+                img.id = "img-show";
+                document.getElementById('photo').appendChild(img);
+            }
+        } else {
+            
+        }
+    }
+
+}
+
+if ($('#previewDiv').length > 0) {
+    function renderUrlInDiv(url, targetDivId) {
+        $.get(url, function (data) {
+            $('#' + targetDivId).html(data);
+        });
+    }
+
+    var urlToRender = 'http://localhost:5093/Admin/PrintProfile?ids=30';
+    var divIdToRenderIn = 'previewDiv'; 
+    renderUrlInDiv(urlToRender, divIdToRenderIn);
 }

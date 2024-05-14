@@ -1,0 +1,217 @@
+﻿@{
+    Layout = null;
+}
+@model UserManagement.Models.Viewsmodel.UserViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="/template/img/icons/icon-48x48.png" />
+    <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+    <title>Family Members</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="/template/css/app.css" rel="stylesheet">
+    <link href="/template/css/light.css" rel="stylesheet">
+    <link href="/template/css/custom_timekeeping.css" rel="stylesheet">
+    <link href="/template/js/DataTables/datatables.min.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body id="p-fam">
+    <div class="wrapper">
+        <partial name="~/Views/Partials/Sidebar_user.cshtml"></partial>
+        <div class="main">
+            <partial name="~/Views/Partials/Top_navbar.cshtml"></partial>
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="h3 mb-3"><strong>Profile - Family Members</strong></h1>
+                        </div>
+                    </div>
+                    <div class="card p-3">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Role</th>
+                                    <th>Fullname</th>
+                                    <th>Year of birth</th>
+                                    <th>Current residence</th>
+                                    <th>Current occupation</th>
+                                    <th>Working agency</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var count = 1;
+                                }
+                                @foreach (var family in Model.Siblings)
+                                {
+                                    <tr>
+                                        <td>@(count++)</td>
+                                        <td>
+                                            @family.Realtionship
+                                        </td>
+                                        <td>@family.FullName</td>
+                                        <td>@family.YearOfBirth</td>
+                                        <td>@family.CurrentResident</td>
+                                        <td>@family.CurrentOcupation</td>
+                                        <td>@family.WorkingAgency</td>
+                                        <td>
+                                            <span onclick="removeSib(@family.Id)" class="btn btn-danger">
+                                                <i data-feather="minus-circle"></i> Remove
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>
+                                        <span class="btn btn-primary"
+                                              data-bs-toggle="modal"
+                                              data-bs-target="#addFam">
+                                            <i data-feather="plus-circle"></i> Add
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div id="successMessage"
+                                 class="alert text-white border rounded alert-success alert-dismissible position-fixed top-50 start-50 translate-middle z-index-9999"
+                                 role="alert"
+                                 style="width: 500px; height: 200px; background-color: rgba(116, 185, 255, 0.9); /* Màu với opacity */">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div class="alert-message d-flex flex-column justify-content-center align-items-center">
+                                    <h4 class="alert-heading mb-3 fs-2">Well done!</h4>
+                                    <p class="fs-3">
+                                        @TempData["SuccessMessage"]
+                                    </p>
+                                </div>
+                            </div>
+                            <script>
+                                // Hide the success message after 5 seconds
+                                setTimeout(function () {
+                                    var successMessage = document.getElementById('successMessage');
+                                    if (successMessage) {
+                                        successMessage.style.display = 'none';
+                                    }
+                                }, 3000);
+                            </script>
+                        }
+                    </div>
+                </div>
+            </main>
+            <!-- MODAL -->
+            <div class="modal fade" id="addFam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">ADD FAMILY MEMBERS</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post" action="DoAddFamilyMem">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Relationship:</label>
+                                    <select name="relationship" class="form-control" required>
+                                        <option selected>-- RELATIONSHIP --</option>
+                                        <option value="Father">Father</option>
+                                        <option value="Mother">Mother</option>
+                                        <option value="Husband/Wife">Husband/Wife</option>
+                                        <option value="Sibling">Sibling</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Fullname:</label>
+                                    <input name="fullname" type="text" class="form-control" placeholder="Enter fullname" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Year of birth:</label>
+                                    <input name="yob" type="number" class="form-control" placeholder="Enter year of birth" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Current residence:</label>
+                                    <input name="cr" type="text" class="form-control" placeholder="Enter current residence" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Current occupation:</label>
+                                    <input name="co" type="text" class="form-control" placeholder="Enter current occupation" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Working agency:</label>
+                                    <input name="wa" type="text" class="form-control" placeholder="Enter working agency" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- END MODAL -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <partial name="~/Views/Partials/Script/ScriptPDF.cshtml"></partial>
+
+    <script src="/template/js/app.js"></script>
+    <script src="/template/js/custom_user.js"></script>
+    <script src="/template/js/custom_navbar.js"></script>
+    <script src="/template/js/custom_userprofile.js"></script>
+</body>
+
+</html>
+

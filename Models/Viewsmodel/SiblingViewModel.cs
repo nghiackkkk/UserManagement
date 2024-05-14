@@ -2,6 +2,8 @@
 {
     public class SiblingViewModel
     {
+        public int? Id { get; set; }
+
         public string Realtionship { get; set; } = null!;
 
         public string FullName { get; set; } = null!;
