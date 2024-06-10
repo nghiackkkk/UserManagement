@@ -143,7 +143,7 @@
                                                         <td onclick="checkedRow(this)">@((user.PhoneNumber != null) ? user.PhoneNumber : "null")</td>
                                                         <td onclick="checkedRow(this)">
                                                             @{
-                                                                var formattedDate = (user.DateOfBirth != null) ? user.DateOfBirth.ToString("yyyy-MM-dd") : "null";
+                                                                var formattedDate = (user.DateOfBirth != null) ? user.DateOfBirth.ToString("dd-MM-yyyy") : "null";
                                                             }
                                                             @formattedDate
                                                         </td>

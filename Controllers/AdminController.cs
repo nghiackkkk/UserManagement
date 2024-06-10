@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.Web;
 using OfficeOpenXml.Style;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 
 namespace UserManagement.Controllers
@@ -33,7 +34,7 @@ namespace UserManagement.Controllers
             _adminService = adminService;
             _hostingEnvironment = hostingEnvironment;
         }
-        
+
         private List<string> GetImageName(string directoryPath)
         {
             List<string> imageNames = new List<string>();
@@ -140,7 +141,7 @@ namespace UserManagement.Controllers
             }
             return Redirect("/");
         }
-        
+
         [HttpGet]
         public JsonResult ShowUserJson(string search = "", string type = "active", string sort = "latest", int pageNumber = 1, int pageSize = 10)
         {
@@ -183,7 +184,7 @@ namespace UserManagement.Controllers
             return Redirect("/");
 
         }
-        
+
         public IActionResult AddUser()
         {
             var fullname = HttpContext.Session.GetString("FullName");
@@ -210,30 +211,37 @@ namespace UserManagement.Controllers
                 // Find User by id
                 User user = _adminService.GetUserById(id);
                 //Find address by user id
-                Address pr = _adminService.GetAddressById((int)user.IdPernamentResidence);
-                Address ra = _adminService.GetAddressById((int)user.IdRegularAddress);
+                if (user.IdPernamentResidence != null && user.IdRegularAddress != null)
+                {
+                    Address pr = _adminService.GetAddressById((int)user.IdPernamentResidence);
+                    Address ra = _adminService.GetAddressById((int)user.IdRegularAddress);
+
+                    model.PermanentResidenceCity = pr.City;
+                    model.PermanentResidenceDistrict = pr.District;
+                    model.PermanentResidenceCommune = pr.Commune;
+                    model.PermanentResidenceAddress = pr.Address1;
+
+                    model.RegularAddressCity = ra.City;
+                    model.RegularAddressDistrict = ra.District;
+                    model.RegularAddressCommune = ra.Commune;
+                    model.RegularAddressAddress = ra.Address1;
+                }
+
                 // User
+                DateOnly dateOnly = DateOnly.FromDateTime(DateTime.Now);
+
                 ViewBag.CoverImage = user.CoverImage;
                 model.Username = user.Username;
                 model.Password = user.Password;
                 model.FullName = user.FullName;
                 model.Gender = user.Gender;
-                model.DateOfBirth = (System.DateOnly)user.DateOfBirth;
+                model.DateOfBirth = (user.DateOfBirth != null) ? (System.DateOnly)user.DateOfBirth : dateOnly;
                 model.PhoneNumber = user.PhoneNumber;
                 model.EthnicGroup = user.EthnicGroup;
                 model.Religion = user.Regilion;
                 model.IdCard = user.IdCard;
                 model.CulturalStandard = user.CulturalStandard;
 
-                model.PermanentResidenceCity = pr.City;
-                model.PermanentResidenceDistrict = pr.District;
-                model.PermanentResidenceCommune = pr.Commune;
-                model.PermanentResidenceAddress = pr.Address1;
-
-                model.RegularAddressCity = ra.City;
-                model.RegularAddressDistrict = ra.District;
-                model.RegularAddressCommune = ra.Commune;
-                model.RegularAddressAddress = ra.Address1;
                 // Family
                 List<Family> families = _adminService.GetFamilyByIdUser(id);
                 foreach (Family family in families)
@@ -478,7 +486,7 @@ namespace UserManagement.Controllers
             }
             return View(luvm);
         }
-        
+
         [HttpGet]
         public IActionResult PrintAllProfile()
         {
@@ -563,9 +571,9 @@ namespace UserManagement.Controllers
             }
             return View("PrintProfile", luvm);
         }
-        
+
         //END SHOW VIEW
-        
+
         public void SetPaginate(int pageNumber, int pageSize, int totalUser)
         {
 
@@ -792,13 +800,18 @@ namespace UserManagement.Controllers
                 User userExist = _adminService.GetUserById(idUser);
 
                 // Update address
-                var addPR = db.Addresses
-                    .Where(a => a.Id == userExist.IdPernamentResidence)
-                    .FirstOrDefault();
-                var addRA = db.Addresses
-                   .Where(a => a.Id == userExist.IdRegularAddress)
+                var addPR = new Address();
+                var addRA = new Address();
+                if (userExist.IdPernamentResidence != null && userExist.IdRegularAddress != null)
+                {
+                    addPR = db.Addresses
+                   .Where(a => a.Id == userExist.IdPernamentResidence)
                    .FirstOrDefault();
-
+                    addRA = db.Addresses
+                       .Where(a => a.Id == userExist.IdRegularAddress)
+                       .FirstOrDefault();
+                }
+               
                 addPR.City = userViewsModel.PermanentResidenceCity;
                 addPR.District = userViewsModel.PermanentResidenceDistrict;
                 addPR.Commune = userViewsModel.PermanentResidenceCommune;

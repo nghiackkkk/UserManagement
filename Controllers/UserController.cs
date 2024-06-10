@@ -174,8 +174,22 @@ namespace UserManagement.Controllers
                 UserViewModel vm = new UserViewModel();
 
                 // Address
-                Address pr = _db.Addresses.FirstOrDefault(a => user.IdPernamentResidence == a.Id);
-                Address ra = _db.Addresses.FirstOrDefault(a => a.Id == user.IdRegularAddress);
+                if (user.IdPernamentResidence != null && user.IdRegularAddress != null)
+                {
+                    Address pr = _db.Addresses.FirstOrDefault(a => user.IdPernamentResidence == a.Id);
+                    Address ra = _db.Addresses.FirstOrDefault(a => a.Id == user.IdRegularAddress);
+
+                    vm.PermanentResidenceCity = pr.City;
+                    vm.PermanentResidenceDistrict = pr.District;
+                    vm.PermanentResidenceCommune = pr.Commune;
+                    vm.PermanentResidenceAddress = pr.Address1;
+
+                    vm.RegularAddressCity = ra.City;
+                    vm.RegularAddressDistrict = ra.District;
+                    vm.RegularAddressCommune = ra.Commune;
+                    vm.RegularAddressAddress = ra.Address1;
+                }
+               
 
                 vm.FullName = user.FullName;
                 vm.Gender = user.Gender;
@@ -185,16 +199,6 @@ namespace UserManagement.Controllers
                 vm.Religion = user.Regilion;
                 vm.IdCard = user.IdCard;
                 vm.CulturalStandard = user.CulturalStandard;
-
-                vm.PermanentResidenceCity = pr.City;
-                vm.PermanentResidenceDistrict = pr.District;
-                vm.PermanentResidenceCommune = pr.Commune;
-                vm.PermanentResidenceAddress = pr.Address1;
-
-                vm.RegularAddressCity = ra.City;
-                vm.RegularAddressDistrict = ra.District;
-                vm.RegularAddressCommune = ra.Commune;
-                vm.RegularAddressAddress = ra.Address1;
 
                 return View("/Views/User/Profile/ShowPersonalInfo.cshtml", vm);
             }
@@ -827,9 +831,15 @@ namespace UserManagement.Controllers
             }
             else
             {
-                Address pr = _db.Addresses.FirstOrDefault(a => userExist.IdPernamentResidence == a.Id);
-                Address ra = _db.Addresses.FirstOrDefault(a => a.Id == userExist.IdRegularAddress);
+                Address pr = new Address();
+                Address ra = new Address();
 
+                if (userExist.IdPernamentResidence != null && userExist.IdRegularAddress != null)
+                {
+                    pr = _db.Addresses.FirstOrDefault(a => userExist.IdPernamentResidence == a.Id);
+                    ra = _db.Addresses.FirstOrDefault(a => a.Id == userExist.IdRegularAddress);
+                }
+                
                 userExist.FullName = userViewsModel.FullName;
                 userExist.Gender = userViewsModel.Gender;
                 userExist.DateOfBirth = userViewsModel.DateOfBirth;
@@ -848,6 +858,7 @@ namespace UserManagement.Controllers
                 ra.District = userViewsModel.RegularAddressDistrict;
                 ra.Commune = userViewsModel.RegularAddressCommune;
                 ra.Address1 = userViewsModel.RegularAddressAddress;
+
             }
             _db.SaveChanges();
             TempData["SuccessMessage"] = "Account saved successfully.";

@@ -1,4 +1,13 @@
-﻿// TIME CHECK TABLE
+﻿//FUNCTION
+function formatDateForm(date) {
+    // convert from yyyy-MM-dd to dd-MM-yyyy
+    var dateSplit = date.split('-');
+    var res = dateSplit[2] + '-' + dateSplit[1] + '-' + dateSplit[0];
+    return res;
+}
+
+//END FUNCTION
+// TIME CHECK TABLE
 if (document.getElementById("timecheck-table") != null) {
     var tableTimeCheck = new DataTable("#timecheck-table", {
         columns: [
@@ -53,13 +62,14 @@ if (document.getElementById("timecheck-table") != null) {
                             <a class="text-center" data-bs-toggle="modal" data-bs-target="#timecheck-modal" `+ `
                             data-bs-reason="`+ item.reason + `" ` + `
                             data-bs-accepted="`+ item.accepted + `" ` + `
-                            data-bs-idAC="`+ item.id_attendanceCheck +`">
+                            data-bs-idAC="`+ item.id_attendanceCheck + `">
                                 <i class="icon-edit" data-feather="info"></i>
                             </a>
                         </div>
                     `;
                     }
-
+                    var day = formatDateForm(item.day);
+                    console.log(day);
                     tableTimeCheck.row.add([
                         '<input type="checkbox">',
                         index + 1,
@@ -67,7 +77,7 @@ if (document.getElementById("timecheck-table") != null) {
                         item.fullName,
                         item.department,
                         item.position,
-                        item.day,
+                        day,
                         item.time_in,
                         item.time_out,
                         actionIcons
@@ -233,6 +243,7 @@ if (document.getElementById("workingday-table") != null) {
         drawCallback: function (settings) {
             feather.replace();
         },
+        responsive: true,
 
     });
     var dataworkingday = [];
@@ -250,7 +261,7 @@ if (document.getElementById("workingday-table") != null) {
 
                 dataworkingday.forEach((item, index) => {
                     item.month = item.month < 10 ? `0${item.month}` : item.month;
-                    var monthYear = item.month + "/" + item.year;
+                    var monthYear = item.month + "-" + item.year;
                     const department = item.department !== null ? item.department : "null";
                     const position = item.position !== null ? item.position : "null";
 
@@ -485,7 +496,7 @@ if (document.getElementById('reschedule-table') != null) {
                 dataReschedule.forEach((item, index) => {
                     const userId = item.userId !== null ? item.userId : "null";
                     const fullName = item.fullName !== null ? item.fullName : "null";
-                    const dateOfBirth = item.dateOfBirth !== null ? item.dateOfBirth : "null";
+                    const dateOfBirth = item.dateOfBirth !== null ? formatDateForm(item.dateOfBirth) : "null";
                     const department = item.department !== null ? item.department : "null";
                     const position = item.position !== null ? item.position : "null";
 
@@ -512,7 +523,6 @@ if (document.getElementById('reschedule-table') != null) {
                     ]).draw();
                 });
                 feather.replace();
-
 
             }
         },
@@ -655,8 +665,8 @@ if (document.getElementById('rfl-table') != null) {
                         data.fullName,
                         data.department,
                         data.position,
-                        data.absence_from,
-                        data.absence_to,
+                        formatDateForm(data.absence_from),
+                        formatDateForm(data.absence_to),
                         data.reason,
                         actionIcons
                     ]).draw();
@@ -748,10 +758,10 @@ if (document.getElementById('rfl-table') != null) {
 
         // Clear existing table data
         table.clear();
-        
+
         //Retrieve data and redraw table
         $.ajax({
-            url: "/Admin/TimeKeeping/API/FilterRFL", 
+            url: "/Admin/TimeKeeping/API/FilterRFL",
             type: "GET",
             data: {
                 sta: statusVal,
@@ -805,6 +815,6 @@ if (document.getElementById('rfl-table') != null) {
     function refreshRFL() {
         window.location.reload();
     }
-    
+
 }
 // END ADMIN RQUEST FOR LEAVE
